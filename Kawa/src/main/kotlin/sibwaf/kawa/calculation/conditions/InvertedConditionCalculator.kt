@@ -1,0 +1,27 @@
+package sibwaf.kawa.calculation.conditions
+
+import sibwaf.kawa.calculation.ValueCalculatorState
+import sibwaf.kawa.constraints.BooleanConstraint
+import sibwaf.kawa.values.ConstrainedValue
+import spoon.reflect.code.CtExpression
+import spoon.reflect.code.CtUnaryOperator
+import spoon.reflect.code.UnaryOperatorKind
+
+class InvertedConditionCalculator : ConditionCalculator {
+
+    override fun supports(expression: CtExpression<*>) = expression is CtUnaryOperator<*> && expression.kind == UnaryOperatorKind.NOT
+
+    override suspend fun calculateCondition(state: ValueCalculatorState, expression: CtExpression<*>): ConditionCalculatorResult {
+        expression as CtUnaryOperator<*>
+
+        val (thenFrame, elseFrame, operand) = state.getConditionValue(expression.operand)
+        return ConditionCalculatorResult(
+                thenFrame = elseFrame,
+                elseFrame = thenFrame,
+                value = ConstrainedValue(
+                        operand.value,
+                        (operand.constraint as? BooleanConstraint)?.invert() ?: BooleanConstraint()
+                )
+        )
+    }
+}
