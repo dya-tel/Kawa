@@ -15,6 +15,7 @@ import sibwaf.kawa.calculation.conditions.BooleanOrCalculator
 import sibwaf.kawa.calculation.conditions.ConditionCalculator
 import sibwaf.kawa.calculation.conditions.ConditionCalculatorResult
 import sibwaf.kawa.calculation.conditions.EqualityConditionCalculator
+import sibwaf.kawa.calculation.conditions.InstanceOfCalculator
 import sibwaf.kawa.calculation.conditions.InvertedConditionCalculator
 import sibwaf.kawa.calculation.conditions.LiteralConditionCalculator
 import sibwaf.kawa.calculation.conditions.VariableReadConditionCalculator
@@ -36,6 +37,7 @@ object ValueCalculator {
             EqualityConditionCalculator(),
             LiteralConditionCalculator(),
             InvertedConditionCalculator(),
+            InstanceOfCalculator(),
             CtVariableReadCalculator(),
             CtConstructorCallCalculator(),
             CtInvocationCalculator(),
