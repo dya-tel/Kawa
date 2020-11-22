@@ -5,7 +5,6 @@ import sibwaf.kawa.calculation.ValueCalculatorState
 import sibwaf.kawa.constraints.FALSE_CONSTRAINT
 import sibwaf.kawa.constraints.TRUE_CONSTRAINT
 import sibwaf.kawa.values.BooleanValue
-import sibwaf.kawa.values.ConstrainedValue
 import sibwaf.kawa.values.ValueSource
 import spoon.reflect.code.CtExpression
 import spoon.reflect.code.CtLiteral
@@ -29,7 +28,8 @@ class LiteralConditionCalculator : ConditionCalculator {
         return ConditionCalculatorResult(
                 thenFrame = thenFrame.apply { isReachable = value },
                 elseFrame = elseFrame.apply { isReachable = !value },
-                value = ConstrainedValue(BooleanValue(ValueSource.NONE), constraint)
+                value = BooleanValue(ValueSource.NONE),
+                constraint = constraint
         )
     }
 }

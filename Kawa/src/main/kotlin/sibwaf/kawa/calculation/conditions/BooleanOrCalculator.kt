@@ -7,7 +7,6 @@ import sibwaf.kawa.constraints.BooleanConstraint
 import sibwaf.kawa.constraints.TRUE_CONSTRAINT
 import sibwaf.kawa.utility.flattenExpression
 import sibwaf.kawa.values.BooleanValue
-import sibwaf.kawa.values.ConstrainedValue
 import sibwaf.kawa.values.ValueSource
 import spoon.reflect.code.BinaryOperatorKind
 import spoon.reflect.code.CtBinaryOperator
@@ -28,9 +27,8 @@ class BooleanOrCalculator : ConditionCalculator {
         val constraints = ArrayList<BooleanConstraint>(operands.size)
         var nextState = state
         for (operand in operands) {
-            val (operandThenFrame, operandElseFrame, value) = nextState.getConditionValue(operand)
-
-            constraints += value.constraint as? BooleanConstraint ?: BooleanConstraint()
+            val (operandThenFrame, operandElseFrame, _, operandConstraint) = nextState.getConditionValue(operand)
+            constraints += operandConstraint
 
             thenFrames += operandThenFrame.compact(state.frame)
             elseFrame = operandElseFrame
@@ -53,7 +51,8 @@ class BooleanOrCalculator : ConditionCalculator {
         return ConditionCalculatorResult(
                 thenFrame = MutableDataFrame(thenFrame).apply { isReachable = !result.isFalse },
                 elseFrame = MutableDataFrame(elseFrame).apply { isReachable = !result.isTrue },
-                value = ConstrainedValue(BooleanValue(ValueSource.NONE), result)
+                value = BooleanValue(ValueSource.NONE),
+                constraint = result
         )
     }
 }

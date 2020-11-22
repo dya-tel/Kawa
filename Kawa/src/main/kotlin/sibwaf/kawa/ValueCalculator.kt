@@ -19,6 +19,8 @@ import sibwaf.kawa.calculation.conditions.InstanceOfCalculator
 import sibwaf.kawa.calculation.conditions.InvertedConditionCalculator
 import sibwaf.kawa.calculation.conditions.LiteralConditionCalculator
 import sibwaf.kawa.calculation.conditions.VariableReadConditionCalculator
+import sibwaf.kawa.constraints.BooleanConstraint
+import sibwaf.kawa.values.BooleanValue
 import sibwaf.kawa.values.ConstrainedValue
 import sibwaf.kawa.values.ValueSource
 import spoon.reflect.code.CtExpression
@@ -82,7 +84,12 @@ object ValueCalculator {
         }
 
         val nextFrame = MutableDataFrame(state.frame)
-        return ConditionCalculatorResult(nextFrame, nextFrame, ConstrainedValue.from(expression, ValueSource.NONE))
+        return ConditionCalculatorResult(
+                thenFrame = nextFrame,
+                elseFrame = nextFrame,
+                value = BooleanValue(ValueSource.NONE),
+                constraint = BooleanConstraint()
+        )
     }
 
     suspend fun calculateValue(

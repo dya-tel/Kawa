@@ -6,7 +6,6 @@ import sibwaf.kawa.constraints.BooleanConstraint
 import sibwaf.kawa.constraints.FALSE_CONSTRAINT
 import sibwaf.kawa.constraints.TRUE_CONSTRAINT
 import sibwaf.kawa.values.BooleanValue
-import sibwaf.kawa.values.ConstrainedValue
 import sibwaf.kawa.values.ValueSource
 import spoon.reflect.code.CtExpression
 import spoon.reflect.code.CtVariableRead
@@ -25,13 +24,14 @@ class VariableReadConditionCalculator : ConditionCalculator {
             elseFrame.setConstraint(declaration, FALSE_CONSTRAINT)
         }
 
-        val value = declaration?.let { state.frame.getValue(it) } ?: BooleanValue(ValueSource.NONE)
+        val value = declaration?.let { state.frame.getValue(it) as? BooleanValue } ?: BooleanValue(ValueSource.NONE)
         val constraint = (declaration?.let { state.frame.getConstraint(it) } as? BooleanConstraint) ?: BooleanConstraint()
 
         return ConditionCalculatorResult(
                 thenFrame = thenFrame.apply { isReachable = !constraint.isFalse },
                 elseFrame = elseFrame.apply { isReachable = !constraint.isTrue },
-                value = ConstrainedValue(value, constraint)
+                value = value,
+                constraint = constraint
         )
     }
 }

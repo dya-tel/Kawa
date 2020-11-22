@@ -1,7 +1,6 @@
 package sibwaf.kawa.analysis
 
 import sibwaf.kawa.DataFrame
-import sibwaf.kawa.constraints.BooleanConstraint
 import sibwaf.kawa.elseBlock
 import sibwaf.kawa.thenBlock
 import spoon.reflect.code.CtIf
@@ -14,8 +13,7 @@ class CtIfAnalyzer : StatementAnalyzer {
     override suspend fun analyze(state: StatementAnalyzerState, statement: CtStatement): DataFrame {
         statement as CtIf
 
-        val (thenStartFrame, elseStartFrame, constraint) = state.getConditionValue(statement.condition)
-        val conditionConstraint = constraint.constraint as? BooleanConstraint ?: BooleanConstraint()
+        val (thenStartFrame, elseStartFrame, _, conditionConstraint) = state.getConditionValue(statement.condition)
 
         val thenBranch = state.copy(frame = thenStartFrame).getStatementFlow(statement.thenBlock)
                 .compact(state.frame)

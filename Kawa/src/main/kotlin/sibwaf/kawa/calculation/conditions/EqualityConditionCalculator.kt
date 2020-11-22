@@ -9,7 +9,6 @@ import sibwaf.kawa.constraints.Nullability
 import sibwaf.kawa.constraints.ReferenceConstraint
 import sibwaf.kawa.constraints.TRUE_CONSTRAINT
 import sibwaf.kawa.values.BooleanValue
-import sibwaf.kawa.values.ConstrainedValue
 import sibwaf.kawa.values.ValueSource
 import spoon.reflect.code.BinaryOperatorKind
 import spoon.reflect.code.CtBinaryOperator
@@ -96,13 +95,15 @@ class EqualityConditionCalculator : ConditionCalculator {
             ConditionCalculatorResult(
                     thenFrame = thenFrame,
                     elseFrame = elseFrame,
-                    value = ConstrainedValue(BooleanValue(ValueSource.NONE), resultConstraint)
+                    value = BooleanValue(ValueSource.NONE),
+                    constraint = resultConstraint
             )
         } else {
             ConditionCalculatorResult(
                     thenFrame = elseFrame,
                     elseFrame = thenFrame,
-                    value = ConstrainedValue(BooleanValue(ValueSource.NONE), resultConstraint.invert())
+                    value = BooleanValue(ValueSource.NONE),
+                    constraint = resultConstraint.invert()
             )
         }
     }

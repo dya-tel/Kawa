@@ -22,8 +22,7 @@ class CtWhileAnalyzer : StatementAnalyzer {
         var currentState = state
 
         for (iteration in 0 until 2) {
-            val (thenFrame, elseFrame, conditionValue) = currentState.getConditionValue(statement.loopingExpression)
-            val conditionConstraint = conditionValue.constraint as? BooleanConstraint ?: BooleanConstraint()
+            val (thenFrame, elseFrame, _, conditionConstraint) = currentState.getConditionValue(statement.loopingExpression)
             if (conditionConstraint.isFalse) {
                 return elseFrame.compact(state.frame)
             }
