@@ -16,41 +16,46 @@ class CtWhileAnalyzer : StatementAnalyzer {
         // TODO: if condition is always true even on the second run, it could be an infinite loop
         // FIXME: leaving frames/values behind here is probably very-very bad, recalc after second run?
 
-        val (firstThenFrame, firstElseFrame, firstValue) = state.getConditionValue(statement.loopingExpression)
-        val firstConditionConstraint = firstValue.constraint as? BooleanConstraint ?: BooleanConstraint()
-        if (firstConditionConstraint.isFalse) {
-            return DataFrame.merge(
-                    state.frame,
-                    firstThenFrame,
-                    firstElseFrame
-            )
+        // var lastGuaranteedFrame: DataFrame = MutableDataFrame(state.frame)
+        // var lastGuaranteedFrameFound = false
+        lateinit var lastExitFrame: DataFrame
+        var currentState = state
+
+        for (iteration in 0 until 2) {
+            val (thenFrame, elseFrame, conditionValue) = currentState.getConditionValue(statement.loopingExpression)
+            val conditionConstraint = conditionValue.constraint as? BooleanConstraint ?: BooleanConstraint()
+            if (conditionConstraint.isFalse) {
+                return elseFrame.compact(state.frame)
+            }
+
+            val bodyFrame = currentState.copy(frame = thenFrame).getStatementFlow(statement.body)
+
+            if (conditionConstraint.isTrue) {
+                /*if (!lastGuaranteedFrameFound) {
+                    lastGuaranteedFrame = thenFrame
+                }*/
+
+                currentState = currentState.copy(frame = bodyFrame)
+            } else {
+                // lastGuaranteedFrameFound = true
+
+                val nextFrame = DataFrame.merge(
+                        currentState.frame,
+                        bodyFrame.compact(currentState.frame),
+                        elseFrame.compact(currentState.frame)
+                )
+
+                currentState = currentState.copy(frame = nextFrame)
+            }
+
+            lastExitFrame = elseFrame
         }
 
-        var firstRunFrame = state.copy(frame = firstThenFrame).getStatementFlow(statement.body)
-        if (!firstConditionConstraint.isTrue) {
-            firstRunFrame = DataFrame.merge(
-                    state.frame,
-                    MutableDataFrame(state.frame),
-                    firstRunFrame.compact(state.frame)
-            )
-        }
-
-        val (secondThenFrame, secondElseFrame, secondValue) = state.copy(frame = firstRunFrame).getConditionValue(statement.loopingExpression)
-        val secondConditionConstraint = secondValue.constraint as? BooleanConstraint ?: BooleanConstraint()
-        if (secondConditionConstraint.isFalse) {
-            return DataFrame.merge(
-                    state.frame,
-                    secondThenFrame.compact(state.frame),
-                    secondElseFrame.compact(state.frame)
-            )
-        }
-
-        val secondRunFrame = state.copy(frame = secondThenFrame).getStatementFlow(statement.body)
-
-        return DataFrame.merge(
+        return lastExitFrame.compact(state.frame)
+        /*DataFrame.merge(
                 state.frame,
-                firstRunFrame.compact(state.frame),
-                secondRunFrame.compact(state.frame)
-        )
+                lastGuaranteedFrame.compact(state.frame),
+                lastExitFrame.compact(state.frame)
+        )*/
     }
 }
