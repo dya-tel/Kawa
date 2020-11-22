@@ -26,6 +26,10 @@ val HIBERNATE = ModelLoader(
         "hibernate",
         collectSources(Paths.get("hibernate-orm-master"))
 )
+val ASYNC_HTTP_CLIENT = ModelLoader(
+        "async-http-client",
+        collectSources(Paths.get("async-http-client-master")) + collectSources(Paths.get("async-http-client-master", "extras"))
+)
 
 val project = HIBERNATE
 val diffOnly = true
