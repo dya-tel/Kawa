@@ -6,8 +6,10 @@ import spoon.reflect.code.CtFieldRead
 import spoon.reflect.code.CtFieldWrite
 import spoon.reflect.code.CtInvocation
 import spoon.reflect.code.CtTargetedExpression
+import spoon.reflect.code.CtThisAccess
 import spoon.reflect.code.CtVariableRead
 import spoon.reflect.code.CtVariableWrite
+import spoon.reflect.reference.CtTypeReference
 
 class R0000_NullDereference : Rule() {
 
@@ -15,15 +17,22 @@ class R0000_NullDereference : Rule() {
         val flow = getFlow(expression) ?: return
         val frame = getFrame(flow, expression) ?: return
 
-        val target = (expression.target as? CtVariableRead<*>)?.variable?.declaration ?: return
-        val constraint = frame.getConstraint(target) as? ReferenceConstraint ?: return
+        val target = expression.target
+                ?.takeUnless { it is CtThisAccess<*> }
+                ?.takeUnless { it is CtTypeReference<*> }
+                ?: return
+
+        val (_, constraint) = getValue(frame, target)
+        if (constraint !is ReferenceConstraint) {
+            return
+        }
 
         if (constraint.nullability == Nullability.ALWAYS_NULL) {
-            warn("Null dereference of '${target.simpleName}'", expression)
+            warn("Null dereference of '${toSimpleString(target)}'", expression)
         }
 
         if (constraint.nullability == Nullability.POSSIBLE_NULL) {
-            warn("Possible null dereference of '${target.simpleName}'", expression)
+            warn("Possible null dereference of '${toSimpleString(target)}'", expression)
         }
     }
 
