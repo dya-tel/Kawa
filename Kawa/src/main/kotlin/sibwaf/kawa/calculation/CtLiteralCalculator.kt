@@ -2,7 +2,6 @@ package sibwaf.kawa.calculation
 
 import sibwaf.kawa.DataFrame
 import sibwaf.kawa.MutableDataFrame
-import sibwaf.kawa.constraints.Nullability
 import sibwaf.kawa.constraints.ReferenceConstraint
 import sibwaf.kawa.values.ConstrainedValue
 import sibwaf.kawa.values.ReferenceValue
@@ -18,7 +17,7 @@ class CtLiteralCalculator : ValueCalculator {
         expression as CtLiteral<*>
 
         return MutableDataFrame(state.frame) to when (expression.value) {
-            null -> ConstrainedValue(ReferenceValue(ValueSource.NONE), ReferenceConstraint().apply { nullability = Nullability.ALWAYS_NULL })
+            null -> ConstrainedValue(ReferenceValue(ValueSource.NONE), ReferenceConstraint.createNull())
             else -> ConstrainedValue.from(expression, ValueSource.NONE)
         }
     }

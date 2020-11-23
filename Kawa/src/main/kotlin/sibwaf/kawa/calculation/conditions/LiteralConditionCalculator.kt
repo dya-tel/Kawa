@@ -2,8 +2,7 @@ package sibwaf.kawa.calculation.conditions
 
 import sibwaf.kawa.MutableDataFrame
 import sibwaf.kawa.calculation.ValueCalculatorState
-import sibwaf.kawa.constraints.FALSE_CONSTRAINT
-import sibwaf.kawa.constraints.TRUE_CONSTRAINT
+import sibwaf.kawa.constraints.BooleanConstraint
 import sibwaf.kawa.values.BooleanValue
 import sibwaf.kawa.values.ValueSource
 import spoon.reflect.code.CtExpression
@@ -20,9 +19,9 @@ class LiteralConditionCalculator : ConditionCalculator {
         val elseFrame = MutableDataFrame(state.frame)
 
         val constraint = if (value) {
-            TRUE_CONSTRAINT
+            BooleanConstraint.createTrue()
         } else {
-            FALSE_CONSTRAINT
+            BooleanConstraint.createFalse()
         }
 
         return ConditionCalculatorResult(

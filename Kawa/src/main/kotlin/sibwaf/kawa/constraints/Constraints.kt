@@ -4,76 +4,59 @@ import sibwaf.kawa.values.BooleanValue
 import sibwaf.kawa.values.CollectionValue
 import sibwaf.kawa.values.ReferenceValue
 import sibwaf.kawa.values.Value
-import kotlin.math.max
-import kotlin.math.min
 
 interface InvertibleConstraint<T : Constraint> {
     fun invert(): T
 }
 
-open class Constraint {
-
+interface Constraint {
     companion object {
         fun from(value: Value): Constraint {
             return when (value) {
-                is CollectionValue -> CollectionConstraint()
-                is ReferenceValue -> ReferenceConstraint()
-                is BooleanValue -> BooleanConstraint()
-                else -> Constraint()
+                is CollectionValue -> CollectionConstraint.createUnknown()
+                is ReferenceValue -> ReferenceConstraint.createUnknown()
+                is BooleanValue -> BooleanConstraint.createUnknown()
+                else -> ConstraintImpl()
             }
         }
+
+        fun createUnknown(): Constraint = ConstraintImpl()
     }
 
-    open fun copy(): Constraint {
-        return Constraint()
+    fun copy(): Constraint
+    fun merge(other: Constraint): Constraint
+
+    fun isEqual(other: Constraint): BooleanConstraint
+    fun isNotEqual(other: Constraint): BooleanConstraint // FIXME: could be very-very broken, but isn't used
+}
+
+
+internal open class ConstraintImpl : Constraint {
+
+    override fun copy(): Constraint {
+        return ConstraintImpl()
     }
 
-    fun merge(other: Constraint): Constraint {
+    final override fun merge(other: Constraint): Constraint {
         val result = createInstanceForMerging(other)
         merge(result, other)
         return result
     }
 
     protected open fun createInstanceForMerging(other: Constraint): Constraint {
-        return Constraint()
+        return ConstraintImpl()
     }
 
     protected open fun merge(result: Constraint, other: Constraint) {
     }
-}
 
-class CollectionConstraint : ReferenceConstraint() {
-    var minSize = 0L
-        internal set
-    var maxSize = Long.MAX_VALUE
-        internal set
-
-    val isEmpty
-        get() = minSize == 0L && maxSize == 0L
-
-    val isNotEmpty
-        get() = minSize > 0 && maxSize > 0
-
-    override fun copy(): Constraint {
-        return CollectionConstraint().also {
-            it.minSize = minSize
-            it.maxSize = maxSize
-        }
-    }
-
-    override fun createInstanceForMerging(other: Constraint): Constraint {
-        return if (other is CollectionConstraint) {
-            CollectionConstraint()
+    override fun isEqual(other: Constraint): BooleanConstraint {
+        return if (this == other) {
+            BooleanConstraint.createTrue()
         } else {
-            super.createInstanceForMerging(other)
+            BooleanConstraint.createUnknown()
         }
     }
 
-    override fun merge(result: Constraint, other: Constraint) {
-        super.merge(result, other)
-        if (result is CollectionConstraint && other is CollectionConstraint) {
-            result.minSize = min(minSize, other.minSize)
-            result.maxSize = max(maxSize, other.maxSize)
-        }
-    }
+    override fun isNotEqual(other: Constraint): BooleanConstraint = isEqual(other).invert()
 }

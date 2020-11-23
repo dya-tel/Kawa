@@ -88,7 +88,7 @@ object ValueCalculator {
                 thenFrame = nextFrame,
                 elseFrame = nextFrame,
                 value = BooleanValue(ValueSource.NONE),
-                constraint = BooleanConstraint()
+                constraint = BooleanConstraint.createUnknown()
         )
     }
 

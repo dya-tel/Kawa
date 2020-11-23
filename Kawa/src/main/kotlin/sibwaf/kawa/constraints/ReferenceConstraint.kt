@@ -4,20 +4,43 @@ enum class Nullability {
     UNKNOWN, POSSIBLE_NULL, ALWAYS_NULL, NEVER_NULL
 }
 
-open class ReferenceConstraint : Constraint() {
+interface ReferenceConstraint : Constraint {
 
-    open var nullability = Nullability.UNKNOWN
-        internal set
+    companion object {
+        private val NULL_CONSTRAINT = ReferenceConstraintImpl(nullability = Nullability.ALWAYS_NULL)
 
-    override fun copy(): Constraint {
-        return ReferenceConstraint().also {
-            it.nullability = nullability
+        fun createNull(): ReferenceConstraint = NULL_CONSTRAINT
+        fun createNonNull(): ReferenceConstraint = ReferenceConstraintImpl(nullability = Nullability.NEVER_NULL)
+        fun createPossibleNull(): ReferenceConstraint = ReferenceConstraintImpl(nullability = Nullability.POSSIBLE_NULL)
+        fun createUnknown(): ReferenceConstraint = ReferenceConstraintImpl(nullability = Nullability.UNKNOWN)
+    }
+
+    val nullability: Nullability
+
+    override fun isEqual(other: Constraint): BooleanConstraint {
+        return when {
+            other == this -> BooleanConstraint.createTrue()
+            other !is ReferenceConstraint -> BooleanConstraint.createUnknown() // TODO: createFalse()
+            nullability == Nullability.ALWAYS_NULL && other.nullability == Nullability.ALWAYS_NULL -> BooleanConstraint.createTrue()
+            nullability == Nullability.NEVER_NULL && other.nullability == Nullability.ALWAYS_NULL -> BooleanConstraint.createFalse()
+            nullability == Nullability.ALWAYS_NULL && other.nullability == Nullability.NEVER_NULL -> BooleanConstraint.createFalse()
+            else -> BooleanConstraint.createUnknown()
         }
+    }
+}
+
+private class ReferenceConstraintImpl(nullability: Nullability) : ConstraintImpl(), ReferenceConstraint {
+
+    override var nullability: Nullability = nullability
+        private set
+
+    override fun copy(): ReferenceConstraint {
+        return ReferenceConstraintImpl(nullability)
     }
 
     override fun createInstanceForMerging(other: Constraint): Constraint {
         return if (other is ReferenceConstraint) {
-            ReferenceConstraint()
+            ReferenceConstraintImpl(Nullability.UNKNOWN)
         } else {
             super.createInstanceForMerging(other)
         }
@@ -25,7 +48,7 @@ open class ReferenceConstraint : Constraint() {
 
     override fun merge(result: Constraint, other: Constraint) {
         super.merge(result, other)
-        if (result is ReferenceConstraint && other is ReferenceConstraint) {
+        if (result is ReferenceConstraintImpl && other is ReferenceConstraint) {
             result.nullability = when {
                 nullability == Nullability.NEVER_NULL && other.nullability == Nullability.NEVER_NULL -> Nullability.NEVER_NULL
                 nullability == Nullability.ALWAYS_NULL && other.nullability == Nullability.ALWAYS_NULL -> Nullability.ALWAYS_NULL
@@ -36,19 +59,7 @@ open class ReferenceConstraint : Constraint() {
         }
     }
 
-    open fun isEqual(other: ReferenceConstraint): BooleanConstraint {
-        return when {
-            other == this -> TRUE_CONSTRAINT
-            nullability == Nullability.ALWAYS_NULL && other.nullability == Nullability.ALWAYS_NULL -> TRUE_CONSTRAINT
-            nullability == Nullability.NEVER_NULL && other.nullability == Nullability.ALWAYS_NULL -> FALSE_CONSTRAINT
-            nullability == Nullability.ALWAYS_NULL && other.nullability == Nullability.NEVER_NULL -> FALSE_CONSTRAINT
-            else -> BooleanConstraint()
-        }
-    }
-
-    open fun isNotEqual(other: ReferenceConstraint): BooleanConstraint {
-        return isEqual(other).invert()
-    }
+    override fun isEqual(other: Constraint): BooleanConstraint = super<ReferenceConstraint>.isEqual(other)
 
     override fun toString(): String {
         return "reference: $nullability"

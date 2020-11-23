@@ -5,9 +5,7 @@ import sibwaf.kawa.MutableDataFrame
 import sibwaf.kawa.calculation.ValueCalculatorState
 import sibwaf.kawa.constraints.BooleanConstraint
 import sibwaf.kawa.constraints.Constraint
-import sibwaf.kawa.constraints.Nullability
 import sibwaf.kawa.constraints.ReferenceConstraint
-import sibwaf.kawa.constraints.TRUE_CONSTRAINT
 import sibwaf.kawa.values.BooleanValue
 import sibwaf.kawa.values.ValueSource
 import spoon.reflect.code.BinaryOperatorKind
@@ -34,25 +32,15 @@ class EqualityConditionCalculator : ConditionCalculator {
         return if (leftOperand is CtLiteral<*> && leftOperand.value == null) {
             InferredConstraint(
                     expression = rightOperand,
-                    thenConstraint = ReferenceConstraint().apply { nullability = Nullability.ALWAYS_NULL },
-                    elseConstraint = ReferenceConstraint().apply { nullability = Nullability.NEVER_NULL }
+                    thenConstraint = ReferenceConstraint.createNull(),
+                    elseConstraint = ReferenceConstraint.createNonNull()
             )
-            /*if (operator.kind == BinaryOperatorKind.EQ) {
-                rightOperand to ReferenceConstraint().apply { nullability = Nullability.ALWAYS_NULL }
-            } else {
-                rightOperand to ReferenceConstraint().apply { nullability = Nullability.NEVER_NULL }
-            }*/
         } else if (rightOperand is CtLiteral<*> && rightOperand.value == null) {
             InferredConstraint(
                     expression = leftOperand,
-                    thenConstraint = ReferenceConstraint().apply { nullability = Nullability.ALWAYS_NULL },
-                    elseConstraint = ReferenceConstraint().apply { nullability = Nullability.NEVER_NULL }
+                    thenConstraint = ReferenceConstraint.createNull(),
+                    elseConstraint = ReferenceConstraint.createNonNull()
             )
-            /*if (operator.kind == BinaryOperatorKind.EQ) {
-                leftOperand to ReferenceConstraint().apply { nullability = Nullability.ALWAYS_NULL }
-            } else {
-                leftOperand to ReferenceConstraint().apply { nullability = Nullability.NEVER_NULL }
-            }*/
         } else {
             null
         }
@@ -74,10 +62,8 @@ class EqualityConditionCalculator : ConditionCalculator {
         val rightConstraint = rightValue.constraint
 
         val resultConstraint = when {
-            leftValue.value isSameAs rightValue.value -> TRUE_CONSTRAINT
-            leftConstraint is BooleanConstraint && rightConstraint is BooleanConstraint -> leftConstraint.isEqual(rightConstraint)
-            leftConstraint is ReferenceConstraint && rightConstraint is ReferenceConstraint -> leftConstraint.isEqual(rightConstraint)
-            else -> BooleanConstraint()
+            leftValue.value isSameAs rightValue.value -> BooleanConstraint.createTrue()
+            else -> leftConstraint.isEqual(rightConstraint)
         }
 
         val thenFrame = MutableDataFrame(operatorNextFrame).apply { isReachable = !resultConstraint.isFalse }

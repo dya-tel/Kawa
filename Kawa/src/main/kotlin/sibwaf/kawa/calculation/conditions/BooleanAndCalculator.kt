@@ -4,7 +4,6 @@ import sibwaf.kawa.DataFrame
 import sibwaf.kawa.MutableDataFrame
 import sibwaf.kawa.calculation.ValueCalculatorState
 import sibwaf.kawa.constraints.BooleanConstraint
-import sibwaf.kawa.constraints.FALSE_CONSTRAINT
 import sibwaf.kawa.utility.flattenExpression
 import sibwaf.kawa.values.BooleanValue
 import sibwaf.kawa.values.ValueSource
@@ -43,7 +42,7 @@ open class BooleanAndCalculator : ConditionCalculator {
             result = result.and(constraint)
 
             if (result.isFalse || constraints.subList(0, index).any { constraint.and(it).isFalse }) {
-                result = FALSE_CONSTRAINT
+                result = BooleanConstraint.createFalse()
                 break
             }
         }

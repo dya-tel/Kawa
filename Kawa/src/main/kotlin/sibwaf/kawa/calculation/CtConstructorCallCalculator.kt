@@ -2,7 +2,6 @@ package sibwaf.kawa.calculation
 
 import sibwaf.kawa.DataFrame
 import sibwaf.kawa.MutableDataFrame
-import sibwaf.kawa.constraints.Nullability
 import sibwaf.kawa.constraints.ReferenceConstraint
 import sibwaf.kawa.values.ConstrainedValue
 import sibwaf.kawa.values.Value
@@ -25,7 +24,7 @@ class CtConstructorCallCalculator : ValueCalculator {
         }
 
         val value = Value.from(expression, ValueSource.NONE)
-        val constraint = ReferenceConstraint().apply { nullability = Nullability.NEVER_NULL }
+        val constraint = ReferenceConstraint.createNonNull()
 
         // TODO: constructor side-effects
 

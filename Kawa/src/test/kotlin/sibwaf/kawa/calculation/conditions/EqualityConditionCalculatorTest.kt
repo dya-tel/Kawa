@@ -42,7 +42,7 @@ class EqualityConditionCalculatorTest : ValueCalculatorTestBase() {
 
         val frame = MutableDataFrame(null).apply {
             setValue(x, ReferenceValue(ValueSource.NONE))
-            setConstraint(x, ReferenceConstraint())
+            setConstraint(x, ReferenceConstraint.createUnknown())
         }
 
         val state = createState(calculator).copy(frame = frame)
@@ -85,7 +85,7 @@ class EqualityConditionCalculatorTest : ValueCalculatorTestBase() {
 
         val frame = MutableDataFrame(null).apply {
             setValue(x, ReferenceValue(ValueSource.NONE))
-            setConstraint(x, ReferenceConstraint())
+            setConstraint(x, ReferenceConstraint.createUnknown())
         }
 
         val state = createState(calculator).copy(frame = frame)

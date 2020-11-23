@@ -18,7 +18,7 @@ class CtExecutableReferenceExpressionCalculator : ValueCalculator {
         // TODO
         val value = ConstrainedValue(
                 ReferenceValue(ValueSource.NONE),
-                ReferenceConstraint().apply { nullability = Nullability.NEVER_NULL }
+                ReferenceConstraint.createNonNull()
         )
 
         return MutableDataFrame(state.frame) to value

@@ -33,7 +33,7 @@ class VariableReadConditionCalculatorTest : ValueCalculatorTestBase() {
 
         val frame = MutableDataFrame(null).apply {
             setValue(x, BooleanValue(ValueSource.NONE))
-            setConstraint(x, BooleanConstraint())
+            setConstraint(x, BooleanConstraint.createUnknown())
         }
 
         val state = createState(calculator).copy(frame = frame)

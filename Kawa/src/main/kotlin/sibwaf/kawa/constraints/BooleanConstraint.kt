@@ -1,28 +1,82 @@
 package sibwaf.kawa.constraints
 
-val FALSE_CONSTRAINT = BooleanConstraint().apply { isFalse = true }
-val TRUE_CONSTRAINT = BooleanConstraint().apply { isTrue = true }
+interface BooleanConstraint : Constraint, InvertibleConstraint<BooleanConstraint> {
 
-//val FALSE_CONSTRAINED_VALUE = ConstrainedValue(FalseValue, FALSE_CONSTRAINT)
-//val TRUE_CONSTRAINED_VALUE = ConstrainedValue(TrueValue, TRUE_CONSTRAINT)
+    companion object {
+        private val FALSE_CONSTRAINT = BooleanConstraintImpl(isFalse = true)
+        private val TRUE_CONSTRAINT = BooleanConstraintImpl(isTrue = true)
 
-open class BooleanConstraint : Constraint(), InvertibleConstraint<BooleanConstraint> {
-    open var isTrue: Boolean = false
-        internal set
+        fun createTrue(): BooleanConstraint = TRUE_CONSTRAINT
+        fun createFalse(): BooleanConstraint = FALSE_CONSTRAINT
+        fun createUnknown(): BooleanConstraint = BooleanConstraintImpl()
+        fun create(isTrue: Boolean = false, isFalse: Boolean = false): BooleanConstraint = BooleanConstraintImpl(isTrue, isFalse)
+    }
 
-    open var isFalse: Boolean = false
-        internal set
+    val isTrue: Boolean
+    val isFalse: Boolean
 
-    override fun copy(): Constraint {
-        return BooleanConstraint().also {
-            it.isTrue = isTrue
-            it.isFalse = isFalse
+    fun and(other: BooleanConstraint): BooleanConstraint {
+        if (this !is InvertedBooleanConstraintImpl && other is InvertedBooleanConstraintImpl) {
+            return other.and(this)
+        }
+
+        return when {
+            other == this -> this
+            isFalse || other.isFalse -> createFalse()
+            isTrue && other.isTrue -> createTrue()
+            isTrue -> other
+            other.isTrue -> this
+            else -> createUnknown()
         }
     }
 
+    fun or(other: BooleanConstraint): BooleanConstraint {
+        if (this !is InvertedBooleanConstraintImpl && other is InvertedBooleanConstraintImpl) {
+            return other.or(this)
+        }
+
+        return when {
+            other == this -> this
+            isTrue || other.isTrue -> createTrue()
+            isFalse && other.isFalse -> createFalse()
+            isFalse -> other
+            other.isFalse -> this
+            else -> createUnknown()
+        }
+    }
+
+    override fun isEqual(other: Constraint): BooleanConstraint {
+        if (this !is InvertedBooleanConstraintImpl && other is InvertedBooleanConstraintImpl) {
+            return other.isEqual(this)
+        }
+
+        return when {
+            other == this -> this
+            other !is BooleanConstraint -> createUnknown() // TODO: createFalse()
+            isTrue && other.isTrue -> createTrue()
+            isFalse && other.isFalse -> createTrue()
+            else -> createUnknown()
+        }
+    }
+}
+
+private class BooleanConstraintImpl(isTrue: Boolean = false, isFalse: Boolean = false) : ConstraintImpl(), BooleanConstraint {
+
+    override var isTrue: Boolean = isTrue
+        private set
+
+    override var isFalse: Boolean = isFalse
+        private set
+
+    init {
+        check(!isTrue || !isFalse) { "Boolean constraint can't be 'true' and 'false' at the same time" }
+    }
+
+    override fun copy(): BooleanConstraint = BooleanConstraintImpl(isTrue, isFalse)
+
     override fun createInstanceForMerging(other: Constraint): Constraint {
         return if (other is BooleanConstraint) {
-            BooleanConstraint()
+            BooleanConstraintImpl()
         } else {
             super.createInstanceForMerging(other)
         }
@@ -30,60 +84,15 @@ open class BooleanConstraint : Constraint(), InvertibleConstraint<BooleanConstra
 
     override fun merge(result: Constraint, other: Constraint) {
         super.merge(result, other)
-        if (result is BooleanConstraint && other is BooleanConstraint) {
+        if (result is BooleanConstraintImpl && other is BooleanConstraint) {
             result.isFalse = isFalse && other.isFalse
             result.isTrue = isTrue && other.isTrue
         }
     }
 
-    override fun invert(): BooleanConstraint = InvertedBooleanConstraint(this)
+    override fun invert(): BooleanConstraint = InvertedBooleanConstraintImpl(this)
 
-    open fun and(other: BooleanConstraint): BooleanConstraint {
-        if (this !is InvertedBooleanConstraint && other is InvertedBooleanConstraint) {
-            return other.and(this)
-        }
-
-        return when {
-            other == this -> this
-            isFalse || other.isFalse -> FALSE_CONSTRAINT
-            isTrue && other.isTrue -> TRUE_CONSTRAINT
-            isTrue -> other
-            other.isTrue -> this
-            else -> BooleanConstraint()
-        }
-    }
-
-    open fun or(other: BooleanConstraint): BooleanConstraint {
-        if (this !is InvertedBooleanConstraint && other is InvertedBooleanConstraint) {
-            return other.or(this)
-        }
-
-        return when {
-            other == this -> this
-            isTrue || other.isTrue -> TRUE_CONSTRAINT
-            isFalse && other.isFalse -> FALSE_CONSTRAINT
-            isFalse -> other
-            other.isFalse -> this
-            else -> BooleanConstraint()
-        }
-    }
-
-    open fun isEqual(other: BooleanConstraint): BooleanConstraint {
-        if (this !is InvertedBooleanConstraint && other is InvertedBooleanConstraint) {
-            return other.isEqual(this)
-        }
-
-        return when {
-            other == this -> this
-            isTrue && other.isTrue -> TRUE_CONSTRAINT
-            isFalse && other.isFalse -> TRUE_CONSTRAINT
-            else -> BooleanConstraint()
-        }
-    }
-
-    open fun isNotEqual(other: BooleanConstraint): BooleanConstraint {
-        return isEqual(other).invert()
-    }
+    override fun isEqual(other: Constraint): BooleanConstraint = super<BooleanConstraint>.isEqual(other)
 
     override fun toString(): String {
         val text = when {
@@ -95,25 +104,24 @@ open class BooleanConstraint : Constraint(), InvertibleConstraint<BooleanConstra
     }
 }
 
-class InvertedBooleanConstraint(private val original: BooleanConstraint) : BooleanConstraint() {
+// FIXME: merging
+private class InvertedBooleanConstraintImpl(private val original: BooleanConstraint) : ConstraintImpl(), BooleanConstraint {
 
-    override var isTrue: Boolean
+    override val isTrue: Boolean
         get() = original.isFalse
-        set(_) = throw IllegalStateException("Can't change value")
 
-    override var isFalse: Boolean
+    override val isFalse: Boolean
         get() = original.isTrue
-        set(_) = throw IllegalStateException("Can't change value")
 
-    override fun copy(): Constraint {
-        return InvertedBooleanConstraint(original.copy() as BooleanConstraint)
+    override fun copy(): BooleanConstraint {
+        return InvertedBooleanConstraintImpl(original.copy() as BooleanConstraint)
     }
 
     override fun invert(): BooleanConstraint = original
 
     override fun and(other: BooleanConstraint): BooleanConstraint {
         return if (other == original) {
-            FALSE_CONSTRAINT
+            BooleanConstraint.createFalse()
         } else {
             super.and(other)
         }
@@ -121,17 +129,17 @@ class InvertedBooleanConstraint(private val original: BooleanConstraint) : Boole
 
     override fun or(other: BooleanConstraint): BooleanConstraint {
         return if (other == original) {
-            TRUE_CONSTRAINT
+            BooleanConstraint.createTrue()
         } else {
             super.or(other)
         }
     }
 
-    override fun isEqual(other: BooleanConstraint): BooleanConstraint {
+    override fun isEqual(other: Constraint): BooleanConstraint {
         return if (other == original) {
-            FALSE_CONSTRAINT
+            BooleanConstraint.createFalse()
         } else {
-            super.isEqual(other)
+            super<BooleanConstraint>.isEqual(other)
         }
     }
 }

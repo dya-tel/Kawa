@@ -38,7 +38,7 @@ abstract class StatementAnalyzerTestBase {
                 returnPoints = Collections.emptySet(),
                 methodFlowProvider = { EmptyFlow },
                 statementFlowProvider = { state, currentStatement -> statementAnalyzer.analyze(state, currentStatement) },
-                valueProvider = { _, _ -> ConstrainedValue(Value(ValueSource.NONE), Constraint()) }
+                valueProvider = { _, _ -> ConstrainedValue(Value(ValueSource.NONE), Constraint.createUnknown()) }
         )
         statementAnalyzer.analyze(state.customizeState(), statement)
     }

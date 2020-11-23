@@ -3,7 +3,6 @@ package sibwaf.kawa.calculation.conditions
 import sibwaf.kawa.MutableDataFrame
 import sibwaf.kawa.calculation.ValueCalculatorState
 import sibwaf.kawa.constraints.BooleanConstraint
-import sibwaf.kawa.constraints.FALSE_CONSTRAINT
 import sibwaf.kawa.constraints.Nullability
 import sibwaf.kawa.constraints.ReferenceConstraint
 import sibwaf.kawa.values.BooleanValue
@@ -25,12 +24,12 @@ class InstanceOfCalculator : ConditionCalculator {
 
         // TODO: add type constraints
         val (value, constraint) = state.getValue(expression.leftHandOperand).second
-        thenFrame.setConstraint(value, ReferenceConstraint().apply { nullability = Nullability.NEVER_NULL })
+        thenFrame.setConstraint(value, ReferenceConstraint.createNonNull())
 
         val resultConstraint = if ((constraint as? ReferenceConstraint)?.nullability == Nullability.ALWAYS_NULL) {
-            FALSE_CONSTRAINT
+            BooleanConstraint.createFalse()
         } else {
-            BooleanConstraint()
+            BooleanConstraint.createUnknown()
         }
 
         return ConditionCalculatorResult(
