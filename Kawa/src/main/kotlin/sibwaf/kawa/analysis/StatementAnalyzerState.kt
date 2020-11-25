@@ -5,6 +5,7 @@ import sibwaf.kawa.MethodFlow
 import sibwaf.kawa.ValueCalculator
 import sibwaf.kawa.calculation.conditions.ConditionCalculatorResult
 import sibwaf.kawa.values.ConstrainedValue
+import spoon.reflect.code.CtCFlowBreak
 import spoon.reflect.code.CtExpression
 import spoon.reflect.code.CtLocalVariable
 import spoon.reflect.code.CtStatement
@@ -15,6 +16,7 @@ data class StatementAnalyzerState(
         val frame: DataFrame,
         val localVariables: MutableSet<CtLocalVariable<*>>,
         val returnPoints: MutableSet<CtStatement>,
+        val jumpPoints: MutableCollection<Pair<CtCFlowBreak, DataFrame>>,
 
         private val methodFlowProvider: suspend (CtExecutableReference<*>) -> MethodFlow,
         private val statementFlowProvider: suspend (StatementAnalyzerState, CtStatement) -> DataFrame,

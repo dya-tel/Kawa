@@ -36,6 +36,7 @@ abstract class StatementAnalyzerTestBase {
                 frame = MutableDataFrame(null),
                 localVariables = Collections.emptySet(),
                 returnPoints = Collections.emptySet(),
+                jumpPoints = Collections.emptyList(),
                 methodFlowProvider = { EmptyFlow },
                 statementFlowProvider = { state, currentStatement -> statementAnalyzer.analyze(state, currentStatement) },
                 valueProvider = { _, _ -> ConstrainedValue(Value(ValueSource.NONE), Constraint.createUnknown()) }

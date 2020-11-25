@@ -17,6 +17,7 @@ import sibwaf.kawa.analysis.CtAbstractInvocationAnalyzer
 import sibwaf.kawa.analysis.CtAssignmentAnalyzer
 import sibwaf.kawa.analysis.CtBlockAnalyzer
 import sibwaf.kawa.analysis.CtBodyHolderAnalyzer
+import sibwaf.kawa.analysis.CtBreakAnalyzer
 import sibwaf.kawa.analysis.CtIfAnalyzer
 import sibwaf.kawa.analysis.CtLocalVariableAnalyzer
 import sibwaf.kawa.analysis.CtLoopAnalyzer
@@ -129,6 +130,7 @@ class MethodFlowAnalyzer private constructor() {
             CtReturnAnalyzer(),
             CtThrowAnalyzer(),
             // TODO: CtCFlowBreakAnalyzer
+            CtBreakAnalyzer(),
             CtAbstractInvocationAnalyzer(),
             CtIfAnalyzer(),
             CtSwitchAnalyzer(),
@@ -211,6 +213,7 @@ class MethodFlowAnalyzer private constructor() {
                 frame = startFrame,
                 localVariables = Collections.emptySet(),
                 returnPoints = IdentityHashSet(),
+                jumpPoints = ArrayList(),
                 methodFlowProvider = flowProvider,
                 statementFlowProvider = this::analyzeStatement,
                 valueProvider = { state, expression -> ValueCalculator.calculateValue(annotation, state.frame, expression, flowProvider) }
