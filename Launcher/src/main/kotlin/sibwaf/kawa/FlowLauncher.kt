@@ -4,6 +4,7 @@ import java.io.File
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
+import java.util.Comparator
 import java.util.stream.Collectors
 
 private fun collectSources(root: Path): Collection<File> {
@@ -39,14 +40,21 @@ fun main() {
 
     ReportManager.saveReport(project.name, report)
 
+    val fileComparator: Comparator<SerializableWarningWrapper> = Comparator.comparing { it.position.file }
+    val positionComparator: Comparator<SerializableWarningWrapper> = Comparator.comparing { it.position.start }
+    val warningComparator = fileComparator.then(positionComparator)
+
     if (diffOnly) {
-        for ((warning, type) in ReportManager.getDiffWithReference(project.name, report)) {
+        val diff = ReportManager.getDiffWithReference(project.name, report)
+        val sortedDiff = diff.toSortedMap(warningComparator)
+
+        for ((warning, type) in sortedDiff) {
             with(warning) {
                 println("[$rule] $type $message. ${position.file}:${position.line}")
             }
         }
     } else {
-        for (warning in report) {
+        for (warning in report.sortedWith(warningComparator)) {
             with(warning) {
                 println("[$rule] $message. ${position.file}:${position.line}")
             }
