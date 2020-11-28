@@ -4,6 +4,7 @@ import sibwaf.kawa.BlockFlow
 import sibwaf.kawa.DataFrame
 import sibwaf.kawa.IdentityHashSet
 import sibwaf.kawa.MutableDataFrame
+import sibwaf.kawa.UnreachableFrame
 import spoon.reflect.code.CtBlock
 import spoon.reflect.code.CtStatement
 import spoon.reflect.code.CtStatementList
@@ -22,8 +23,6 @@ class CtBlockAnalyzer : StatementAnalyzer {
         )
 
         for (nestedStatement in statement.statements) {
-            // TODO: stop at unreachable frames?
-
             val nextFrame = localState.getStatementFlow(nestedStatement)
             if (nextFrame == localState.frame) {
                 continue
@@ -40,6 +39,14 @@ class CtBlockAnalyzer : StatementAnalyzer {
             it.endFrame = endFrame
         }
 
-        return endFrame.compact(state.frame).copy(retiredVariables = localState.localVariables)
+        return if (endFrame is UnreachableFrame) {
+            val cleanedFrame = endFrame.previous
+                    .compact(state.frame)
+                    .copy(retiredVariables = localState.localVariables)
+
+            UnreachableFrame.after(cleanedFrame)
+        } else {
+            endFrame.compact(state.frame).copy(retiredVariables = localState.localVariables)
+        }
     }
 }

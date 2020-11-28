@@ -61,6 +61,7 @@ class MethodFlowAnalyzer private constructor() {
                     val total = x.size
 
                     // FIXME: no parallelism at all with producer
+                    //  Maybe raw channel should be used?
                     /*val channel = produce<CtExecutable<*>>(Dispatchers.Unconfined, capacity = baseCoroutineCount * 128) {
                     for (type in x) {
                         for (method in type.methods) {
@@ -225,7 +226,7 @@ class MethodFlowAnalyzer private constructor() {
         annotation.startFrame = blockFlow.startFrame
         annotation.endFrame = blockFlow.endFrame
 
-        annotation.neverReturns = !annotation.endFrame.isReachable && analyzerState.returnPoints.all { it is CtThrow }
+        annotation.neverReturns = annotation.endFrame is UnreachableFrame && analyzerState.returnPoints.all { it is CtThrow }
 
         if (annotation.purity == null) {
             annotation.purity = MethodPurity.PURE
@@ -246,6 +247,10 @@ class MethodFlowAnalyzer private constructor() {
         }
 
         state.annotation.frames[statement] = state.frame
+
+        if (state.frame is UnreachableFrame) {
+            return state.frame
+        }
 
         // TODO
         /*val additionalConstraints = LinkedList<Pair<Value, Constraint>>()

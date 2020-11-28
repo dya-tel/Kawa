@@ -1,6 +1,7 @@
 package sibwaf.kawa.calculation.conditions
 
 import sibwaf.kawa.MutableDataFrame
+import sibwaf.kawa.UnreachableFrame
 import sibwaf.kawa.calculation.ValueCalculatorState
 import sibwaf.kawa.constraints.BooleanConstraint
 import sibwaf.kawa.values.BooleanValue
@@ -26,8 +27,8 @@ class VariableReadConditionCalculator : ConditionCalculator {
         val constraint = (declaration?.let { state.frame.getConstraint(it) } as? BooleanConstraint) ?: BooleanConstraint.createUnknown()
 
         return ConditionCalculatorResult(
-                thenFrame = thenFrame.apply { isReachable = !constraint.isFalse },
-                elseFrame = elseFrame.apply { isReachable = !constraint.isTrue },
+                thenFrame = if (constraint.isFalse) UnreachableFrame.after(state.frame) else thenFrame,
+                elseFrame = if (constraint.isTrue) UnreachableFrame.after(state.frame) else elseFrame,
                 value = value,
                 constraint = constraint
         )

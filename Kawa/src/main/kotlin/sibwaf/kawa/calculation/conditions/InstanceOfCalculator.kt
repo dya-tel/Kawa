@@ -32,6 +32,7 @@ class InstanceOfCalculator : ConditionCalculator {
             BooleanConstraint.createUnknown()
         }
 
+        // FIXME: reachability
         return ConditionCalculatorResult(
                 thenFrame = thenFrame,
                 elseFrame = elseFrame,

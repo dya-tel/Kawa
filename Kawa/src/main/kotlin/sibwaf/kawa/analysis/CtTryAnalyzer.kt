@@ -1,9 +1,9 @@
 package sibwaf.kawa.analysis
 
 import sibwaf.kawa.DataFrame
+import sibwaf.kawa.UnreachableFrame
 import spoon.reflect.code.CtStatement
 import spoon.reflect.code.CtTry
-import java.util.LinkedList
 
 class CtTryAnalyzer : StatementAnalyzer {
 
@@ -12,28 +12,49 @@ class CtTryAnalyzer : StatementAnalyzer {
     override suspend fun analyze(state: StatementAnalyzerState, statement: CtStatement): DataFrame {
         statement as CtTry
 
+        val localState = state.copy(jumpPoints = ArrayList())
+
+        val bodyFrame = localState.getStatementFlow(statement.body)
+
+        // TODO: .lastReachableParent
         // TODO: do not erase values until exception can happen
-        val bodyFrame = state.getStatementFlow(statement.body).eraseValues()
-        val catcherState = state.copy(frame = bodyFrame.copy().apply { isReachable = true })
+        val lastReachableBodyFrame = if (bodyFrame is UnreachableFrame) {
+            bodyFrame.previous
+        } else {
+            bodyFrame
+        }.eraseValues()
 
-        val framesToMerge = LinkedList<DataFrame>()
-        framesToMerge += bodyFrame
-        statement.catchers.mapTo(framesToMerge) { catcherState.getStatementFlow(it.body) }
+        // TODO: some throws can be caught by our catchers
+        val catcherState = localState.copy(frame = lastReachableBodyFrame)
+        val catcherFrames = statement.catchers
+                .map { catcherState.getStatementFlow(it.body).compact(localState.frame) }
 
-        val compactedFrames = framesToMerge.map { it.compact(state.frame) }
+        state.jumpPoints.addAll(localState.jumpPoints)
 
         val finalizer = statement.finalizer
         return if (finalizer == null) {
-            DataFrame.merge(state.frame, compactedFrames)
+            DataFrame.merge(state.frame, catcherFrames + bodyFrame)
         } else {
-            // FIXME: no-return methods make it actually unreachable
+            val jumpFrames = localState.returnPoints
+                    .asSequence()
+                    .filter { it.hasParent(statement) }
+                    .map { localState.annotation.frames.getValue(it) }
+                    .plus(localState.jumpPoints.map { it.second })
+                    .map { it.compact(state.frame) }
 
-            for (frame in compactedFrames) {
-                frame.isReachable = true
+            // FIXME: next frame reachability should be determined only by framesToMerge
+
+            val finalizerFrame = DataFrame.merge(
+                    state.frame,
+                    (jumpFrames + catcherFrames + lastReachableBodyFrame).toList()
+            )
+
+            val resultFrame = state.copy(frame = finalizerFrame).getStatementFlow(finalizer)
+            if (bodyFrame is UnreachableFrame && catcherFrames.all { it is UnreachableFrame }) {
+                UnreachableFrame.after(resultFrame)
+            } else {
+                resultFrame
             }
-
-            val finalizerFrame = DataFrame.merge(state.frame, compactedFrames)
-            state.copy(frame = finalizerFrame).getStatementFlow(finalizer)
         }
     }
 }

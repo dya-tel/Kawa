@@ -28,6 +28,7 @@ class CtInvocationCalculator : ValueCalculator {
         val constraint = flow.returnConstraint?.copy() ?: Constraint.from(value)
 
         // TODO: invocation side-effects
+        // TODO: no-return invocations
 
         return MutableDataFrame(currentState.frame) to ConstrainedValue(value, constraint)
     }

@@ -2,11 +2,13 @@ package sibwaf.kawa.snippets
 
 import kotlinx.coroutines.runBlocking
 import sibwaf.kawa.MethodAnalyzerTestBase
+import sibwaf.kawa.UnreachableFrame
 import sibwaf.kawa.getElementsOf
 import sibwaf.kawa.parse
 import sibwaf.kawa.thenBlock
 import spoon.reflect.code.CtIf
 import strikt.api.expectThat
+import strikt.assertions.isA
 import strikt.assertions.isTrue
 import kotlin.test.Test
 
@@ -79,7 +81,6 @@ class Hibernate_BinaryArithmeticOperatorNode_resolveDateTimeArithmeticResultType
         val blockFlow = flow.blocks.getValue(block)
 
         expectThat(blockFlow.startFrame)
-                .get { isReachable }
-                .isTrue()
+                .not().isA<UnreachableFrame>()
     }
 }

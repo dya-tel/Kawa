@@ -30,7 +30,7 @@ abstract class StatementAnalyzerTestBase {
             statementAnalyzer: StatementAnalyzer,
             statement: CtStatement,
             customizeState: StatementAnalyzerState.() -> StatementAnalyzerState = { this }
-    ) {
+    ): DataFrame {
         val state = StatementAnalyzerState(
                 annotation = EmptyFlow,
                 frame = MutableDataFrame(null),
@@ -41,6 +41,6 @@ abstract class StatementAnalyzerTestBase {
                 statementFlowProvider = { state, currentStatement -> statementAnalyzer.analyze(state, currentStatement) },
                 valueProvider = { _, _ -> ConstrainedValue(Value(ValueSource.NONE), Constraint.createUnknown()) }
         )
-        statementAnalyzer.analyze(state.customizeState(), statement)
+        return statementAnalyzer.analyze(state.customizeState(), statement)
     }
 }

@@ -2,11 +2,12 @@ package sibwaf.kawa.snippets
 
 import kotlinx.coroutines.runBlocking
 import sibwaf.kawa.MethodAnalyzerTestBase
+import sibwaf.kawa.UnreachableFrame
 import sibwaf.kawa.getElementsOf
 import sibwaf.kawa.parseMethod
 import spoon.reflect.code.CtReturn
 import strikt.api.expectThat
-import strikt.assertions.isTrue
+import strikt.assertions.isA
 import kotlin.test.Test
 
 class Hibernate_H2IdleConnectionCounter_count : MethodAnalyzerTestBase() {
@@ -42,7 +43,6 @@ class Hibernate_H2IdleConnectionCounter_count : MethodAnalyzerTestBase() {
         val frame = flow.frames.getValue(returnStatement)
 
         expectThat(frame)
-                .get { isReachable }
-                .isTrue()
+                .not().isA<UnreachableFrame>()
     }
 }

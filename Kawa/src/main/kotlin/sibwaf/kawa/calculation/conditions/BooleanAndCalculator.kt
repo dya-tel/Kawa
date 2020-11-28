@@ -2,6 +2,7 @@ package sibwaf.kawa.calculation.conditions
 
 import sibwaf.kawa.DataFrame
 import sibwaf.kawa.MutableDataFrame
+import sibwaf.kawa.UnreachableFrame
 import sibwaf.kawa.calculation.ValueCalculatorState
 import sibwaf.kawa.constraints.BooleanConstraint
 import sibwaf.kawa.utility.flattenExpression
@@ -48,8 +49,8 @@ open class BooleanAndCalculator : ConditionCalculator {
         }
 
         return ConditionCalculatorResult(
-                thenFrame = MutableDataFrame(thenFrame).apply { isReachable = !result.isFalse },
-                elseFrame = MutableDataFrame(elseFrame).apply { isReachable = !result.isTrue },
+                thenFrame = if (result.isFalse) UnreachableFrame.after(thenFrame) else MutableDataFrame(thenFrame),
+                elseFrame = if (result.isTrue) UnreachableFrame.after(elseFrame) else MutableDataFrame(elseFrame),
                 value = BooleanValue(ValueSource.NONE),
                 constraint = result
         )

@@ -2,6 +2,7 @@ package sibwaf.kawa.calculation.conditions
 
 import sibwaf.kawa.DataFrame
 import sibwaf.kawa.MutableDataFrame
+import sibwaf.kawa.UnreachableFrame
 import sibwaf.kawa.calculation.ValueCalculatorState
 import sibwaf.kawa.constraints.BooleanConstraint
 import sibwaf.kawa.constraints.Constraint
@@ -66,13 +67,17 @@ class EqualityConditionCalculator : ConditionCalculator {
             else -> leftConstraint.isEqual(rightConstraint)
         }
 
-        val thenFrame = MutableDataFrame(operatorNextFrame).apply { isReachable = !resultConstraint.isFalse }
-        val elseFrame = MutableDataFrame(operatorNextFrame).apply { isReachable = !resultConstraint.isTrue }
+        val thenFrame = if (resultConstraint.isFalse) UnreachableFrame.after(operatorNextFrame) else MutableDataFrame(operatorNextFrame)
+        val elseFrame = if (resultConstraint.isTrue) UnreachableFrame.after(operatorNextFrame) else MutableDataFrame(operatorNextFrame)
 
         inferEqualityConstraint(expression)?.let { (expression, thenConstraint, elseConstraint) ->
-            val declaration = (expression as? CtVariableRead<*>)?.variable?.declaration
-            if (declaration != null) {
+            val declaration = (expression as? CtVariableRead<*>)?.variable?.declaration ?: return@let
+
+            // TODO: looks kinda hack-ish, should probably rework
+            if (thenFrame is MutableDataFrame) {
                 thenFrame.setConstraint(declaration, thenConstraint)
+            }
+            if (elseFrame is MutableDataFrame) {
                 elseFrame.setConstraint(declaration, elseConstraint)
             }
         }

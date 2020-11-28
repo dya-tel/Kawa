@@ -3,6 +3,7 @@ package sibwaf.kawa
 import kotlinx.coroutines.runBlocking
 import strikt.api.expect
 import strikt.api.expectThat
+import strikt.assertions.isA
 import strikt.assertions.isFalse
 import strikt.assertions.isNotNull
 import strikt.assertions.isNotSameInstanceAs
@@ -166,8 +167,7 @@ class FrameMergeTest : MethodAnalyzerTestBase() {
 
         expectThat(flow.endFrame)
                 .describedAs("end frame")
-                .get { isReachable }
-                .isFalse()
+                .isA<UnreachableFrame>()
     }
 
     @Test fun `Test 'if' merging for non-sequential value diff`() {

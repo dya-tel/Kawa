@@ -6,7 +6,7 @@ import sibwaf.kawa.values.ValueSource
 import spoon.reflect.declaration.CtVariable
 import java.util.Collections
 
-sealed class DataFrame(val previous: DataFrame?) {
+sealed class DataFrame(previous: DataFrame?) {
 
     companion object {
         internal fun merge(previous: DataFrame, vararg frames: DataFrame): DataFrame {
@@ -14,14 +14,19 @@ sealed class DataFrame(val previous: DataFrame?) {
         }
 
         internal fun merge(previous: DataFrame, frames: Iterable<DataFrame>): DataFrame {
+            val reachableFrames = frames.asSequence()
+                    .filter { it !is UnreachableFrame }
+                    .onEach { require(it.previous == previous) { "Frames must be compacted before merging" } }
+                    .toList()
+
+            if (reachableFrames.isEmpty()) {
+                return UnreachableFrame.after(previous)
+            }
+
+            // TODO: (optimization) if there is a single reachable frame it should be returned as it is
+
             val result = MutableDataFrame(previous)
             // TODO: next?
-
-            var isReachable = false
-            val reachableFrames = frames
-                    .onEach { require(it.previous == previous) { "Frames must be compacted before merging" } }
-                    .onEach { isReachable = isReachable || it.isReachable }
-                    .filter { it.isReachable }
 
             val affectedValues = reachableFrames.asSequence()
                     .flatMap { it.constraintDiff.keys }
@@ -57,24 +62,24 @@ sealed class DataFrame(val previous: DataFrame?) {
             }
 
             result.volatileConstraintDiff = Collections.emptyMap()
-            result.isReachable = isReachable
             return result
         }
     }
 
-    var next: DataFrame? = null
-        internal set
+    open val previous: DataFrame? = previous
 
-    private var forcedReachability: Boolean? = null
-    var isReachable: Boolean
-        get() = forcedReachability ?: previous?.isReachable ?: true
-        internal set(value) {
-            forcedReachability = value
-        }
+    open var next: DataFrame? = null
+        internal set
 
     protected var valueDiff: MutableMap<CtVariable<*>, Value> = Collections.emptyMap()
     protected var constraintDiff: MutableMap<Value, Constraint> = Collections.emptyMap()
     protected var volatileConstraintDiff: MutableMap<Value, Constraint> = Collections.emptyMap()
+
+    init {
+        if (previous is UnreachableFrame) {
+            throw IllegalArgumentException("No frames can be linked to an unreachable one")
+        }
+    }
 
     fun getValue(variable: CtVariable<*>): Value? {
         return valueDiff.getOrElse(variable) { previous?.getValue(variable) }
@@ -97,10 +102,9 @@ sealed class DataFrame(val previous: DataFrame?) {
         return getConstraint(value)
     }
 
-    fun copy(retiredVariables: Collection<CtVariable<*>> = emptySet(), keepVolatileConstraints: Boolean = true): DataFrame {
+    open fun copy(retiredVariables: Collection<CtVariable<*>> = emptySet(), keepVolatileConstraints: Boolean = true): DataFrame {
         val frame = MutableDataFrame(previous)
         frame.next = next
-        frame.isReachable = isReachable
 
         for (diff in valueDiff) {
             if (diff.key !in retiredVariables) {
@@ -109,6 +113,7 @@ sealed class DataFrame(val previous: DataFrame?) {
         }
 
         for (diff in constraintDiff) {
+            // TODO: (optimization) do not copy constraints if corresponding values can't be obtained
             frame.setConstraint(diff.key, diff.value)
         }
 
@@ -130,9 +135,13 @@ sealed class DataFrame(val previous: DataFrame?) {
      * @param bound boundary for compacting (exclusive)
      * @return the compacted frame
      */
-    fun compact(bound: DataFrame): DataFrame {
+    open fun compact(bound: DataFrame): DataFrame {
         if (previous == bound) {
             return this
+        }
+
+        if (bound == this) {
+            throw IllegalArgumentException("Frame can't be compacted with itself as a bound")
         }
 
         var chain = RightChain(null, this)
@@ -145,7 +154,6 @@ sealed class DataFrame(val previous: DataFrame?) {
         }
 
         val result = MutableDataFrame(bound)
-        result.isReachable = isReachable
         result.next = next
 
         while (true) {
@@ -173,10 +181,9 @@ sealed class DataFrame(val previous: DataFrame?) {
      *
      * @return copy of this frame with erased values and constraints
      */
-    fun eraseValues(): DataFrame {
+    open fun eraseValues(): DataFrame {
         val result = MutableDataFrame(previous)
         result.next = next
-        (result as DataFrame).forcedReachability = forcedReachability // Kotlin WTF
 
         for ((variable, value) in valueDiff) {
             val erasedValue = value.copy()
@@ -235,4 +242,43 @@ internal class MutableDataFrame(previous: DataFrame?) : DataFrame(previous) {
         val value = getValue(variable) ?: return // TODO
         setVolatileConstraint(value, constraint)
     }
+}
+
+class UnreachableFrame private constructor(previous: DataFrame) : DataFrame(previous) {
+
+    companion object {
+        fun after(previous: DataFrame): UnreachableFrame {
+            return if (previous is UnreachableFrame) {
+                previous
+            } else {
+                UnreachableFrame(previous)
+            }
+        }
+    }
+
+    override val previous: DataFrame
+        get() = super.previous!!
+
+    override var next: DataFrame?
+        get() = super.next
+        set(_) = throw UnsupportedOperationException("Unreachable frame can't be modified")
+
+    override fun copy(retiredVariables: Collection<CtVariable<*>>, keepVolatileConstraints: Boolean): DataFrame =
+            throw UnsupportedOperationException("Unreachable frame can't be copied")
+
+    override fun compact(bound: DataFrame): DataFrame {
+        if (previous == bound) {
+            return this
+        }
+
+        if (bound == this) {
+            throw IllegalArgumentException("Frame can't be compacted with itself as a bound")
+        }
+
+        val compactedTail = previous.compact(bound)
+        return UnreachableFrame(compactedTail)
+    }
+
+    override fun eraseValues(): DataFrame =
+            throw UnsupportedOperationException("Unreachable frame can't be copied with erased values")
 }

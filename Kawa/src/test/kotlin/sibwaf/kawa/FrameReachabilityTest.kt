@@ -3,8 +3,7 @@ package sibwaf.kawa
 import kotlinx.coroutines.runBlocking
 import spoon.reflect.code.CtIf
 import strikt.api.expect
-import strikt.assertions.isFalse
-import strikt.assertions.isTrue
+import strikt.assertions.isA
 import kotlin.test.Test
 
 class FrameReachabilityTest : MethodAnalyzerTestBase() {
@@ -25,19 +24,17 @@ class FrameReachabilityTest : MethodAnalyzerTestBase() {
         val flow = runBlocking { analyze(method) }
 
         val ifStatement = method.getElementsOf<CtIf>().single()
-        val thenBranchFrame = flow.blocks.getValue(ifStatement.thenBlock).startFrame
-        val elseBranchFrame = flow.blocks.getValue(ifStatement.elseBlock!!).startFrame
+        val thenBranchFrame = flow.frames.getValue(ifStatement.thenBlock)
+        val elseBranchFrame = flow.frames.getValue(ifStatement.elseBlock!!)
 
         expect {
             that(thenBranchFrame)
                     .describedAs("then-branch frame")
-                    .get { isReachable }
-                    .isFalse()
+                    .isA<UnreachableFrame>()
 
             that(elseBranchFrame)
                     .describedAs("else-branch frame")
-                    .get { isReachable }
-                    .isTrue()
+                    .not().isA<UnreachableFrame>()
         }
     }
 
@@ -55,19 +52,17 @@ class FrameReachabilityTest : MethodAnalyzerTestBase() {
         val flow = runBlocking { analyze(method) }
 
         val ifStatement = method.getElementsOf<CtIf>().single()
-        val thenBranchFrame = flow.blocks.getValue(ifStatement.thenBlock).startFrame
-        val elseBranchFrame = flow.blocks.getValue(ifStatement.elseBlock!!).startFrame
+        val thenBranchFrame = flow.frames.getValue(ifStatement.thenBlock)
+        val elseBranchFrame = flow.frames.getValue(ifStatement.elseBlock!!)
 
         expect {
             that(thenBranchFrame)
                     .describedAs("then-branch frame")
-                    .get { isReachable }
-                    .isTrue()
+                    .not().isA<UnreachableFrame>()
 
             that(elseBranchFrame)
                     .describedAs("else-branch frame")
-                    .get { isReachable }
-                    .isFalse()
+                    .isA<UnreachableFrame>()
         }
     }
 }

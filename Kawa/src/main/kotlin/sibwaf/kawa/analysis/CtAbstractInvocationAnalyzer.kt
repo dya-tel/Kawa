@@ -3,6 +3,7 @@ package sibwaf.kawa.analysis
 import sibwaf.kawa.DataFrame
 import sibwaf.kawa.MethodPurity
 import sibwaf.kawa.MutableDataFrame
+import sibwaf.kawa.UnreachableFrame
 import spoon.reflect.code.CtAbstractInvocation
 import spoon.reflect.code.CtStatement
 
@@ -21,7 +22,7 @@ class CtAbstractInvocationAnalyzer : StatementAnalyzer {
         }
 
         if (flow.neverReturns) {
-            return MutableDataFrame(state.frame).apply { isReachable = false }
+            return UnreachableFrame.after(state.frame)
         }
 
         return MutableDataFrame(state.frame)

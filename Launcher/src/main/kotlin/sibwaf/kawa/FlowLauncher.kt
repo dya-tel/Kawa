@@ -32,7 +32,7 @@ val ASYNC_HTTP_CLIENT = ModelLoader(
 )
 
 val project = HIBERNATE
-val diffOnly = true
+val diffOnly = false
 
 fun main() {
     val report = Analyzer(project, 4).analyze().map { it.wrap() }

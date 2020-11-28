@@ -6,7 +6,7 @@ import spoon.reflect.code.CtLocalVariable
 import spoon.reflect.code.CtStatement
 import strikt.api.expect
 import strikt.api.expectThat
-import strikt.assertions.isFalse
+import strikt.assertions.isA
 import strikt.assertions.isNotNull
 import strikt.assertions.isNotSameInstanceAs
 import strikt.assertions.isSameInstanceAs
@@ -181,8 +181,6 @@ class FrameChainingTest : MethodAnalyzerTestBase() {
 
         expectThat(unreachableFrame)
                 .describedAs("unreachable frame")
-                .isNotNull()
-                .get { isReachable }
-                .isFalse()
+                .isA<UnreachableFrame>()
     }
 }

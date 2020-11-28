@@ -1,7 +1,7 @@
 package sibwaf.kawa.analysis
 
 import sibwaf.kawa.DataFrame
-import sibwaf.kawa.MutableDataFrame
+import sibwaf.kawa.UnreachableFrame
 import spoon.reflect.code.CtReturn
 import spoon.reflect.code.CtStatement
 
@@ -12,9 +12,7 @@ class CtReturnAnalyzer : StatementAnalyzer {
     override suspend fun analyze(state: StatementAnalyzerState, statement: CtStatement): DataFrame {
         statement as CtReturn<*>
 
-        if (state.frame.isReachable) {
-            state.returnPoints += statement
-        }
+        state.returnPoints += statement
 
         val constraint = statement.returnedExpression
                 ?.let { state.getValue(it) }
@@ -25,6 +23,8 @@ class CtReturnAnalyzer : StatementAnalyzer {
             state.annotation.returnConstraint = existingConstraint?.merge(constraint) ?: constraint
         }
 
-        return MutableDataFrame(state.frame).apply { isReachable = false }
+        // TODO: add 'next' frame manually?
+
+        return UnreachableFrame.after(state.frame)
     }
 }

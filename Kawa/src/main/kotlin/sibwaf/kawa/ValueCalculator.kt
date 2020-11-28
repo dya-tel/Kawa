@@ -57,6 +57,10 @@ object ValueCalculator {
     private suspend fun calculateValue(state: ValueCalculatorState, expression: CtExpression<*>): Pair<DataFrame, ConstrainedValue> {
         state.annotation.frames[expression] = state.frame
 
+        if (state.frame is UnreachableFrame) {
+            return state.frame to ConstrainedValue.from(expression.type, ValueSource.NONE)
+        }
+
         for (calculator in calculators) {
             if (calculator.supports(expression)) {
                 return calculator.calculate(state, expression)
@@ -72,6 +76,15 @@ object ValueCalculator {
 
     private suspend fun calculateCondition(state: ValueCalculatorState, expression: CtExpression<*>): ConditionCalculatorResult {
         state.annotation.frames[expression] = state.frame
+
+        if (state.frame is UnreachableFrame) {
+            return ConditionCalculatorResult(
+                    thenFrame = state.frame,
+                    elseFrame = state.frame,
+                    value = BooleanValue(ValueSource.NONE),
+                    constraint = BooleanConstraint.createUnknown()
+            )
+        }
 
         for (calculator in conditionCalculators) {
             if (calculator.supports(expression)) {
