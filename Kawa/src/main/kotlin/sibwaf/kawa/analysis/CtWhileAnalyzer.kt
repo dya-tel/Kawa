@@ -3,6 +3,7 @@ package sibwaf.kawa.analysis
 import sibwaf.kawa.DataFrame
 import sibwaf.kawa.MutableDataFrame
 import spoon.reflect.code.CtBreak
+import spoon.reflect.code.CtContinue
 import spoon.reflect.code.CtStatement
 import spoon.reflect.code.CtWhile
 import java.util.LinkedList
@@ -33,19 +34,17 @@ class CtWhileAnalyzer : StatementAnalyzer {
             // If the condition is always true, this frame will be unreachable
             // and won't affect anything
             exitFrames += elseFrame.compact(localState.frame)
-        }
 
-        var resultFrame = DataFrame.merge(state.frame, exitFrames)
-
-        for (jump in localState.jumpPoints) {
-            // TODO: check labels
-            if (jump.first is CtBreak) {
-                resultFrame = DataFrame.merge(state.frame, resultFrame, jump.second.compact(state.frame))
-            } else {
-                state.jumpPoints.add(jump)
+            for (jump in localState.jumpPoints) {
+                when (jump.first) {
+                    is CtContinue -> startFrames += jump.second.compact(state.frame)
+                    is CtBreak -> exitFrames += jump.second.compact(state.frame)
+                    else -> state.jumpPoints += jump
+                }
             }
+            localState.jumpPoints.clear()
         }
 
-        return resultFrame
+        return DataFrame.merge(state.frame, exitFrames)
     }
 }
