@@ -1,6 +1,7 @@
 package sibwaf.kawa.values
 
 import sibwaf.kawa.constraints.Constraint
+import spoon.SpoonException
 import spoon.reflect.declaration.CtTypedElement
 import spoon.reflect.factory.TypeFactory
 import spoon.reflect.reference.CtTypeReference
@@ -39,8 +40,13 @@ open class Value constructor(val source: ValueSource) {
             }
 
             val valueFactory = valueFactoryCache.computeIfAbsent(type) { key ->
-                if (key.isSubtypeOf(typeFactory.COLLECTION) || key.isSubtypeOf(typeFactory.MAP)) {
-                    return@computeIfAbsent { CollectionValue(source) }
+                try {
+                    if (key.isSubtypeOf(typeFactory.COLLECTION) || key.isSubtypeOf(typeFactory.MAP)) {
+                        return@computeIfAbsent { CollectionValue(source) }
+                    }
+                } catch (ignored: SpoonException) {
+                    // Spoon does Spoon things and sometimes dies on 'isSubtypeOf' invocations,
+                    // but we can be sure that it's at least a ReferenceValue
                 }
 
                 return@computeIfAbsent { ReferenceValue(source) }
