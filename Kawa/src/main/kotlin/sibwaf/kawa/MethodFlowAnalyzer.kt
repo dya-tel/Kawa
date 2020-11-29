@@ -28,6 +28,7 @@ import sibwaf.kawa.analysis.CtSwitchAnalyzer
 import sibwaf.kawa.analysis.CtSynchronizedAnalyzer
 import sibwaf.kawa.analysis.CtThrowAnalyzer
 import sibwaf.kawa.analysis.CtTryAnalyzer
+import sibwaf.kawa.analysis.CtUnaryOperatorAnalyzer
 import sibwaf.kawa.analysis.CtWhileAnalyzer
 import sibwaf.kawa.analysis.StatementAnalyzerState
 import sibwaf.kawa.constraints.Constraint
@@ -130,12 +131,13 @@ class MethodFlowAnalyzer private constructor() {
     private val statementAnalyzers = listOf(
             CtLocalVariableAnalyzer(),
             CtAssignmentAnalyzer(),
+            // TODO: all flow breaks should probably be merged into one StatementAnalyzer
             CtReturnAnalyzer(),
             CtThrowAnalyzer(),
-            // TODO: CtCFlowBreakAnalyzer
             CtContinueAnalyzer(),
             CtBreakAnalyzer(),
             CtAbstractInvocationAnalyzer(),
+            CtUnaryOperatorAnalyzer(),
             CtIfAnalyzer(),
             CtSwitchAnalyzer(),
             CtForAnalyzer(),

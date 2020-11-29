@@ -8,6 +8,7 @@ import sibwaf.kawa.calculation.CtInvocationCalculator
 import sibwaf.kawa.calculation.CtLambdaCalculator
 import sibwaf.kawa.calculation.CtLiteralCalculator
 import sibwaf.kawa.calculation.CtNewArrayCalculator
+import sibwaf.kawa.calculation.CtUnaryOperatorIncDecCalculator
 import sibwaf.kawa.calculation.CtVariableReadCalculator
 import sibwaf.kawa.calculation.ValueCalculatorState
 import sibwaf.kawa.calculation.conditions.BooleanAndCalculator
@@ -40,6 +41,7 @@ object ValueCalculator {
             LiteralConditionCalculator(),
             InvertedConditionCalculator(),
             InstanceOfCalculator(),
+            CtUnaryOperatorIncDecCalculator(),
             CtVariableReadCalculator(),
             CtConstructorCallCalculator(),
             CtInvocationCalculator(),
