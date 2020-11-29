@@ -14,17 +14,13 @@ class CtReturnAnalyzer : StatementAnalyzer {
 
         state.returnPoints += statement
 
-        val constraint = statement.returnedExpression
-                ?.let { state.getValue(it) }
-                ?.constraint
-
-        if (constraint != null) {
+        val result = statement.returnedExpression?.let { state.getValue(it) }
+        if (result != null) {
+            val constraint = result.second.constraint
             val existingConstraint = state.annotation.returnConstraint
             state.annotation.returnConstraint = existingConstraint?.merge(constraint) ?: constraint
         }
 
-        // TODO: add 'next' frame manually?
-
-        return UnreachableFrame.after(state.frame)
+        return UnreachableFrame.after(result?.first ?: state.frame)
     }
 }

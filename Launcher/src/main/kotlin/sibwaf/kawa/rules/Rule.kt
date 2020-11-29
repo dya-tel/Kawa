@@ -49,7 +49,7 @@ abstract class Rule : CtAbstractVisitor() {
     fun getValue(frame: DataFrame, expression: CtExpression<*>): ConstrainedValue {
         return runBlocking {
             ValueCalculator.calculateValue(MethodFlow(), frame, expression, { flow[it] ?: EmptyFlow })
-        }
+        }.second
     }
 
     fun getStatement(element: CtElement): CtStatement? {

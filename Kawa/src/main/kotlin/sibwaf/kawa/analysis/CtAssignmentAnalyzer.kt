@@ -24,10 +24,10 @@ class CtAssignmentAnalyzer : StatementAnalyzer {
                     ?.declaration
 
             if (targetVariable != null) {
-                val (value, constraint) = state.getValue(statement.assignment)
-                return MutableDataFrame(state.frame).apply {
-                    setValue(targetVariable, value)
-                    setConstraint(value, constraint)
+                val (frame, result) = state.getValue(statement.assignment)
+                return MutableDataFrame(frame).apply {
+                    setValue(targetVariable, result.value)
+                    setConstraint(result.value, result.constraint)
                 }
             }
         }

@@ -20,7 +20,7 @@ data class StatementAnalyzerState(
 
         private val methodFlowProvider: suspend (CtExecutableReference<*>) -> MethodFlow,
         private val statementFlowProvider: suspend (StatementAnalyzerState, CtStatement) -> DataFrame,
-        private val valueProvider: suspend (StatementAnalyzerState, CtExpression<*>) -> ConstrainedValue
+        private val valueProvider: suspend (StatementAnalyzerState, CtExpression<*>) -> Pair<DataFrame, ConstrainedValue>
 ) {
     suspend fun getMethodFlow(executable: CtExecutableReference<*>): MethodFlow {
         return methodFlowProvider(executable)
@@ -30,7 +30,7 @@ data class StatementAnalyzerState(
         return statementFlowProvider(this, statement)
     }
 
-    suspend fun getValue(expression: CtExpression<*>): ConstrainedValue {
+    suspend fun getValue(expression: CtExpression<*>): Pair<DataFrame, ConstrainedValue> {
         return valueProvider(this, expression)
     }
 

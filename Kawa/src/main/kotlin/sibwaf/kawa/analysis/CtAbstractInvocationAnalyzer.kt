@@ -16,9 +16,8 @@ class CtAbstractInvocationAnalyzer : StatementAnalyzer {
 
         var currentState = state
         for (argument in statement.arguments) {
-            // FIXME: getValue should return frames
             val (nextFrame, _) = currentState.getValue(argument)
-            //currentState = state.copy(frame = nextFrame)
+            currentState = state.copy(frame = nextFrame)
         }
 
         val flow = currentState.getMethodFlow(statement.executable)

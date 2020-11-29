@@ -15,10 +15,10 @@ class CtLocalVariableAnalyzer : StatementAnalyzer {
         state.localVariables += statement
         val expression = statement.defaultExpression
         return if (expression != null) {
-            val (value, constraint) = state.getValue(expression)
-            MutableDataFrame(state.frame).apply {
-                setValue(statement, value)
-                setConstraint(value, constraint)
+            val (frame, result) = state.getValue(expression)
+            MutableDataFrame(frame).apply {
+                setValue(statement, result.value)
+                setConstraint(result.value, result.constraint)
             }
         } else {
             state.frame
