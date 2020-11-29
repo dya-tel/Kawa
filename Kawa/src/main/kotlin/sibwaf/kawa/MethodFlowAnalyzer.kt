@@ -14,6 +14,7 @@ import kotlinx.coroutines.joinAll
 import kotlinx.coroutines.launch
 import org.slf4j.LoggerFactory
 import sibwaf.kawa.analysis.CtAbstractInvocationAnalyzer
+import sibwaf.kawa.analysis.CtAssertAnalyzer
 import sibwaf.kawa.analysis.CtAssignmentAnalyzer
 import sibwaf.kawa.analysis.CtBlockAnalyzer
 import sibwaf.kawa.analysis.CtBodyHolderAnalyzer
@@ -146,7 +147,8 @@ class MethodFlowAnalyzer private constructor() {
             CtTryAnalyzer(),
             CtSynchronizedAnalyzer(),
             CtBodyHolderAnalyzer(),
-            CtBlockAnalyzer()
+            CtBlockAnalyzer(),
+            CtAssertAnalyzer()
     )
 
     private suspend fun getFlowFor(
