@@ -19,6 +19,7 @@ import sibwaf.kawa.analysis.CtBlockAnalyzer
 import sibwaf.kawa.analysis.CtBodyHolderAnalyzer
 import sibwaf.kawa.analysis.CtBreakAnalyzer
 import sibwaf.kawa.analysis.CtContinueAnalyzer
+import sibwaf.kawa.analysis.CtForAnalyzer
 import sibwaf.kawa.analysis.CtIfAnalyzer
 import sibwaf.kawa.analysis.CtLocalVariableAnalyzer
 import sibwaf.kawa.analysis.CtLoopAnalyzer
@@ -137,6 +138,7 @@ class MethodFlowAnalyzer private constructor() {
             CtAbstractInvocationAnalyzer(),
             CtIfAnalyzer(),
             CtSwitchAnalyzer(),
+            CtForAnalyzer(),
             CtWhileAnalyzer(),
             CtLoopAnalyzer(),
             CtTryAnalyzer(),

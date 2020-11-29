@@ -23,21 +23,20 @@ class CtWhileAnalyzer : StatementAnalyzer {
         val exitFrames = LinkedList<DataFrame>()
 
         for (iteration in 0 until 2) {
-            val entryFrame = DataFrame.merge(localState.frame, startFrames)
-            val iterationState = localState.copy(frame = entryFrame)
+            val iterationState = localState.copy(frame = DataFrame.merge(localState.frame, startFrames))
 
             val (thenFrame, elseFrame, _, _) = iterationState.getConditionValue(statement.loopingExpression)
 
-            val bodyFrame = localState.copy(frame = thenFrame).getStatementFlow(statement.body)
+            val bodyFrame = iterationState.copy(frame = thenFrame).getStatementFlow(statement.body)
             startFrames += bodyFrame.compact(localState.frame)
 
             // If the condition is always true, this frame will be unreachable
             // and won't affect anything
-            exitFrames += elseFrame.compact(localState.frame)
+            exitFrames += elseFrame.compact(state.frame)
 
             for (jump in localState.jumpPoints) {
                 when (jump.first) {
-                    is CtContinue -> startFrames += jump.second.compact(state.frame)
+                    is CtContinue -> startFrames += jump.second.compact(localState.frame)
                     is CtBreak -> exitFrames += jump.second.compact(state.frame)
                     else -> state.jumpPoints += jump
                 }
