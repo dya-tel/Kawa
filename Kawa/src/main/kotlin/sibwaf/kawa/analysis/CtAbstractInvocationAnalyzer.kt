@@ -14,7 +14,14 @@ class CtAbstractInvocationAnalyzer : StatementAnalyzer {
     override suspend fun analyze(state: StatementAnalyzerState, statement: CtStatement): DataFrame {
         statement as CtAbstractInvocation<*>
 
-        val flow = state.getMethodFlow(statement.executable)
+        var currentState = state
+        for (argument in statement.arguments) {
+            // FIXME: getValue should return frames
+            val (nextFrame, _) = currentState.getValue(argument)
+            //currentState = state.copy(frame = nextFrame)
+        }
+
+        val flow = currentState.getMethodFlow(statement.executable)
 
         // TODO
         if (flow.purity != MethodPurity.PURE) {
