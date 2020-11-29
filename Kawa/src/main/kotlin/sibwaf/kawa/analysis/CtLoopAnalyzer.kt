@@ -41,32 +41,3 @@ class CtLoopAnalyzer : StatementAnalyzer {
         return resultFrame
     }
 }
-
-/*
-abstract class CtLoopAnalyzer : StatementAnalyzer {
-
-    protected open suspend fun beforeLoop(state: StatementAnalyzerState, loop: CtLoop): Pair<DataFrame, Boolean> =
-            state.frame to true
-
-    protected open suspend fun afterLoop(state: StatementAnalyzerState, loop: CtLoop): Pair<DataFrame, Boolean> =
-            state.frame to true
-
-    override suspend fun analyze(state: StatementAnalyzerState, statement: CtStatement): DataFrame {
-        statement as CtLoop
-
-        val body = statement.body as CtBlock<*>
-
-        var (loopFrame, exitFrame) = beforeLoop(state, statement)
-
-        val blockFrame = state.copy(frame = loopFrame).getStatementFlow(body).compact(state.frame)
-        val secondIterationFrame = DataFrame.merge(
-                state.frame,
-                MutableDataFrame(state.frame),
-                blockFrame
-        )
-
-
-        val secondIterationState = state.copy(frame = secondIterationFrame)
-        return secondIterationState.getStatementFlow(body).eraseValues()
-    }
-}*/

@@ -1,10 +1,6 @@
 package sibwaf.kawa.rules
 
-import kotlinx.coroutines.runBlocking
-import sibwaf.kawa.EmptyFlow
-import sibwaf.kawa.MethodFlow
 import sibwaf.kawa.UnreachableFrame
-import sibwaf.kawa.ValueCalculator
 import sibwaf.kawa.constraints.BooleanConstraint
 import spoon.reflect.code.CtIf
 
@@ -16,13 +12,14 @@ class R0001_ConstantCondition : Rule() {
         val methodFlow = getFlow(condition) ?: return
         val frame = getFrame(methodFlow, ifElement)?.takeUnless { it is UnreachableFrame } ?: return
 
-        val result = runBlocking {
-            ValueCalculator.calculateValue(MethodFlow(), frame, condition, { flow[it] ?: EmptyFlow })
-        }.constraint as? BooleanConstraint ?: return
+        val (_, constraint) = getValue(frame, condition)
+        if (constraint !is BooleanConstraint) {
+            return
+        }
 
-        if (result.isFalse) {
+        if (constraint.isFalse) {
             warn("Condition is always false: '$condition'", condition)
-        } else if (result.isTrue) {
+        } else if (constraint.isTrue) {
             warn("Condition is always true: '$condition'", condition)
         }
     }
