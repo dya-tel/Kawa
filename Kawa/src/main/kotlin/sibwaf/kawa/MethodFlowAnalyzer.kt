@@ -20,10 +20,11 @@ import sibwaf.kawa.analysis.CtBlockAnalyzer
 import sibwaf.kawa.analysis.CtBodyHolderAnalyzer
 import sibwaf.kawa.analysis.CtBreakAnalyzer
 import sibwaf.kawa.analysis.CtContinueAnalyzer
+import sibwaf.kawa.analysis.CtDoAnalyzer
 import sibwaf.kawa.analysis.CtForAnalyzer
+import sibwaf.kawa.analysis.CtForEachAnalyzer
 import sibwaf.kawa.analysis.CtIfAnalyzer
 import sibwaf.kawa.analysis.CtLocalVariableAnalyzer
-import sibwaf.kawa.analysis.CtLoopAnalyzer
 import sibwaf.kawa.analysis.CtReturnAnalyzer
 import sibwaf.kawa.analysis.CtSwitchAnalyzer
 import sibwaf.kawa.analysis.CtSynchronizedAnalyzer
@@ -142,8 +143,9 @@ class MethodFlowAnalyzer private constructor() {
             CtIfAnalyzer(),
             CtSwitchAnalyzer(),
             CtForAnalyzer(),
+            CtForEachAnalyzer(),
             CtWhileAnalyzer(),
-            CtLoopAnalyzer(),
+            CtDoAnalyzer(),
             CtTryAnalyzer(),
             CtSynchronizedAnalyzer(),
             CtBodyHolderAnalyzer(),

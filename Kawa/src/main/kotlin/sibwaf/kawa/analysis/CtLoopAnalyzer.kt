@@ -2,42 +2,65 @@ package sibwaf.kawa.analysis
 
 import sibwaf.kawa.DataFrame
 import sibwaf.kawa.MutableDataFrame
-import spoon.reflect.code.CtBlock
+import sibwaf.kawa.calculation.conditions.ConditionCalculatorResult
 import spoon.reflect.code.CtBreak
+import spoon.reflect.code.CtContinue
 import spoon.reflect.code.CtLoop
 import spoon.reflect.code.CtStatement
+import java.util.LinkedList
 
-class CtLoopAnalyzer : StatementAnalyzer {
+abstract class CtLoopAnalyzer<T : CtLoop> : StatementAnalyzer {
 
-    override fun supports(statement: CtStatement) = statement is CtLoop
+    protected abstract suspend fun getPreCondition(state: StatementAnalyzerState, loop: T): ConditionCalculatorResult?
+    protected abstract suspend fun getPostCondition(state: StatementAnalyzerState, loop: T): ConditionCalculatorResult?
+
+    protected open suspend fun getBodyFlow(state: StatementAnalyzerState, loop: T): DataFrame {
+        return state.getStatementFlow(loop.body)
+    }
 
     override suspend fun analyze(state: StatementAnalyzerState, statement: CtStatement): DataFrame {
-        statement as CtLoop
+        @Suppress("unchecked_cast")
+        statement as T
 
         val localState = state.copy(jumpPoints = ArrayList())
 
-        val body = statement.body as CtBlock<*>
+        val startFrames = LinkedList<DataFrame>().also { it += MutableDataFrame(localState.frame) }
+        val exitFrames = LinkedList<DataFrame>()
 
-        val blockFrame = localState.getStatementFlow(body).compact(state.frame)
-        val secondIterationFrame = DataFrame.merge(
-                state.frame,
-                MutableDataFrame(state.frame),
-                blockFrame
-        )
+        for (iteration in 0 until 2) {
+            val iterationState = localState.copy(frame = DataFrame.merge(localState.frame, startFrames))
 
-        val secondIterationState = localState.copy(frame = secondIterationFrame)
+            var bodyFrame: DataFrame
 
-        var resultFrame = secondIterationState.getStatementFlow(body).compact(state.frame)
+            // When any condition is a known 'true' value,
+            // the 'elseFrame' will be unreachable and won't affect the result
 
-        for (jump in localState.jumpPoints) {
-            // TODO: check labels
-            if (jump.first is CtBreak) {
-                resultFrame = DataFrame.merge(state.frame, resultFrame, jump.second.compact(state.frame))
+            val preCondition = getPreCondition(iterationState, statement)
+            if (preCondition != null) {
+                bodyFrame = getBodyFlow(iterationState.copy(frame = preCondition.thenFrame), statement)
+                exitFrames += preCondition.elseFrame.compact(state.frame)
             } else {
-                state.jumpPoints.add(jump)
+                bodyFrame = getBodyFlow(iterationState, statement)
             }
+
+            val postCondition = getPostCondition(iterationState.copy(frame = bodyFrame), statement)
+            if (postCondition != null) {
+                bodyFrame = postCondition.thenFrame
+                exitFrames += postCondition.elseFrame.compact(state.frame)
+            }
+
+            startFrames += bodyFrame.compact(localState.frame)
+
+            for (jump in localState.jumpPoints) {
+                when (jump.first) {
+                    is CtContinue -> startFrames += jump.second.compact(localState.frame)
+                    is CtBreak -> exitFrames += jump.second.compact(state.frame)
+                    else -> state.jumpPoints += jump
+                }
+            }
+            localState.jumpPoints.clear()
         }
 
-        return resultFrame
+        return DataFrame.merge(state.frame, exitFrames)
     }
 }
