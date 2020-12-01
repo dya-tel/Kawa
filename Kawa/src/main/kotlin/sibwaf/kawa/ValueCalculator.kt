@@ -1,6 +1,7 @@
 package sibwaf.kawa
 
 import org.slf4j.LoggerFactory
+import sibwaf.kawa.calculation.CtAssignmentCalculator
 import sibwaf.kawa.calculation.CtConditionalCalculator
 import sibwaf.kawa.calculation.CtConstructorCallCalculator
 import sibwaf.kawa.calculation.CtExecutableReferenceExpressionCalculator
@@ -47,6 +48,7 @@ object ValueCalculator {
             CtInvocationCalculator(),
             CtLiteralCalculator(),
             CtConditionalCalculator(),
+            CtAssignmentCalculator(),
             CtNewArrayCalculator(),
             CtLambdaCalculator(),
             CtExecutableReferenceExpressionCalculator()
