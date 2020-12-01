@@ -31,6 +31,10 @@ val ASYNC_HTTP_CLIENT = ModelLoader(
         "async-http-client",
         collectSources(Paths.get("async-http-client-master")) + collectSources(Paths.get("async-http-client-master", "extras"))
 )
+val MAGE = ModelLoader(
+        "mage",
+        collectSources(Paths.get("mage-master")) + collectSources(Paths.get("mage-master", "Mage.Server.Plugins"))
+)
 
 val project = HIBERNATE
 val diffOnly = false
