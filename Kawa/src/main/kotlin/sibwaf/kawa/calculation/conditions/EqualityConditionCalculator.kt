@@ -7,15 +7,15 @@ import sibwaf.kawa.constraints.BooleanConstraint
 import sibwaf.kawa.constraints.Constraint
 import sibwaf.kawa.constraints.ReferenceConstraint
 import sibwaf.kawa.values.BooleanValue
+import sibwaf.kawa.values.Value
 import sibwaf.kawa.values.ValueSource
 import spoon.reflect.code.BinaryOperatorKind
 import spoon.reflect.code.CtBinaryOperator
 import spoon.reflect.code.CtExpression
 import spoon.reflect.code.CtLiteral
-import spoon.reflect.code.CtVariableRead
 
 private data class InferredConstraint(
-        val expression: CtExpression<*>,
+        val value: Value,
         val thenConstraint: Constraint,
         val elseConstraint: Constraint
 )
@@ -25,19 +25,19 @@ class EqualityConditionCalculator : ConditionCalculator {
     override fun supports(expression: CtExpression<*>) =
             expression is CtBinaryOperator<*> && (expression.kind == BinaryOperatorKind.EQ || expression.kind == BinaryOperatorKind.NE)
 
-    private fun inferEqualityConstraint(operator: CtBinaryOperator<*>): InferredConstraint? {
+    private fun inferEqualityConstraint(operator: CtBinaryOperator<*>, leftValue: Value, rightValue: Value): InferredConstraint? {
         val leftOperand = operator.leftHandOperand
         val rightOperand = operator.rightHandOperand
 
         return if (leftOperand is CtLiteral<*> && leftOperand.value == null) {
             InferredConstraint(
-                    expression = rightOperand,
+                    value = rightValue,
                     thenConstraint = ReferenceConstraint.createNull(),
                     elseConstraint = ReferenceConstraint.createNonNull()
             )
         } else if (rightOperand is CtLiteral<*> && rightOperand.value == null) {
             InferredConstraint(
-                    expression = leftOperand,
+                    value = leftValue,
                     thenConstraint = ReferenceConstraint.createNull(),
                     elseConstraint = ReferenceConstraint.createNonNull()
             )
@@ -63,15 +63,13 @@ class EqualityConditionCalculator : ConditionCalculator {
         val thenFrame = if (resultConstraint.isFalse) UnreachableFrame.after(rightFrame) else MutableDataFrame(rightFrame)
         val elseFrame = if (resultConstraint.isTrue) UnreachableFrame.after(rightFrame) else MutableDataFrame(rightFrame)
 
-        inferEqualityConstraint(expression)?.let { (expression, thenConstraint, elseConstraint) ->
-            val declaration = (expression as? CtVariableRead<*>)?.variable?.declaration ?: return@let
-
+        inferEqualityConstraint(expression, leftValue.value, rightValue.value)?.let { (value, thenConstraint, elseConstraint) ->
             // TODO: looks kinda hack-ish, should probably rework
             if (thenFrame is MutableDataFrame) {
-                thenFrame.setConstraint(declaration, thenConstraint)
+                thenFrame.setConstraint(value, thenConstraint)
             }
             if (elseFrame is MutableDataFrame) {
-                elseFrame.setConstraint(declaration, elseConstraint)
+                elseFrame.setConstraint(value, elseConstraint)
             }
         }
 
