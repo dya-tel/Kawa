@@ -1,6 +1,5 @@
 package sibwaf.kawa.calculation.conditions
 
-import sibwaf.kawa.DataFrame
 import sibwaf.kawa.MutableDataFrame
 import sibwaf.kawa.UnreachableFrame
 import sibwaf.kawa.calculation.ValueCalculatorState
@@ -51,13 +50,7 @@ class EqualityConditionCalculator : ConditionCalculator {
         expression as CtBinaryOperator<*>
 
         val (leftFrame, leftValue) = state.getValue(expression.leftHandOperand)
-        val (rightFrame, rightValue) = state.getValue(expression.rightHandOperand)
-
-        val operatorNextFrame = DataFrame.merge(
-                state.frame,
-                leftFrame.compact(state.frame),
-                rightFrame.compact(state.frame)
-        )
+        val (rightFrame, rightValue) = state.copy(frame = leftFrame).getValue(expression.rightHandOperand)
 
         val leftConstraint = leftValue.constraint
         val rightConstraint = rightValue.constraint
@@ -67,8 +60,8 @@ class EqualityConditionCalculator : ConditionCalculator {
             else -> leftConstraint.isEqual(rightConstraint)
         }
 
-        val thenFrame = if (resultConstraint.isFalse) UnreachableFrame.after(operatorNextFrame) else MutableDataFrame(operatorNextFrame)
-        val elseFrame = if (resultConstraint.isTrue) UnreachableFrame.after(operatorNextFrame) else MutableDataFrame(operatorNextFrame)
+        val thenFrame = if (resultConstraint.isFalse) UnreachableFrame.after(rightFrame) else MutableDataFrame(rightFrame)
+        val elseFrame = if (resultConstraint.isTrue) UnreachableFrame.after(rightFrame) else MutableDataFrame(rightFrame)
 
         inferEqualityConstraint(expression)?.let { (expression, thenConstraint, elseConstraint) ->
             val declaration = (expression as? CtVariableRead<*>)?.variable?.declaration ?: return@let
