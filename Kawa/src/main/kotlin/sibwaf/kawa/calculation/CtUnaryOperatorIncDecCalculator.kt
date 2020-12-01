@@ -6,10 +6,10 @@ import sibwaf.kawa.UnreachableFrame
 import sibwaf.kawa.values.ConstrainedValue
 import sibwaf.kawa.values.ValueSource
 import spoon.reflect.code.CtExpression
-import spoon.reflect.code.CtLocalVariable
 import spoon.reflect.code.CtUnaryOperator
 import spoon.reflect.code.CtVariableAccess
 import spoon.reflect.code.UnaryOperatorKind
+import spoon.reflect.declaration.CtField
 
 class CtUnaryOperatorIncDecCalculator : ValueCalculator {
 
@@ -29,7 +29,7 @@ class CtUnaryOperatorIncDecCalculator : ValueCalculator {
         val variable = (expression.operand as? CtVariableAccess<*>)
                 ?.variable
                 ?.declaration
-                ?.takeIf { it is CtLocalVariable<*> }
+                ?.takeUnless { it is CtField<*> }
 
         val resultFrame = if (variable != null && frame !is UnreachableFrame) {
             MutableDataFrame(frame).apply {
