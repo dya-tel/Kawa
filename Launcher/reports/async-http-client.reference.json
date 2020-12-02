@@ -1,0 +1,22 @@
+[
+  {
+    "rule": "R0000",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/async-http-client-master/client/src/main/java/org/asynchttpclient/netty/channel/NettyConnectListener.java",
+      "line": 178,
+      "start": 6167,
+      "end": 6184
+    },
+    "message": "Possible null dereference of \u0027cause\u0027"
+  },
+  {
+    "rule": "R0001",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/async-http-client-master/client/src/main/java/org/asynchttpclient/spnego/SpnegoEngine.java",
+      "line": 221,
+      "start": 9045,
+      "end": 9057
+    },
+    "message": "Condition is always true: \u0027token \u003d\u003d null\u0027"
+  }
+]

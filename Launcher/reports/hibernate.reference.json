@@ -1,0 +1,782 @@
+[
+  {
+    "rule": "R0002",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/bytecode/internal/javassist/BytecodeProviderImpl.java",
+      "line": 51,
+      "start": 1660,
+      "end": 1679
+    },
+    "message": "Unreachable statement"
+  },
+  {
+    "rule": "R0001",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/bytecode/internal/javassist/BytecodeProviderImpl.java",
+      "line": 50,
+      "start": 1633,
+      "end": 1649
+    },
+    "message": "Condition is always false: \u0027fastClass \u003d\u003d null\u0027"
+  },
+  {
+    "rule": "R0001",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/cfg/OneToOneSecondPass.java",
+      "line": 131,
+      "start": 4820,
+      "end": 4829
+    },
+    "message": "Condition is always true: \u0027rightOrder\u0027"
+  },
+  {
+    "rule": "R0000",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/boot/internal/InFlightMetadataCollectorImpl.java",
+      "line": 802,
+      "start": 27559,
+      "end": 27580
+    },
+    "message": "Possible null dereference of \u0027logicalName\u0027"
+  },
+  {
+    "rule": "R0000",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/boot/internal/InFlightMetadataCollectorImpl.java",
+      "line": 1015,
+      "start": 35070,
+      "end": 35084
+    },
+    "message": "Possible null dereference of \u0027table\u0027"
+  },
+  {
+    "rule": "R0000",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/boot/internal/InFlightMetadataCollectorImpl.java",
+      "line": 1053,
+      "start": 36223,
+      "end": 36237
+    },
+    "message": "Possible null dereference of \u0027table\u0027"
+  },
+  {
+    "rule": "R0000",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/boot/registry/classloading/internal/ClassLoaderServiceImpl.java",
+      "line": 162,
+      "start": 5555,
+      "end": 5576
+    },
+    "message": "Possible null dereference of \u0027name\u0027"
+  },
+  {
+    "rule": "R0000",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/boot/registry/classloading/internal/ClassLoaderServiceImpl.java",
+      "line": 202,
+      "start": 6566,
+      "end": 6587
+    },
+    "message": "Possible null dereference of \u0027name\u0027"
+  },
+  {
+    "rule": "R0000",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/cfg/AnnotationBinder.java",
+      "line": 326,
+      "start": 12704,
+      "end": 12718
+    },
+    "message": "Possible null dereference of \u0027idGen\u0027"
+  },
+  {
+    "rule": "R0000",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/cfg/AnnotationBinder.java",
+      "line": 648,
+      "start": 24499,
+      "end": 24525
+    },
+    "message": "Possible null dereference of \u0027superEntity\u0027"
+  },
+  {
+    "rule": "R0000",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/cfg/AnnotationBinder.java",
+      "line": 758,
+      "start": 28771,
+      "end": 28802
+    },
+    "message": "Possible null dereference of \u0027discriminatorColumn\u0027"
+  },
+  {
+    "rule": "R0000",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/cfg/AnnotationBinder.java",
+      "line": 1214,
+      "start": 45183,
+      "end": 45196
+    },
+    "message": "Possible null dereference of \u0027jcsAnn\u0027"
+  },
+  {
+    "rule": "R0000",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/cfg/AnnotationBinder.java",
+      "line": 1268,
+      "start": 47046,
+      "end": 47072
+    },
+    "message": "Possible null dereference of \u0027superEntityState\u0027"
+  },
+  {
+    "rule": "R0000",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/cfg/AnnotationBinder.java",
+      "line": 2248,
+      "start": 84692,
+      "end": 84729
+    },
+    "message": "Possible null dereference of \u0027mapsIdProperty\u0027"
+  },
+  {
+    "rule": "R0000",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/cfg/AnnotationBinder.java",
+      "line": 2298,
+      "start": 86400,
+      "end": 86437
+    },
+    "message": "Possible null dereference of \u0027mapsIdProperty\u0027"
+  },
+  {
+    "rule": "R0000",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/cfg/AnnotationBinder.java",
+      "line": 2311,
+      "start": 86993,
+      "end": 87024
+    },
+    "message": "Possible null dereference of \u0027mapsIdProperty\u0027"
+  },
+  {
+    "rule": "R0000",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/cfg/AnnotationBinder.java",
+      "line": 2544,
+      "start": 94829,
+      "end": 94848
+    },
+    "message": "Possible null dereference of \u0027assocTable\u0027"
+  },
+  {
+    "rule": "R0000",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/cfg/AnnotationBinder.java",
+      "line": 2768,
+      "start": 103636,
+      "end": 103670
+    },
+    "message": "Possible null dereference of \u0027baseInferredData\u0027"
+  },
+  {
+    "rule": "R0000",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/cfg/AnnotationBinder.java",
+      "line": 3484,
+      "start": 127694,
+      "end": 127714
+    },
+    "message": "Possible null dereference of \u0027idGenerator\u0027"
+  },
+  {
+    "rule": "R0000",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/cfg/AnnotationBinder.java",
+      "line": 3499,
+      "start": 128159,
+      "end": 128179
+    },
+    "message": "Possible null dereference of \u0027idGenerator\u0027"
+  },
+  {
+    "rule": "R0000",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/cfg/AnnotationBinder.java",
+      "line": 3511,
+      "start": 128627,
+      "end": 128641
+    },
+    "message": "Possible null dereference of \u0027idGen\u0027"
+  },
+  {
+    "rule": "R0000",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/cfg/AnnotationBinder.java",
+      "line": 3517,
+      "start": 128835,
+      "end": 128849
+    },
+    "message": "Possible null dereference of \u0027idGen\u0027"
+  },
+  {
+    "rule": "R0000",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/cfg/AnnotationBinder.java",
+      "line": 3522,
+      "start": 129042,
+      "end": 129056
+    },
+    "message": "Possible null dereference of \u0027idGen\u0027"
+  },
+  {
+    "rule": "R0000",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/cfg/AttributeConverterDefinition.java",
+      "line": 166,
+      "start": 6576,
+      "end": 6603
+    },
+    "message": "Possible null dereference of \u0027clazz\u0027"
+  },
+  {
+    "rule": "R0000",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/cfg/AttributeConverterDefinition.java",
+      "line": 224,
+      "start": 8479,
+      "end": 8503
+    },
+    "message": "Possible null dereference of \u0027clazz\u0027"
+  },
+  {
+    "rule": "R0000",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/cfg/BinderHelper.java",
+      "line": 269,
+      "start": 11157,
+      "end": 11187
+    },
+    "message": "Possible null dereference of \u0027associatedClass\u0027"
+  },
+  {
+    "rule": "R0000",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/cfg/BinderHelper.java",
+      "line": 479,
+      "start": 18866,
+      "end": 18880
+    },
+    "message": "Possible null dereference of \u0027idName\u0027"
+  },
+  {
+    "rule": "R0000",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/cfg/InheritanceState.java",
+      "line": 278,
+      "start": 8981,
+      "end": 9006
+    },
+    "message": "Possible null dereference of \u0027superClass\u0027"
+  },
+  {
+    "rule": "R0000",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/cfg/annotations/CollectionBinder.java",
+      "line": 1367,
+      "start": 49212,
+      "end": 49280
+    },
+    "message": "Possible null dereference of \u0027collectionEntity\u0027"
+  },
+  {
+    "rule": "R0000",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/cfg/annotations/TableBinder.java",
+      "line": 554,
+      "start": 15736,
+      "end": 15766
+    },
+    "message": "Possible null dereference of \u0027associatedClass\u0027"
+  },
+  {
+    "rule": "R0000",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/cfg/annotations/reflection/JPAOverriddenAnnotationReader.java",
+      "line": 1250,
+      "start": 55107,
+      "end": 55123
+    },
+    "message": "Possible null dereference of \u0027element\u0027"
+  },
+  {
+    "rule": "R0000",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/cfg/beanvalidation/TypeSafeActivator.java",
+      "line": 437,
+      "start": 16636,
+      "end": 16650
+    },
+    "message": "Possible null dereference of \u0027idName\u0027"
+  },
+  {
+    "rule": "R0002",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/dialect/Dialect.java",
+      "line": 380,
+      "start": 17014,
+      "end": 17100
+    },
+    "message": "Unreachable statement"
+  },
+  {
+    "rule": "R0002",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/dialect/Dialect.java",
+      "line": 705,
+      "start": 28596,
+      "end": 28688
+    },
+    "message": "Unreachable statement"
+  },
+  {
+    "rule": "R0002",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-envers/src/main/java/org/hibernate/envers/configuration/internal/metadata/CollectionMetadataGenerator.java",
+      "line": 749,
+      "start": 30092,
+      "end": 30118
+    },
+    "message": "Unreachable statement"
+  },
+  {
+    "rule": "R0001",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/dialect/Dialect.java",
+      "line": 379,
+      "start": 16992,
+      "end": 17005
+    },
+    "message": "Condition is always false: \u0027result \u003d\u003d null\u0027"
+  },
+  {
+    "rule": "R0001",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/dialect/Dialect.java",
+      "line": 704,
+      "start": 28574,
+      "end": 28587
+    },
+    "message": "Condition is always false: \u0027result \u003d\u003d null\u0027"
+  },
+  {
+    "rule": "R0000",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/engine/internal/Collections.java",
+      "line": 72,
+      "start": 2549,
+      "end": 2589
+    },
+    "message": "Possible null dereference of \u0027loadedPersister\u0027"
+  },
+  {
+    "rule": "R0000",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/engine/internal/Collections.java",
+      "line": 272,
+      "start": 9617,
+      "end": 9641
+    },
+    "message": "Possible null dereference of \u0027loadedPersister\u0027"
+  },
+  {
+    "rule": "R0000",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/engine/internal/Collections.java",
+      "line": 278,
+      "start": 9720,
+      "end": 9747
+    },
+    "message": "Possible null dereference of \u0027entry\u0027"
+  },
+  {
+    "rule": "R0000",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/engine/internal/EntityEntryContext.java",
+      "line": 123,
+      "start": 4896,
+      "end": 4952
+    },
+    "message": "Possible null dereference of \u0027managedEntity\u0027"
+  },
+  {
+    "rule": "R0000",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/engine/jdbc/internal/JdbcCoordinatorImpl.java",
+      "line": 347,
+      "start": 10163,
+      "end": 10219
+    },
+    "message": "Possible null dereference of \u0027sqlExceptionHelper\u0027"
+  },
+  {
+    "rule": "R0000",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/engine/query/spi/HQLQueryPlan.java",
+      "line": 243,
+      "start": 8316,
+      "end": 8340
+    },
+    "message": "Possible null dereference of \u0027distinction\u0027"
+  },
+  {
+    "rule": "R0000",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/engine/spi/CollectionEntry.java",
+      "line": 178,
+      "start": 5596,
+      "end": 5620
+    },
+    "message": "Possible null dereference of \u0027loadedPersister\u0027"
+  },
+  {
+    "rule": "R0000",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-envers/src/main/java/org/hibernate/envers/internal/entities/mapper/relation/ListCollectionMapper.java",
+      "line": 140,
+      "start": 4715,
+      "end": 4734
+    },
+    "message": "Possible null dereference of \u0027oldCollection\u0027"
+  },
+  {
+    "rule": "R0000",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-envers/src/main/java/org/hibernate/envers/internal/entities/mapper/relation/ListCollectionMapper.java",
+      "line": 156,
+      "start": 5331,
+      "end": 5350
+    },
+    "message": "Possible null dereference of \u0027newCollection\u0027"
+  },
+  {
+    "rule": "R0000",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-envers/src/main/java/org/hibernate/envers/internal/reader/AuditReaderImpl.java",
+      "line": 88,
+      "start": 2986,
+      "end": 2998
+    },
+    "message": "Possible null dereference of \u0027cls\u0027"
+  },
+  {
+    "rule": "R0000",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-envers/src/main/java/org/hibernate/envers/internal/reader/AuditReaderImpl.java",
+      "line": 137,
+      "start": 4632,
+      "end": 4644
+    },
+    "message": "Possible null dereference of \u0027cls\u0027"
+  },
+  {
+    "rule": "R0000",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-envers/src/main/java/org/hibernate/envers/internal/reader/AuditReaderImpl.java",
+      "line": 299,
+      "start": 10222,
+      "end": 10242
+    },
+    "message": "Possible null dereference of \u0027entityClass\u0027"
+  },
+  {
+    "rule": "R0000",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-envers/src/main/java/org/hibernate/envers/query/AuditQueryCreator.java",
+      "line": 51,
+      "start": 2237,
+      "end": 2247
+    },
+    "message": "Possible null dereference of \u0027c\u0027"
+  },
+  {
+    "rule": "R0000",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-envers/src/main/java/org/hibernate/envers/query/AuditQueryCreator.java",
+      "line": 141,
+      "start": 6244,
+      "end": 6254
+    },
+    "message": "Possible null dereference of \u0027c\u0027"
+  },
+  {
+    "rule": "R0000",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-envers/src/main/java/org/hibernate/envers/query/AuditQueryCreator.java",
+      "line": 169,
+      "start": 8016,
+      "end": 8026
+    },
+    "message": "Possible null dereference of \u0027c\u0027"
+  },
+  {
+    "rule": "R0003",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/internal/SessionImpl.java",
+      "line": 3721,
+      "start": 115996,
+      "end": 116000
+    },
+    "message": "The returned value is always null: \u0027named\u0027"
+  },
+  {
+    "rule": "R0001",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/persister/collection/AbstractCollectionPersister.java",
+      "line": 1566,
+      "start": 50051,
+      "end": 50060
+    },
+    "message": "Condition is always true: \u0027st \u003d\u003d null\u0027"
+  },
+  {
+    "rule": "R0000",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/hql/internal/ast/tree/AbstractRestrictableStatement.java",
+      "line": 53,
+      "start": 1776,
+      "end": 1798
+    },
+    "message": "Possible null dereference of \u0027parent\u0027"
+  },
+  {
+    "rule": "R0000",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/hql/internal/ast/tree/DotNode.java",
+      "line": 551,
+      "start": 20357,
+      "end": 20381
+    },
+    "message": "Possible null dereference of \u0027elem\u0027"
+  },
+  {
+    "rule": "R0000",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/hql/internal/ast/tree/FromElementFactory.java",
+      "line": 150,
+      "start": 5087,
+      "end": 5276
+    },
+    "message": "Possible null dereference of \u0027pathNode\u0027"
+  },
+  {
+    "rule": "R0000",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/hql/internal/ast/tree/QueryNode.java",
+      "line": 89,
+      "start": 2949,
+      "end": 2976
+    },
+    "message": "Possible null dereference of \u0027prevSibling\u0027"
+  },
+  {
+    "rule": "R0000",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/hql/internal/ast/util/ASTParentsFirstIterator.java",
+      "line": 51,
+      "start": 1235,
+      "end": 1257
+    },
+    "message": "Possible null dereference of \u0027parent\u0027"
+  },
+  {
+    "rule": "R0000",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/hql/internal/ast/util/SyntheticAndFactory.java",
+      "line": 153,
+      "start": 5097,
+      "end": 5129
+    },
+    "message": "Possible null dereference of \u0027whereFragment\u0027"
+  },
+  {
+    "rule": "R0000",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/internal/SessionImpl.java",
+      "line": 1735,
+      "start": 57452,
+      "end": 57477
+    },
+    "message": "Possible null dereference of \u0027entry\u0027"
+  },
+  {
+    "rule": "R0000",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/internal/util/ReflectHelper.java",
+      "line": 468,
+      "start": 14875,
+      "end": 14898
+    },
+    "message": "Possible null dereference of \u0027containerClass\u0027"
+  },
+  {
+    "rule": "R0000",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/internal/util/collections/ConcurrentReferenceHashMap.java",
+      "line": 857,
+      "start": 26536,
+      "end": 26542
+    },
+    "message": "Possible null dereference of \u0027p\u0027"
+  },
+  {
+    "rule": "R0000",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/loader/Loader.java",
+      "line": 640,
+      "start": 21391,
+      "end": 21416
+    },
+    "message": "Possible null dereference of \u0027lastKey\u0027"
+  },
+  {
+    "rule": "R0000",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/loader/Loader.java",
+      "line": 658,
+      "start": 21761,
+      "end": 21788
+    },
+    "message": "Possible null dereference of \u0027keyToRead\u0027"
+  },
+  {
+    "rule": "R0000",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/loader/criteria/CriteriaJoinWalker.java",
+      "line": 278,
+      "start": 8980,
+      "end": 9001
+    },
+    "message": "Possible null dereference of \u0027subcriteria\u0027"
+  },
+  {
+    "rule": "R0000",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/loader/criteria/CriteriaQueryTranslator.java",
+      "line": 259,
+      "start": 9724,
+      "end": 9752
+    },
+    "message": "Possible null dereference of \u0027elementType\u0027"
+  },
+  {
+    "rule": "R0000",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/metamodel/internal/AttributeFactory.java",
+      "line": 183,
+      "start": 7403,
+      "end": 7437
+    },
+    "message": "Possible null dereference of \u0027attributeMetadata\u0027"
+  },
+  {
+    "rule": "R0000",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/metamodel/internal/AttributeFactory.java",
+      "line": 213,
+      "start": 8405,
+      "end": 8445
+    },
+    "message": "Possible null dereference of \u0027attributeMetadata\u0027"
+  },
+  {
+    "rule": "R0002",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/sql/Template.java",
+      "line": 296,
+      "start": 9946,
+      "end": 10010
+    },
+    "message": "Unreachable statement"
+  },
+  {
+    "rule": "R0002",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/sql/Template.java",
+      "line": 297,
+      "start": 9982,
+      "end": 10004
+    },
+    "message": "Unreachable statement"
+  },
+  {
+    "rule": "R0001",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/sql/Template.java",
+      "line": 295,
+      "start": 9923,
+      "end": 9936
+    },
+    "message": "Condition is always false: \u0027afterFromTable\u0027"
+  },
+  {
+    "rule": "R0001",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-testing/src/main/java/org/hibernate/testing/jta/JtaAwareConnectionProviderImpl.java",
+      "line": 53,
+      "start": 2403,
+      "end": 2429
+    },
+    "message": "Condition is always true: \u0027passThroughSettings !\u003d null\u0027"
+  },
+  {
+    "rule": "R0000",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/sql/Template.java",
+      "line": 161,
+      "start": 5784,
+      "end": 5813
+    },
+    "message": "Possible null dereference of \u0027token\u0027"
+  },
+  {
+    "rule": "R0000",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/sql/Template.java",
+      "line": 285,
+      "start": 9712,
+      "end": 9726
+    },
+    "message": "Possible null dereference of \u0027token\u0027"
+  },
+  {
+    "rule": "R0000",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/tool/schema/extract/internal/InformationExtractorJdbcDatabaseMetaDataImpl.java",
+      "line": 751,
+      "start": 22350,
+      "end": 22375
+    },
+    "message": "Possible null dereference of \u0027columnIdentifier\u0027"
+  },
+  {
+    "rule": "R0000",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/tool/schema/extract/internal/InformationExtractorJdbcDatabaseMetaDataImpl.java",
+      "line": 752,
+      "start": 22386,
+      "end": 22410
+    },
+    "message": "Possible null dereference of \u0027indexIdentifier\u0027"
+  },
+  {
+    "rule": "R0000",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/type/CollectionType.java",
+      "line": 754,
+      "start": 25145,
+      "end": 25189
+    },
+    "message": "Possible null dereference of \u0027target\u0027"
+  }
+]
