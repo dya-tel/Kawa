@@ -1,5 +1,6 @@
 package sibwaf.kawa.calculation
 
+import sibwaf.kawa.AnalyzerState
 import sibwaf.kawa.DataFrame
 import sibwaf.kawa.MutableDataFrame
 import sibwaf.kawa.UnreachableFrame
@@ -12,12 +13,12 @@ import spoon.reflect.code.CtTargetedExpression
 abstract class CtTargetedExpressionCalculator : ValueCalculator {
 
     protected abstract suspend fun calculate(
-            state: ValueCalculatorState,
+            state: AnalyzerState,
             expression: CtExpression<*>,
             target: ConstrainedValue
     ): Pair<DataFrame, ConstrainedValue>
 
-    final override suspend fun calculate(state: ValueCalculatorState, expression: CtExpression<*>): Pair<DataFrame, ConstrainedValue> {
+    final override suspend fun calculate(state: AnalyzerState, expression: CtExpression<*>): Pair<DataFrame, ConstrainedValue> {
         expression as CtTargetedExpression<*, *>
 
         val (targetFrame, targetValue) = state.getValue(expression.target)

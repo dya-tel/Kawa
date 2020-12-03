@@ -1,5 +1,6 @@
 package sibwaf.kawa.calculation
 
+import sibwaf.kawa.AnalyzerState
 import sibwaf.kawa.DataFrame
 import sibwaf.kawa.MutableDataFrame
 import sibwaf.kawa.constraints.Nullability
@@ -14,7 +15,7 @@ class CtExecutableReferenceExpressionCalculator : ValueCalculator {
 
     override fun supports(expression: CtExpression<*>) = expression is CtExecutableReferenceExpression<*, *>
 
-    override suspend fun calculate(state: ValueCalculatorState, expression: CtExpression<*>): Pair<DataFrame, ConstrainedValue> {
+    override suspend fun calculate(state: AnalyzerState, expression: CtExpression<*>): Pair<DataFrame, ConstrainedValue> {
         // TODO
         val value = ConstrainedValue(
                 ReferenceValue(ValueSource.NONE),

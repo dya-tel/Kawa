@@ -1,8 +1,8 @@
 package sibwaf.kawa.calculation.conditions
 
+import sibwaf.kawa.AnalyzerState
 import sibwaf.kawa.MutableDataFrame
 import sibwaf.kawa.UnreachableFrame
-import sibwaf.kawa.calculation.ValueCalculatorState
 import sibwaf.kawa.constraints.BooleanConstraint
 import sibwaf.kawa.values.BooleanValue
 import sibwaf.kawa.values.ValueSource
@@ -13,7 +13,7 @@ class LiteralConditionCalculator : ConditionCalculator {
 
     override fun supports(expression: CtExpression<*>) = expression is CtLiteral<*> && (expression.value == true || expression.value == false)
 
-    override suspend fun calculateCondition(state: ValueCalculatorState, expression: CtExpression<*>): ConditionCalculatorResult {
+    override suspend fun calculateCondition(state: AnalyzerState, expression: CtExpression<*>): ConditionCalculatorResult {
         val value = (expression as CtLiteral<*>).value as Boolean
 
         val thenFrame = MutableDataFrame(state.frame)

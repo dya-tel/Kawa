@@ -1,6 +1,7 @@
 package sibwaf.kawa.analysis
 
 import sibwaf.kawa.DataFrame
+import sibwaf.kawa.AnalyzerState
 import sibwaf.kawa.calculation.ValueCalculator
 import spoon.reflect.code.CtExpression
 import spoon.reflect.code.CtStatement
@@ -11,8 +12,8 @@ abstract class ExpressionStatementAnalyzer : StatementAnalyzer {
 
     override fun supports(statement: CtStatement) = statement is CtExpression<*> && calculator.supports(statement)
 
-    final override suspend fun analyze(state: StatementAnalyzerState, statement: CtStatement): DataFrame {
+    final override suspend fun analyze(state: AnalyzerState, statement: CtStatement): DataFrame {
         statement as CtExpression<*>
-        return calculator.calculate(state.toCalculatorState(), statement).first
+        return calculator.calculate(state, statement).first
     }
 }

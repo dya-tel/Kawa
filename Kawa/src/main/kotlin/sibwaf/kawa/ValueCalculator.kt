@@ -12,7 +12,6 @@ import sibwaf.kawa.calculation.CtNewArrayCalculator
 import sibwaf.kawa.calculation.CtUnaryOperatorIncDecCalculator
 import sibwaf.kawa.calculation.CtVariableReadCalculator
 import sibwaf.kawa.calculation.DelegatingValueCalculator
-import sibwaf.kawa.calculation.ValueCalculatorState
 import sibwaf.kawa.calculation.conditions.BooleanAndCalculator
 import sibwaf.kawa.calculation.conditions.BooleanOrCalculator
 import sibwaf.kawa.calculation.conditions.ConditionCalculator
@@ -29,6 +28,7 @@ import sibwaf.kawa.values.ConstrainedValue
 import sibwaf.kawa.values.ValueSource
 import spoon.reflect.code.CtExpression
 import spoon.reflect.reference.CtExecutableReference
+import java.util.Collections
 
 private object FallbackCalculator : ConditionCalculator {
 
@@ -37,7 +37,7 @@ private object FallbackCalculator : ConditionCalculator {
 
     override fun supports(expression: CtExpression<*>) = true
 
-    override suspend fun calculate(state: ValueCalculatorState, expression: CtExpression<*>): Pair<DataFrame, ConstrainedValue> {
+    override suspend fun calculate(state: AnalyzerState, expression: CtExpression<*>): Pair<DataFrame, ConstrainedValue> {
         if (failedExpressionTypes.add(expression.javaClass)) {
             log.warn("Failed to find a calculator for {}", expression.javaClass)
         }
@@ -45,7 +45,7 @@ private object FallbackCalculator : ConditionCalculator {
         return MutableDataFrame(state.frame) to ConstrainedValue.from(expression, ValueSource.NONE)
     }
 
-    override suspend fun calculateCondition(state: ValueCalculatorState, expression: CtExpression<*>): ConditionCalculatorResult {
+    override suspend fun calculateCondition(state: AnalyzerState, expression: CtExpression<*>): ConditionCalculatorResult {
         if (failedExpressionTypes.add(expression.javaClass)) {
             log.warn("Failed to find a condition calculator for {}", expression.javaClass)
         }
@@ -88,11 +88,29 @@ object ValueCalculator {
     private val calculator = DelegatingValueCalculator(calculators)
     private val conditionCalculator = DelegatingConditionCalculator(conditionCalculators)
 
-    suspend fun calculateValue(state: ValueCalculatorState, expression: CtExpression<*>) =
+    suspend fun calculateValue(state: AnalyzerState, expression: CtExpression<*>) =
         calculator.calculate(state, expression)
 
-    suspend fun calculateCondition(state: ValueCalculatorState, expression: CtExpression<*>) =
+    suspend fun calculateCondition(state: AnalyzerState, expression: CtExpression<*>) =
         conditionCalculator.calculateCondition(state, expression)
+
+    private fun createState(
+            annotation: MethodFlow,
+            frame: DataFrame,
+            flowProvider: suspend (CtExecutableReference<*>) -> MethodFlow
+    ): AnalyzerState {
+        return AnalyzerState(
+                annotation = annotation,
+                frame = frame,
+                localVariables = Collections.emptySet(),
+                returnPoints = Collections.emptySet(),
+                jumpPoints = Collections.emptySet(),
+                methodFlowProvider = flowProvider,
+                statementFlowProvider = { _, _ -> throw IllegalStateException() },
+                valueProvider = { state, expr -> calculateValue(state, expr) },
+                conditionValueProvider = { state, expr -> calculateCondition(state, expr) }
+        )
+    }
 
     suspend fun calculateValue(
             annotation: MethodFlow,
@@ -100,14 +118,7 @@ object ValueCalculator {
             expression: CtExpression<*>,
             flowProvider: suspend (CtExecutableReference<*>) -> MethodFlow
     ): Pair<DataFrame, ConstrainedValue> {
-        val state = ValueCalculatorState(
-                annotation = annotation,
-                frame = frame,
-                methodFlowProvider = flowProvider,
-                valueProvider = { state, expr -> calculateValue(state, expr) },
-                conditionValueProvider = { state, expr -> calculateCondition(state, expr) }
-        )
-
+        val state = createState(annotation, frame, flowProvider)
         return calculateValue(state, expression)
     }
 
@@ -117,14 +128,7 @@ object ValueCalculator {
             expression: CtExpression<*>,
             flowProvider: suspend (CtExecutableReference<*>) -> MethodFlow
     ): ConditionCalculatorResult {
-        val state = ValueCalculatorState(
-                annotation = annotation,
-                frame = frame,
-                methodFlowProvider = flowProvider,
-                valueProvider = { state, expr -> calculateValue(state, expr) },
-                conditionValueProvider = { state, expr -> calculateCondition(state, expr) }
-        )
-
+        val state = createState(annotation, frame, flowProvider)
         return calculateCondition(state, expression)
     }
 }

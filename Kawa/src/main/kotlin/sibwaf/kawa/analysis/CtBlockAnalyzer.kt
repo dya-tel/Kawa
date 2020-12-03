@@ -4,6 +4,7 @@ import sibwaf.kawa.BlockFlow
 import sibwaf.kawa.DataFrame
 import sibwaf.kawa.IdentityHashSet
 import sibwaf.kawa.MutableDataFrame
+import sibwaf.kawa.AnalyzerState
 import sibwaf.kawa.UnreachableFrame
 import spoon.reflect.code.CtBlock
 import spoon.reflect.code.CtStatement
@@ -13,7 +14,7 @@ class CtBlockAnalyzer : StatementAnalyzer {
 
     override fun supports(statement: CtStatement) = statement is CtBlock<*>
 
-    override suspend fun analyze(state: StatementAnalyzerState, statement: CtStatement): DataFrame {
+    override suspend fun analyze(state: AnalyzerState, statement: CtStatement): DataFrame {
         statement as CtStatementList
 
         val startFrame: DataFrame = MutableDataFrame(state.frame)

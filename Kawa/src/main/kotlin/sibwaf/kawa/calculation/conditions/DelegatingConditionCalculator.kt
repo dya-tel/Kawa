@@ -1,6 +1,6 @@
 package sibwaf.kawa.calculation.conditions
 
-import sibwaf.kawa.calculation.ValueCalculatorState
+import sibwaf.kawa.AnalyzerState
 import spoon.reflect.code.CtExpression
 
 class DelegatingConditionCalculator(private val calculators: List<ConditionCalculator>) : ConditionCalculator {
@@ -9,7 +9,7 @@ class DelegatingConditionCalculator(private val calculators: List<ConditionCalcu
         return calculators.isNotEmpty() && calculators.any { it.supports(expression) }
     }
 
-    override suspend fun calculateCondition(state: ValueCalculatorState, expression: CtExpression<*>): ConditionCalculatorResult {
+    override suspend fun calculateCondition(state: AnalyzerState, expression: CtExpression<*>): ConditionCalculatorResult {
         for (calculator in calculators) {
             if (calculator.supports(expression)) {
                 return calculator.calculateCondition(state, expression)

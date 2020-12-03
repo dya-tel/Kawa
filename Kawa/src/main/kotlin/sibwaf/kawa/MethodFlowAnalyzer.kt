@@ -34,7 +34,6 @@ import sibwaf.kawa.analysis.CtUnaryOperatorAnalyzer
 import sibwaf.kawa.analysis.CtWhileAnalyzer
 import sibwaf.kawa.analysis.DelegatingStatementAnalyzer
 import sibwaf.kawa.analysis.StatementAnalyzer
-import sibwaf.kawa.analysis.StatementAnalyzerState
 import sibwaf.kawa.constraints.Constraint
 import sibwaf.kawa.values.Value
 import sibwaf.kawa.values.ValueSource
@@ -58,7 +57,7 @@ private object FallbackAnalyzer : StatementAnalyzer {
 
     override fun supports(statement: CtStatement) = true
 
-    override suspend fun analyze(state: StatementAnalyzerState, statement: CtStatement): DataFrame {
+    override suspend fun analyze(state: AnalyzerState, statement: CtStatement): DataFrame {
         if (failedStatementTypes.add(statement::class.java)) {
             log.warn("Failed to find an analyzer for {}", statement::class.java)
         }
@@ -237,7 +236,7 @@ class MethodFlowAnalyzer private constructor() {
         val bodyBlock = method.body
 
         val flowProvider: suspend (CtExecutableReference<*>) -> MethodFlow = { getFlowFor(it, callChain) }
-        val analyzerState = StatementAnalyzerState(
+        val analyzerState = AnalyzerState(
                 annotation = annotation,
                 frame = startFrame,
                 localVariables = Collections.emptySet(),

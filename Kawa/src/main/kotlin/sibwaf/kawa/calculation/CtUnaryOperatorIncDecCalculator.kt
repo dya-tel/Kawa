@@ -1,5 +1,6 @@
 package sibwaf.kawa.calculation
 
+import sibwaf.kawa.AnalyzerState
 import sibwaf.kawa.DataFrame
 import sibwaf.kawa.MutableDataFrame
 import sibwaf.kawa.UnreachableFrame
@@ -20,7 +21,7 @@ class CtUnaryOperatorIncDecCalculator : ValueCalculator {
 
     override fun supports(expression: CtExpression<*>) = expression is CtUnaryOperator<*> && expression.kind in supportedKinds
 
-    override suspend fun calculate(state: ValueCalculatorState, expression: CtExpression<*>): Pair<DataFrame, ConstrainedValue> {
+    override suspend fun calculate(state: AnalyzerState, expression: CtExpression<*>): Pair<DataFrame, ConstrainedValue> {
         expression as CtUnaryOperator<*>
 
         val (frame, operandValue) = state.getValue(expression.operand)

@@ -1,26 +1,41 @@
-package sibwaf.kawa.calculation
+package sibwaf.kawa
 
-import sibwaf.kawa.DataFrame
-import sibwaf.kawa.MethodFlow
-import sibwaf.kawa.UnreachableFrame
 import sibwaf.kawa.calculation.conditions.ConditionCalculatorResult
 import sibwaf.kawa.constraints.BooleanConstraint
 import sibwaf.kawa.values.BooleanValue
 import sibwaf.kawa.values.ConstrainedValue
 import sibwaf.kawa.values.ValueSource
+import spoon.reflect.code.CtCFlowBreak
 import spoon.reflect.code.CtExpression
+import spoon.reflect.code.CtLocalVariable
+import spoon.reflect.code.CtStatement
 import spoon.reflect.reference.CtExecutableReference
 
-data class ValueCalculatorState(
+data class AnalyzerState(
         val annotation: MethodFlow,
         val frame: DataFrame,
+        val localVariables: MutableSet<CtLocalVariable<*>>,
+        val returnPoints: MutableSet<CtStatement>,
+        val jumpPoints: MutableCollection<Pair<CtCFlowBreak, DataFrame>>,
 
         private val methodFlowProvider: suspend (CtExecutableReference<*>) -> MethodFlow,
-        private val valueProvider: suspend (ValueCalculatorState, CtExpression<*>) -> Pair<DataFrame, ConstrainedValue>,
-        private val conditionValueProvider: suspend (ValueCalculatorState, CtExpression<*>) -> ConditionCalculatorResult
+        private val statementFlowProvider: suspend (AnalyzerState, CtStatement) -> DataFrame,
+        private val valueProvider: suspend (AnalyzerState, CtExpression<*>) -> Pair<DataFrame, ConstrainedValue>,
+        private val conditionValueProvider: suspend (AnalyzerState, CtExpression<*>) -> ConditionCalculatorResult
 ) {
+
     suspend fun getMethodFlow(executable: CtExecutableReference<*>): MethodFlow {
         return methodFlowProvider(executable)
+    }
+
+    suspend fun getStatementFlow(statement: CtStatement): DataFrame {
+        annotation.frames[statement] = frame
+
+        if (frame is UnreachableFrame) {
+            return frame
+        }
+
+        return statementFlowProvider(this, statement)
     }
 
     suspend fun getValue(expression: CtExpression<*>): Pair<DataFrame, ConstrainedValue> {
@@ -39,10 +54,10 @@ data class ValueCalculatorState(
         if (frame is UnreachableFrame) {
             // TODO: invalid result
             return ConditionCalculatorResult(
-                    thenFrame = frame,
-                    elseFrame = frame,
-                    value = BooleanValue(ValueSource.NONE),
-                    constraint = BooleanConstraint.createUnknown()
+                thenFrame = frame,
+                elseFrame = frame,
+                value = BooleanValue(ValueSource.NONE),
+                constraint = BooleanConstraint.createUnknown()
             )
         }
 

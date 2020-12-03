@@ -1,5 +1,6 @@
 package sibwaf.kawa.calculation
 
+import sibwaf.kawa.AnalyzerState
 import sibwaf.kawa.DataFrame
 import sibwaf.kawa.MutableDataFrame
 import sibwaf.kawa.UnreachableFrame
@@ -14,7 +15,7 @@ class CtInvocationCalculator : CtTargetedExpressionCalculator() {
 
     override fun supports(expression: CtExpression<*>) = expression is CtInvocation<*>
 
-    override suspend fun calculate(state: ValueCalculatorState, expression: CtExpression<*>, target: ConstrainedValue): Pair<DataFrame, ConstrainedValue> {
+    override suspend fun calculate(state: AnalyzerState, expression: CtExpression<*>, target: ConstrainedValue): Pair<DataFrame, ConstrainedValue> {
         expression as CtInvocation<*>
 
         var currentState = state

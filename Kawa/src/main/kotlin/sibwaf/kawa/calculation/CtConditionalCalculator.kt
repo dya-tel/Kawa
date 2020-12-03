@@ -1,5 +1,6 @@
 package sibwaf.kawa.calculation
 
+import sibwaf.kawa.AnalyzerState
 import sibwaf.kawa.DataFrame
 import sibwaf.kawa.values.ConstrainedValue
 import sibwaf.kawa.values.Value
@@ -11,7 +12,7 @@ class CtConditionalCalculator : ValueCalculator {
 
     override fun supports(expression: CtExpression<*>) = expression is CtConditional<*>
 
-    override suspend fun calculate(state: ValueCalculatorState, expression: CtExpression<*>): Pair<DataFrame, ConstrainedValue> {
+    override suspend fun calculate(state: AnalyzerState, expression: CtExpression<*>): Pair<DataFrame, ConstrainedValue> {
         expression as CtConditional<*>
 
         val (thenFrame, elseFrame, _) = state.getConditionValue(expression.condition)

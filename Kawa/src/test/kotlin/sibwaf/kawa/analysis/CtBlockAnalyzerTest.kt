@@ -2,6 +2,7 @@ package sibwaf.kawa.analysis
 
 import kotlinx.coroutines.runBlocking
 import sibwaf.kawa.DataFrame
+import sibwaf.kawa.AnalyzerState
 import sibwaf.kawa.calculation.CtLiteralCalculator
 import sibwaf.kawa.getElementsOf
 import sibwaf.kawa.parseMethod
@@ -37,7 +38,7 @@ class CtBlockAnalyzerTest : StatementAnalyzerTestBase() {
 
         val statementAnalyzer = DelegatingStatementAnalyzer(listOf(CtLocalVariableAnalyzer(), CtBlockAnalyzer()))
         val wrappedStatementAnalyzer = object : StatementAnalyzerWrapper(statementAnalyzer) {
-            override suspend fun analyze(state: StatementAnalyzerState, statement: CtStatement): DataFrame {
+            override suspend fun analyze(state: AnalyzerState, statement: CtStatement): DataFrame {
                 val frame = super.analyze(state, statement)
 
                 if (statement is CtLocalVariable<*>) {
@@ -92,7 +93,7 @@ class CtBlockAnalyzerTest : StatementAnalyzerTestBase() {
 
         val statementAnalyzer = DelegatingStatementAnalyzer(listOf(CtLocalVariableAnalyzer(), CtBlockAnalyzer()))
         val wrappedStatementAnalyzer = object : StatementAnalyzerWrapper(statementAnalyzer) {
-            override suspend fun analyze(state: StatementAnalyzerState, statement: CtStatement): DataFrame {
+            override suspend fun analyze(state: AnalyzerState, statement: CtStatement): DataFrame {
                 if (statement is CtLocalVariable<*>) {
                     frames[statement] = state.frame
                 }

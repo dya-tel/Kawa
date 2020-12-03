@@ -1,5 +1,6 @@
 package sibwaf.kawa.calculation
 
+import sibwaf.kawa.AnalyzerState
 import sibwaf.kawa.DataFrame
 import sibwaf.kawa.MutableDataFrame
 import sibwaf.kawa.constraints.ReferenceConstraint
@@ -14,7 +15,7 @@ class CtConstructorCallCalculator : ValueCalculator {
 
     override fun supports(expression: CtExpression<*>) = expression is CtConstructorCall<*>
 
-    override suspend fun calculate(state: ValueCalculatorState, expression: CtExpression<*>): Pair<DataFrame, ConstrainedValue> {
+    override suspend fun calculate(state: AnalyzerState, expression: CtExpression<*>): Pair<DataFrame, ConstrainedValue> {
         expression as CtConstructorCall<*>
 
         var currentState = state

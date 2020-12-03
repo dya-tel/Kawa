@@ -1,6 +1,7 @@
 package sibwaf.kawa.analysis
 
 import sibwaf.kawa.DataFrame
+import sibwaf.kawa.AnalyzerState
 import sibwaf.kawa.UnreachableFrame
 import spoon.reflect.code.CtStatement
 import spoon.reflect.code.CtTry
@@ -9,7 +10,7 @@ class CtTryAnalyzer : StatementAnalyzer {
 
     override fun supports(statement: CtStatement) = statement is CtTry
 
-    override suspend fun analyze(state: StatementAnalyzerState, statement: CtStatement): DataFrame {
+    override suspend fun analyze(state: AnalyzerState, statement: CtStatement): DataFrame {
         statement as CtTry
 
         val localState = state.copy(jumpPoints = ArrayList())

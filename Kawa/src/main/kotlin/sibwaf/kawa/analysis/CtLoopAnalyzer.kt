@@ -2,6 +2,7 @@ package sibwaf.kawa.analysis
 
 import sibwaf.kawa.DataFrame
 import sibwaf.kawa.MutableDataFrame
+import sibwaf.kawa.AnalyzerState
 import sibwaf.kawa.calculation.conditions.ConditionCalculatorResult
 import spoon.reflect.code.CtBreak
 import spoon.reflect.code.CtContinue
@@ -11,14 +12,14 @@ import java.util.LinkedList
 
 abstract class CtLoopAnalyzer<T : CtLoop> : StatementAnalyzer {
 
-    protected abstract suspend fun getPreCondition(state: StatementAnalyzerState, loop: T): ConditionCalculatorResult?
-    protected abstract suspend fun getPostCondition(state: StatementAnalyzerState, loop: T): ConditionCalculatorResult?
+    protected abstract suspend fun getPreCondition(state: AnalyzerState, loop: T): ConditionCalculatorResult?
+    protected abstract suspend fun getPostCondition(state: AnalyzerState, loop: T): ConditionCalculatorResult?
 
-    protected open suspend fun getBodyFlow(state: StatementAnalyzerState, loop: T): DataFrame {
+    protected open suspend fun getBodyFlow(state: AnalyzerState, loop: T): DataFrame {
         return state.getStatementFlow(loop.body)
     }
 
-    override suspend fun analyze(state: StatementAnalyzerState, statement: CtStatement): DataFrame {
+    override suspend fun analyze(state: AnalyzerState, statement: CtStatement): DataFrame {
         @Suppress("unchecked_cast")
         statement as T
 

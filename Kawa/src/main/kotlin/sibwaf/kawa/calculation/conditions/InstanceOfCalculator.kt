@@ -1,7 +1,7 @@
 package sibwaf.kawa.calculation.conditions
 
+import sibwaf.kawa.AnalyzerState
 import sibwaf.kawa.MutableDataFrame
-import sibwaf.kawa.calculation.ValueCalculatorState
 import sibwaf.kawa.constraints.BooleanConstraint
 import sibwaf.kawa.constraints.Nullability
 import sibwaf.kawa.constraints.ReferenceConstraint
@@ -16,7 +16,7 @@ class InstanceOfCalculator : ConditionCalculator {
     override fun supports(expression: CtExpression<*>) =
             expression is CtBinaryOperator<*> && expression.kind == BinaryOperatorKind.INSTANCEOF
 
-    override suspend fun calculateCondition(state: ValueCalculatorState, expression: CtExpression<*>): ConditionCalculatorResult {
+    override suspend fun calculateCondition(state: AnalyzerState, expression: CtExpression<*>): ConditionCalculatorResult {
         expression as CtBinaryOperator<*>
 
         val thenFrame = MutableDataFrame(state.frame)

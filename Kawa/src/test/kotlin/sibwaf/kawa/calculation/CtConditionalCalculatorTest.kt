@@ -1,6 +1,7 @@
 package sibwaf.kawa.calculation
 
 import kotlinx.coroutines.runBlocking
+import sibwaf.kawa.AnalyzerState
 import sibwaf.kawa.DataFrame
 import sibwaf.kawa.MutableDataFrame
 import sibwaf.kawa.calculation.conditions.EqualityConditionCalculator
@@ -45,7 +46,7 @@ class CtConditionalCalculatorTest : ValueCalculatorTestBase() {
                         CtLiteralCalculator()
                 )
         ) {
-            override suspend fun calculate(state: ValueCalculatorState, expression: CtExpression<*>): Pair<DataFrame, ConstrainedValue> {
+            override suspend fun calculate(state: AnalyzerState, expression: CtExpression<*>): Pair<DataFrame, ConstrainedValue> {
                 val parent = expression.parent
                 if (parent is CtConditional<*>) {
                     when {

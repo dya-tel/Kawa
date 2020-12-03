@@ -1,8 +1,8 @@
 package sibwaf.kawa.calculation.conditions
 
+import sibwaf.kawa.AnalyzerState
 import sibwaf.kawa.MutableDataFrame
 import sibwaf.kawa.UnreachableFrame
-import sibwaf.kawa.calculation.ValueCalculatorState
 import sibwaf.kawa.constraints.BooleanConstraint
 import sibwaf.kawa.constraints.Constraint
 import sibwaf.kawa.constraints.ReferenceConstraint
@@ -46,7 +46,7 @@ class EqualityConditionCalculator : ConditionCalculator {
         }
     }
 
-    override suspend fun calculateCondition(state: ValueCalculatorState, expression: CtExpression<*>): ConditionCalculatorResult {
+    override suspend fun calculateCondition(state: AnalyzerState, expression: CtExpression<*>): ConditionCalculatorResult {
         expression as CtBinaryOperator<*>
 
         val (leftFrame, leftValue) = state.getValue(expression.leftHandOperand)

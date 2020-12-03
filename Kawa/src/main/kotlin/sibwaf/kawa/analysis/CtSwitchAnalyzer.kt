@@ -2,6 +2,7 @@ package sibwaf.kawa.analysis
 
 import sibwaf.kawa.DataFrame
 import sibwaf.kawa.MutableDataFrame
+import sibwaf.kawa.AnalyzerState
 import spoon.reflect.code.CtBreak
 import spoon.reflect.code.CtStatement
 import spoon.reflect.code.CtSwitch
@@ -12,7 +13,7 @@ class CtSwitchAnalyzer : StatementAnalyzer {
 
     override fun supports(statement: CtStatement) = statement is CtSwitch<*>
 
-    override suspend fun analyze(state: StatementAnalyzerState, statement: CtStatement): DataFrame {
+    override suspend fun analyze(state: AnalyzerState, statement: CtStatement): DataFrame {
         statement as CtSwitch<*>
 
         val localState = state.copy(jumpPoints = ArrayList())

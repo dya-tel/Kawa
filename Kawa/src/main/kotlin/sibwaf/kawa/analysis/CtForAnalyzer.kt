@@ -2,6 +2,7 @@ package sibwaf.kawa.analysis
 
 import sibwaf.kawa.DataFrame
 import sibwaf.kawa.IdentityHashSet
+import sibwaf.kawa.AnalyzerState
 import sibwaf.kawa.UnreachableFrame
 import sibwaf.kawa.calculation.conditions.ConditionCalculatorResult
 import spoon.reflect.code.CtFor
@@ -11,13 +12,13 @@ class CtForAnalyzer : CtLoopAnalyzer<CtFor>() {
 
     override fun supports(statement: CtStatement) = statement is CtFor
 
-    override suspend fun getPreCondition(state: StatementAnalyzerState, loop: CtFor) =
+    override suspend fun getPreCondition(state: AnalyzerState, loop: CtFor) =
             loop.expression?.let { state.getConditionValue(it) }
 
-    override suspend fun getPostCondition(state: StatementAnalyzerState, loop: CtFor): ConditionCalculatorResult? =
+    override suspend fun getPostCondition(state: AnalyzerState, loop: CtFor): ConditionCalculatorResult? =
             null
 
-    override suspend fun getBodyFlow(state: StatementAnalyzerState, loop: CtFor): DataFrame {
+    override suspend fun getBodyFlow(state: AnalyzerState, loop: CtFor): DataFrame {
         var resultFrame = super.getBodyFlow(state, loop)
         for (update in loop.forUpdate) {
             resultFrame = state.copy(frame = resultFrame).getStatementFlow(update)
@@ -25,7 +26,7 @@ class CtForAnalyzer : CtLoopAnalyzer<CtFor>() {
         return resultFrame
     }
 
-    override suspend fun analyze(state: StatementAnalyzerState, statement: CtStatement): DataFrame {
+    override suspend fun analyze(state: AnalyzerState, statement: CtStatement): DataFrame {
         statement as CtFor
 
         var initializerState = state.copy(localVariables = IdentityHashSet())
