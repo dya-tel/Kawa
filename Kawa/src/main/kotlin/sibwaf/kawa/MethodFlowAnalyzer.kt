@@ -12,12 +12,12 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.joinAll
 import kotlinx.coroutines.launch
+import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import sibwaf.kawa.analysis.CtAbstractInvocationAnalyzer
 import sibwaf.kawa.analysis.CtAssertAnalyzer
 import sibwaf.kawa.analysis.CtAssignmentAnalyzer
 import sibwaf.kawa.analysis.CtBlockAnalyzer
-import sibwaf.kawa.analysis.CtBodyHolderAnalyzer
 import sibwaf.kawa.analysis.CtBreakAnalyzer
 import sibwaf.kawa.analysis.CtContinueAnalyzer
 import sibwaf.kawa.analysis.CtDoAnalyzer
@@ -32,11 +32,12 @@ import sibwaf.kawa.analysis.CtThrowAnalyzer
 import sibwaf.kawa.analysis.CtTryAnalyzer
 import sibwaf.kawa.analysis.CtUnaryOperatorAnalyzer
 import sibwaf.kawa.analysis.CtWhileAnalyzer
+import sibwaf.kawa.analysis.DelegatingStatementAnalyzer
+import sibwaf.kawa.analysis.StatementAnalyzer
 import sibwaf.kawa.analysis.StatementAnalyzerState
 import sibwaf.kawa.constraints.Constraint
 import sibwaf.kawa.values.Value
 import sibwaf.kawa.values.ValueSource
-import spoon.reflect.code.CtComment
 import spoon.reflect.code.CtStatement
 import spoon.reflect.code.CtThrow
 import spoon.reflect.declaration.CtConstructor
@@ -50,11 +51,26 @@ import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.Executors
 import kotlin.math.ceil
 
+private object FallbackAnalyzer : StatementAnalyzer {
+
+    private val log = LoggerFactory.getLogger(FallbackAnalyzer::class.java)
+    private val failedStatementTypes = ConcurrentHashSet<Class<*>>()
+
+    override fun supports(statement: CtStatement) = true
+
+    override suspend fun analyze(state: StatementAnalyzerState, statement: CtStatement): DataFrame {
+        if (failedStatementTypes.add(statement::class.java)) {
+            log.warn("Failed to find an analyzer for {}", statement::class.java)
+        }
+
+        return state.frame
+    }
+}
+
 class MethodFlowAnalyzer private constructor() {
 
     companion object {
-        private val log = LoggerFactory.getLogger(MethodFlowAnalyzer::class.java)
-        private val failedStatementTypes = Collections.newSetFromMap<Class<*>>(ConcurrentHashMap())
+        private val log: Logger = LoggerFactory.getLogger(MethodFlowAnalyzer::class.java)
 
         suspend fun analyze(types: Iterable<CtType<*>>, baseCoroutineCount: Int): Map<CtExecutable<*>, MethodFlow> {
             return Executors.newFixedThreadPool(baseCoroutineCount).asCoroutineDispatcher().use { dispatcher ->
@@ -130,7 +146,8 @@ class MethodFlowAnalyzer private constructor() {
     // TODO: concurrent identity
     private val cache = ConcurrentHashMap<CtExecutable<*>, Deferred<MethodFlow>>()
 
-    private val statementAnalyzers = listOf(
+    private val analyzer = DelegatingStatementAnalyzer(
+        listOf(
             CtLocalVariableAnalyzer(),
             CtAssignmentAnalyzer(),
             // TODO: all flow breaks should probably be merged into one StatementAnalyzer
@@ -148,9 +165,10 @@ class MethodFlowAnalyzer private constructor() {
             CtDoAnalyzer(),
             CtTryAnalyzer(),
             CtSynchronizedAnalyzer(),
-            CtBodyHolderAnalyzer(),
             CtBlockAnalyzer(),
-            CtAssertAnalyzer()
+            CtAssertAnalyzer(),
+            FallbackAnalyzer
+        )
     )
 
     private suspend fun getFlowFor(
@@ -226,11 +244,12 @@ class MethodFlowAnalyzer private constructor() {
                 returnPoints = IdentityHashSet(),
                 jumpPoints = ArrayList(),
                 methodFlowProvider = flowProvider,
-                statementFlowProvider = this::analyzeStatement,
-                valueProvider = { state, expression -> ValueCalculator.calculateValue(annotation, state.frame, expression, flowProvider) }
+                statementFlowProvider = analyzer::analyze,
+                valueProvider = ValueCalculator::calculateValue,
+                conditionValueProvider = ValueCalculator::calculateCondition
         )
 
-        analyzeStatement(analyzerState, bodyBlock)
+        analyzer.analyze(analyzerState, bodyBlock)
 
         val blockFlow = annotation.blocks.getValue(bodyBlock)
         annotation.startFrame = blockFlow.startFrame
@@ -248,42 +267,5 @@ class MethodFlowAnalyzer private constructor() {
         }
 
         return annotation
-    }
-
-    // TODO: move to a CtStatementAnalyzer class?
-    private suspend fun analyzeStatement(state: StatementAnalyzerState, statement: CtStatement): DataFrame {
-        if (statement is CtComment) {
-            return state.frame
-        }
-
-        state.annotation.frames[statement] = state.frame
-
-        if (state.frame is UnreachableFrame) {
-            return state.frame
-        }
-
-        // TODO
-        /*val additionalConstraints = LinkedList<Pair<Value, Constraint>>()
-        fun nextFrame(variable: CtVariable<*>, value: Value, constraint: Constraint): DataFrame {
-            return MutableDataFrame(frame).apply {
-                setValue(variable, value)
-                setConstraint(value, constraint)
-                for ((additionalValue, additionalConstraint) in additionalConstraints) {
-                    setConstraint(additionalValue, additionalConstraint)
-                }
-            }
-        }*/
-
-        for (analyzer in statementAnalyzers) {
-            if (analyzer.supports(statement)) {
-                return analyzer.analyze(state, statement)
-            }
-        }
-
-        if (failedStatementTypes.add(statement::class.java)) {
-            log.warn("Failed to find an analyzer for {}", statement::class.java)
-        }
-
-        return state.frame
     }
 }

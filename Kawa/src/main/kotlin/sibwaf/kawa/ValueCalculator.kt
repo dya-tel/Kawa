@@ -11,11 +11,13 @@ import sibwaf.kawa.calculation.CtLiteralCalculator
 import sibwaf.kawa.calculation.CtNewArrayCalculator
 import sibwaf.kawa.calculation.CtUnaryOperatorIncDecCalculator
 import sibwaf.kawa.calculation.CtVariableReadCalculator
+import sibwaf.kawa.calculation.DelegatingValueCalculator
 import sibwaf.kawa.calculation.ValueCalculatorState
 import sibwaf.kawa.calculation.conditions.BooleanAndCalculator
 import sibwaf.kawa.calculation.conditions.BooleanOrCalculator
 import sibwaf.kawa.calculation.conditions.ConditionCalculator
 import sibwaf.kawa.calculation.conditions.ConditionCalculatorResult
+import sibwaf.kawa.calculation.conditions.DelegatingConditionCalculator
 import sibwaf.kawa.calculation.conditions.EqualityConditionCalculator
 import sibwaf.kawa.calculation.conditions.InstanceOfCalculator
 import sibwaf.kawa.calculation.conditions.InvertedConditionCalculator
@@ -27,13 +29,37 @@ import sibwaf.kawa.values.ConstrainedValue
 import sibwaf.kawa.values.ValueSource
 import spoon.reflect.code.CtExpression
 import spoon.reflect.reference.CtExecutableReference
-import java.util.Collections
-import java.util.concurrent.ConcurrentHashMap
+
+private object FallbackCalculator : ConditionCalculator {
+
+    private val log = LoggerFactory.getLogger(FallbackCalculator::class.java)
+    private val failedExpressionTypes = ConcurrentHashSet<Class<*>>()
+
+    override fun supports(expression: CtExpression<*>) = true
+
+    override suspend fun calculate(state: ValueCalculatorState, expression: CtExpression<*>): Pair<DataFrame, ConstrainedValue> {
+        if (failedExpressionTypes.add(expression.javaClass)) {
+            log.warn("Failed to find a calculator for {}", expression.javaClass)
+        }
+
+        return MutableDataFrame(state.frame) to ConstrainedValue.from(expression, ValueSource.NONE)
+    }
+
+    override suspend fun calculateCondition(state: ValueCalculatorState, expression: CtExpression<*>): ConditionCalculatorResult {
+        if (failedExpressionTypes.add(expression.javaClass)) {
+            log.warn("Failed to find a condition calculator for {}", expression.javaClass)
+        }
+
+        return ConditionCalculatorResult(
+                thenFrame = MutableDataFrame(state.frame),
+                elseFrame = MutableDataFrame(state.frame),
+                value = BooleanValue(ValueSource.NONE),
+                constraint = BooleanConstraint.createUnknown()
+        )
+    }
+}
 
 object ValueCalculator {
-
-    private val log = LoggerFactory.getLogger(ValueCalculator::class.java)
-    private val failedExpressionTypes = Collections.newSetFromMap<Class<*>>(ConcurrentHashMap())
 
     private val calculators = listOf(
             BooleanAndCalculator(),
@@ -51,63 +77,22 @@ object ValueCalculator {
             CtAssignmentCalculator(),
             CtNewArrayCalculator(),
             CtLambdaCalculator(),
-            CtExecutableReferenceExpressionCalculator()
+            CtExecutableReferenceExpressionCalculator(),
+            FallbackCalculator
     )
 
     private val conditionCalculators = listOf(
             VariableReadConditionCalculator()
     ) + calculators.filterIsInstance<ConditionCalculator>()
 
-    private suspend fun calculateValue(state: ValueCalculatorState, expression: CtExpression<*>): Pair<DataFrame, ConstrainedValue> {
-        state.annotation.frames[expression] = state.frame
+    private val calculator = DelegatingValueCalculator(calculators)
+    private val conditionCalculator = DelegatingConditionCalculator(conditionCalculators)
 
-        if (state.frame is UnreachableFrame) {
-            return state.frame to ConstrainedValue.from(expression.type, ValueSource.NONE)
-        }
+    suspend fun calculateValue(state: ValueCalculatorState, expression: CtExpression<*>) =
+        calculator.calculate(state, expression)
 
-        for (calculator in calculators) {
-            if (calculator.supports(expression)) {
-                return calculator.calculate(state, expression)
-            }
-        }
-
-        if (failedExpressionTypes.add(expression.javaClass)) {
-            log.warn("Failed to find a calculator for {}", expression.javaClass)
-        }
-
-        return MutableDataFrame(state.frame) to ConstrainedValue.from(expression, ValueSource.NONE)
-    }
-
-    private suspend fun calculateCondition(state: ValueCalculatorState, expression: CtExpression<*>): ConditionCalculatorResult {
-        state.annotation.frames[expression] = state.frame
-
-        if (state.frame is UnreachableFrame) {
-            return ConditionCalculatorResult(
-                    thenFrame = state.frame,
-                    elseFrame = state.frame,
-                    value = BooleanValue(ValueSource.NONE),
-                    constraint = BooleanConstraint.createUnknown()
-            )
-        }
-
-        for (calculator in conditionCalculators) {
-            if (calculator.supports(expression)) {
-                return calculator.calculateCondition(state, expression)
-            }
-        }
-
-        if (failedExpressionTypes.add(expression.javaClass)) {
-            log.warn("Failed to find a condition calculator for {}", expression.javaClass)
-        }
-
-        val nextFrame = MutableDataFrame(state.frame)
-        return ConditionCalculatorResult(
-                thenFrame = nextFrame,
-                elseFrame = nextFrame,
-                value = BooleanValue(ValueSource.NONE),
-                constraint = BooleanConstraint.createUnknown()
-        )
-    }
+    suspend fun calculateCondition(state: ValueCalculatorState, expression: CtExpression<*>) =
+        conditionCalculator.calculateCondition(state, expression)
 
     suspend fun calculateValue(
             annotation: MethodFlow,

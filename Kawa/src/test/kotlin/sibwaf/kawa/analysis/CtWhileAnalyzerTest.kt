@@ -2,6 +2,7 @@ package sibwaf.kawa.analysis
 
 import kotlinx.coroutines.runBlocking
 import sibwaf.kawa.UnreachableFrame
+import sibwaf.kawa.calculation.conditions.LiteralConditionCalculator
 import sibwaf.kawa.parseStatement
 import spoon.reflect.code.CtWhile
 import strikt.api.expectThat
@@ -13,9 +14,13 @@ class CtWhileAnalyzerTest : StatementAnalyzerTestBase() {
     @Test fun `Test resulting frame is unreachable in while (true) without jumps`() {
         val loop = parseStatement<CtWhile>("while (true) {}")
 
-        val analyzer = TestCtStatementAnalyzer(listOf(CtWhileAnalyzer(), CtBlockAnalyzer()))
+        val analyzer = DelegatingStatementAnalyzer(listOf(CtWhileAnalyzer(), CtBlockAnalyzer()))
+
         val resultFrame = runBlocking {
-            analyzeStatement(analyzer, loop)
+            analyzeStatement(analyzer, loop) {
+                val calculator = LiteralConditionCalculator()
+                copy(conditionValueProvider = { state, expression -> calculator.calculateCondition(state, expression) })
+            }
         }
 
         expectThat(resultFrame).isA<UnreachableFrame>()

@@ -3,26 +3,18 @@ package sibwaf.kawa.analysis
 import sibwaf.kawa.DataFrame
 import sibwaf.kawa.EmptyFlow
 import sibwaf.kawa.MutableDataFrame
-import sibwaf.kawa.constraints.Constraint
-import sibwaf.kawa.values.ConstrainedValue
-import sibwaf.kawa.values.Value
-import sibwaf.kawa.values.ValueSource
+import sibwaf.kawa.calculation.DelegatingValueCalculator
+import sibwaf.kawa.calculation.conditions.DelegatingConditionCalculator
 import spoon.reflect.code.CtStatement
 import java.util.Collections
 
 abstract class StatementAnalyzerTestBase {
 
-    protected open class TestCtStatementAnalyzer(private val analyzers: List<StatementAnalyzer>) : StatementAnalyzer {
-        override fun supports(statement: CtStatement) = true
+    protected open class StatementAnalyzerWrapper(private val analyzer: StatementAnalyzer) : StatementAnalyzer {
+        override fun supports(statement: CtStatement) = analyzer.supports(statement)
 
         override suspend fun analyze(state: StatementAnalyzerState, statement: CtStatement): DataFrame {
-            for (analyzer in analyzers) {
-                if (analyzer.supports(statement)) {
-                    return analyzer.analyze(state, statement)
-                }
-            }
-
-            throw IllegalStateException("No analyzer registered for ${statement.javaClass}")
+            return analyzer.analyze(state, statement)
         }
     }
 
@@ -38,9 +30,11 @@ abstract class StatementAnalyzerTestBase {
                 returnPoints = Collections.emptySet(),
                 jumpPoints = Collections.emptyList(),
                 methodFlowProvider = { EmptyFlow },
-                statementFlowProvider = { state, currentStatement -> statementAnalyzer.analyze(state, currentStatement) },
-                valueProvider = { state, _ -> state.frame to ConstrainedValue(Value(ValueSource.NONE), Constraint.createUnknown()) }
+                statementFlowProvider = statementAnalyzer::analyze,
+                valueProvider = DelegatingValueCalculator(emptyList())::calculate,
+                conditionValueProvider = DelegatingConditionCalculator(emptyList())::calculateCondition
         )
-        return statementAnalyzer.analyze(state.customizeState(), statement)
+
+        return state.customizeState().getStatementFlow(statement)
     }
 }

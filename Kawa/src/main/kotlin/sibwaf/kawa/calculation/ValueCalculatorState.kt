@@ -2,8 +2,12 @@ package sibwaf.kawa.calculation
 
 import sibwaf.kawa.DataFrame
 import sibwaf.kawa.MethodFlow
+import sibwaf.kawa.UnreachableFrame
 import sibwaf.kawa.calculation.conditions.ConditionCalculatorResult
+import sibwaf.kawa.constraints.BooleanConstraint
+import sibwaf.kawa.values.BooleanValue
 import sibwaf.kawa.values.ConstrainedValue
+import sibwaf.kawa.values.ValueSource
 import spoon.reflect.code.CtExpression
 import spoon.reflect.reference.CtExecutableReference
 
@@ -20,10 +24,28 @@ data class ValueCalculatorState(
     }
 
     suspend fun getValue(expression: CtExpression<*>): Pair<DataFrame, ConstrainedValue> {
+        annotation.frames[expression] = frame
+
+        if (frame is UnreachableFrame) {
+            return frame to ConstrainedValue.from(expression, ValueSource.NONE) // TODO: invalid value
+        }
+
         return valueProvider(this, expression)
     }
 
     suspend fun getConditionValue(expression: CtExpression<*>): ConditionCalculatorResult {
+        annotation.frames[expression] = frame
+
+        if (frame is UnreachableFrame) {
+            // TODO: invalid result
+            return ConditionCalculatorResult(
+                    thenFrame = frame,
+                    elseFrame = frame,
+                    value = BooleanValue(ValueSource.NONE),
+                    constraint = BooleanConstraint.createUnknown()
+            )
+        }
+
         return conditionValueProvider(this, expression)
     }
 }

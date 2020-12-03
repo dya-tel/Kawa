@@ -7,6 +7,7 @@ import spoon.reflect.visitor.filter.TypeFilter
 import java.util.Collections
 import java.util.IdentityHashMap
 import java.util.Stack
+import java.util.concurrent.ConcurrentHashMap
 import kotlin.math.ceil
 import kotlin.math.min
 
@@ -14,6 +15,9 @@ typealias BinaryOperation<T> = T.(T) -> T
 
 @Suppress("FunctionName")
 fun <T> IdentityHashSet(): MutableSet<T> = Collections.newSetFromMap(IdentityHashMap())
+
+@Suppress("FunctionName")
+fun <T> ConcurrentHashSet(): MutableSet<T> = Collections.newSetFromMap(ConcurrentHashMap())
 
 fun <T> List<T>.splitIntoParts(parts: Int): List<List<T>> {
     val size = size

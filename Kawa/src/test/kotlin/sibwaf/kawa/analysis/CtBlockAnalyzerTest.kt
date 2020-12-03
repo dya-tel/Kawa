@@ -2,6 +2,7 @@ package sibwaf.kawa.analysis
 
 import kotlinx.coroutines.runBlocking
 import sibwaf.kawa.DataFrame
+import sibwaf.kawa.calculation.CtLiteralCalculator
 import sibwaf.kawa.getElementsOf
 import sibwaf.kawa.parseMethod
 import spoon.reflect.code.CtBlock
@@ -34,7 +35,8 @@ class CtBlockAnalyzerTest : StatementAnalyzerTestBase() {
         lateinit var outerBlockVariables: Set<CtLocalVariable<*>>
         lateinit var innerBlockVariables: Set<CtLocalVariable<*>>
 
-        val statementAnalyzer = object : TestCtStatementAnalyzer(listOf(CtLocalVariableAnalyzer(), CtBlockAnalyzer())) {
+        val statementAnalyzer = DelegatingStatementAnalyzer(listOf(CtLocalVariableAnalyzer(), CtBlockAnalyzer()))
+        val wrappedStatementAnalyzer = object : StatementAnalyzerWrapper(statementAnalyzer) {
             override suspend fun analyze(state: StatementAnalyzerState, statement: CtStatement): DataFrame {
                 val frame = super.analyze(state, statement)
 
@@ -50,10 +52,10 @@ class CtBlockAnalyzerTest : StatementAnalyzerTestBase() {
         }
 
         runBlocking {
-            analyzeStatement(
-                    statementAnalyzer = statementAnalyzer,
-                    statement = outerBlock
-            )
+            analyzeStatement(wrappedStatementAnalyzer, outerBlock) {
+                val calculator = CtLiteralCalculator()
+                copy(valueProvider = { state, expression -> calculator.calculate(state, expression) })
+            }
         }
 
         expect {
@@ -87,7 +89,9 @@ class CtBlockAnalyzerTest : StatementAnalyzerTestBase() {
         val (xVariable, yVariable, zVariable) = method.getElementsOf<CtLocalVariable<*>>()
 
         val frames = HashMap<CtStatement, DataFrame>()
-        val statementAnalyzer = object : TestCtStatementAnalyzer(listOf(CtLocalVariableAnalyzer(), CtBlockAnalyzer())) {
+
+        val statementAnalyzer = DelegatingStatementAnalyzer(listOf(CtLocalVariableAnalyzer(), CtBlockAnalyzer()))
+        val wrappedStatementAnalyzer = object : StatementAnalyzerWrapper(statementAnalyzer) {
             override suspend fun analyze(state: StatementAnalyzerState, statement: CtStatement): DataFrame {
                 if (statement is CtLocalVariable<*>) {
                     frames[statement] = state.frame
@@ -97,10 +101,10 @@ class CtBlockAnalyzerTest : StatementAnalyzerTestBase() {
         }
 
         runBlocking {
-            analyzeStatement(
-                    statementAnalyzer = statementAnalyzer,
-                    statement = method.body
-            )
+            analyzeStatement(wrappedStatementAnalyzer, method.body) {
+                val calculator = CtLiteralCalculator()
+                copy(valueProvider = { state, expression -> calculator.calculate(state, expression) })
+            }
         }
 
         expect {
