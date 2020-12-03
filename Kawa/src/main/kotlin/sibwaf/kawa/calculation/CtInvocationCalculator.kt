@@ -28,9 +28,13 @@ class CtInvocationCalculator : CtTargetedExpressionCalculator() {
             currentState = state.copy(frame = nextFrame)
         }
 
+        if (currentState.frame is UnreachableFrame) {
+            return currentState.frame to ConstrainedValue.from(expression, ValueSource.NONE) // TODO: invalid value
+        }
+
         val flow = currentState.getMethodFlow(expression.executable)
         if (flow.neverReturns) {
-            return UnreachableFrame.after(currentState.frame) to ConstrainedValue.from(expression, ValueSource.NONE)
+            return UnreachableFrame.after(currentState.frame) to ConstrainedValue.from(expression, ValueSource.NONE) // TODO: invalid value
         }
 
         val value = Value.from(expression.type, ValueSource.NONE)
