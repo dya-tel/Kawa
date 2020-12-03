@@ -9,7 +9,6 @@ import sibwaf.kawa.thenBlock
 import spoon.reflect.code.CtIf
 import strikt.api.expectThat
 import strikt.assertions.isA
-import strikt.assertions.isTrue
 import kotlin.test.Test
 
 @Suppress("ClassName")
@@ -71,16 +70,16 @@ class Hibernate_BinaryArithmeticOperatorNode_resolveDateTimeArithmeticResultType
     @Test fun `Test 'lhsIsDateTime && !rhsIsDateTime' is not a constant condition`() {
         val method = type.methods.single { it.simpleName == "resolveDateTimeArithmeticResultType" }
         val block = method.getElementsOf<CtIf>()
-                .single {
-                    val text = it.condition.toString()
-                    text.contains("lhsIsDateTime") && text.contains("&&") && text.contains("!rhsIsDateTime")
-                }
-                .thenBlock
+            .single {
+                val text = it.condition.toString()
+                text.contains("lhsIsDateTime") && text.contains("&&") && text.contains("!rhsIsDateTime")
+            }
+            .thenBlock
 
         val flow = runBlocking { analyze(method) }
         val blockFlow = flow.blocks.getValue(block)
 
         expectThat(blockFlow.startFrame)
-                .not().isA<UnreachableFrame>()
+            .not().isA<UnreachableFrame>()
     }
 }

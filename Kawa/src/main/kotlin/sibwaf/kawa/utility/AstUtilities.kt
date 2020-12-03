@@ -16,4 +16,4 @@ fun flattenExpression(expression: CtExpression<*>, operatorKind: BinaryOperatorK
 }
 
 fun flattenExpression(expression: CtBinaryOperator<*>) =
-        flattenExpression(expression.leftHandOperand, expression.kind) + flattenExpression(expression.rightHandOperand, expression.kind)
+    flattenExpression(expression.leftHandOperand, expression.kind) + flattenExpression(expression.rightHandOperand, expression.kind)

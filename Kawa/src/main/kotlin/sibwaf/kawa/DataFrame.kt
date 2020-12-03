@@ -15,9 +15,9 @@ sealed class DataFrame(previous: DataFrame?) {
 
         internal fun merge(previous: DataFrame, frames: Iterable<DataFrame>): DataFrame {
             val reachableFrames = frames.asSequence()
-                    .filter { it !is UnreachableFrame }
-                    .onEach { require(it.previous == previous) { "Frames must be compacted before merging" } }
-                    .toList()
+                .filter { it !is UnreachableFrame }
+                .onEach { require(it.previous == previous) { "Frames must be compacted before merging" } }
+                .toList()
 
             if (reachableFrames.isEmpty()) {
                 return UnreachableFrame.after(previous)
@@ -29,8 +29,8 @@ sealed class DataFrame(previous: DataFrame?) {
             // TODO: next?
 
             val affectedValues = reachableFrames.asSequence()
-                    .flatMap { it.constraintDiff.keys }
-                    .distinct()
+                .flatMap { it.constraintDiff.keys }
+                .distinct()
 
             // TODO: volatile constraints
 
@@ -40,8 +40,8 @@ sealed class DataFrame(previous: DataFrame?) {
             }
 
             val affectedVariables = reachableFrames.asSequence()
-                    .flatMap { it.valueDiff.keys }
-                    .distinct()
+                .flatMap { it.valueDiff.keys }
+                .distinct()
 
             for (variable in affectedVariables) {
                 val values = reachableFrames.mapNotNull { frame -> frame.getValue(variable) }
@@ -93,8 +93,8 @@ sealed class DataFrame(previous: DataFrame?) {
 
     fun getConstraint(value: Value): Constraint? {
         return volatileConstraintDiff[value]
-                ?: constraintDiff[value]
-                ?: previous?.getConstraint(value)
+            ?: constraintDiff[value]
+            ?: previous?.getConstraint(value)
     }
 
     fun getConstraint(variable: CtVariable<*>): Constraint? {
@@ -148,7 +148,7 @@ sealed class DataFrame(previous: DataFrame?) {
         var currentFrame = this
         while (currentFrame.previous != bound) {
             currentFrame = currentFrame.previous
-                    ?: throw IllegalStateException("Specified frame is not linked to this one")
+                ?: throw IllegalStateException("Specified frame is not linked to this one")
 
             chain = RightChain(chain, currentFrame)
         }
@@ -264,7 +264,7 @@ class UnreachableFrame private constructor(previous: DataFrame) : DataFrame(prev
         set(_) = throw UnsupportedOperationException("Unreachable frame can't be modified")
 
     override fun copy(retiredVariables: Collection<CtVariable<*>>, keepVolatileConstraints: Boolean): DataFrame =
-            throw UnsupportedOperationException("Unreachable frame can't be copied")
+        throw UnsupportedOperationException("Unreachable frame can't be copied")
 
     override fun compact(bound: DataFrame): DataFrame {
         if (previous == bound) {
@@ -280,5 +280,5 @@ class UnreachableFrame private constructor(previous: DataFrame) : DataFrame(prev
     }
 
     override fun eraseValues(): DataFrame =
-            throw UnsupportedOperationException("Unreachable frame can't be copied with erased values")
+        throw UnsupportedOperationException("Unreachable frame can't be copied with erased values")
 }

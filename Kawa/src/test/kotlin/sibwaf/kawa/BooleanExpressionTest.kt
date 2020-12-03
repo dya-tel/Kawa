@@ -13,19 +13,19 @@ class BooleanExpressionTest : MethodAnalyzerTestBase() {
 
     private fun evaluate(expression: String, prepare: String = ""): BooleanConstraint {
         val parameters = VARIABLE_REGEX.findAll(expression)
-                .map { it.groupValues[1] }
-                .distinct()
-                .joinToString { "boolean $it" }
+            .map { it.groupValues[1] }
+            .distinct()
+            .joinToString { "boolean $it" }
 
         val cleanExpression = expression.replace(VARIABLE_REGEX, "$1")
 
         val method = parseMethod(
-                """
-                void test($parameters) {
-                    $prepare;
-                    boolean result = $cleanExpression;
-                }
-                """.trimIndent()
+            """
+            void test($parameters) {
+                $prepare;
+                boolean result = $cleanExpression;
+            }
+            """.trimIndent()
         )
 
         val flow = runBlocking { analyze(method) }
@@ -35,14 +35,14 @@ class BooleanExpressionTest : MethodAnalyzerTestBase() {
 
     private fun checkExact(expression: String, expected: Boolean, prepare: String = "") {
         expectThat(evaluate(expression, prepare))
-                .describedAs("result")
-                .assertThat("is $expected") {
-                    if (expected) {
-                        it.isTrue
-                    } else {
-                        it.isFalse
-                    }
+            .describedAs("result")
+            .assertThat("is $expected") {
+                if (expected) {
+                    it.isTrue
+                } else {
+                    it.isFalse
                 }
+            }
     }
 
     @Test fun `x && !x == false`() = checkExact("@x && !@x", false)
@@ -51,9 +51,9 @@ class BooleanExpressionTest : MethodAnalyzerTestBase() {
     @Test fun `(x && y) && !(x && y) == false`() = checkExact("(@x && @y) && !(@x && @y)", false)
     @Test fun `y = !x, x && y == false`() {
         checkExact(
-                prepare = "boolean y = !x",
-                expression = "@x && y",
-                expected = false
+            prepare = "boolean y = !x",
+            expression = "@x && y",
+            expected = false
         )
     }
 
@@ -63,9 +63,9 @@ class BooleanExpressionTest : MethodAnalyzerTestBase() {
     @Test fun `(x && y) || !(x && y) == true`() = checkExact("(@x && @y) || !(@x && @y)", true)
     @Test fun `y = !x, x || y == true`() {
         checkExact(
-                prepare = "boolean y = !x",
-                expression = "@x || y",
-                expected = true
+            prepare = "boolean y = !x",
+            expression = "@x || y",
+            expected = true
         )
     }
 

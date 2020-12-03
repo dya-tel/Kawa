@@ -58,8 +58,8 @@ class Hibernate_InFlightMetadataCollectorImpl : MethodAnalyzerTestBase() {
         val flow = runBlocking { analyze(method) }
 
         expectThat(flow.endFrame.getConstraint(currentTable))
-                .isA<ReferenceConstraint>()
-                .get { nullability }
-                .isEqualTo(Nullability.POSSIBLE_NULL)
+            .isA<ReferenceConstraint>()
+            .get { nullability }
+            .isEqualTo(Nullability.POSSIBLE_NULL)
     }
 }

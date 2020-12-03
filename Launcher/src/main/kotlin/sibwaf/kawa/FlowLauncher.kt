@@ -6,18 +6,18 @@ import java.security.MessageDigest
 
 private fun String.stableHash(): BigInteger {
     return MessageDigest
-            .getInstance("SHA-256")
-            .digest(toByteArray())
-            .let { BigInteger(it) }
+        .getInstance("SHA-256")
+        .digest(toByteArray())
+        .let { BigInteger(it) }
 }
 
 fun main(args: Array<String>) {
     val sources = collectSources(args.map { Paths.get(it) })
 
     val hash = sources.map { it.absolutePath.stableHash() }
-            .reduce(BigInteger::add)
-            .toString()
-            .takeLast(32)
+        .reduce(BigInteger::add)
+        .toString()
+        .takeLast(32)
 
     val model = ModelLoader(hash, sources)
 

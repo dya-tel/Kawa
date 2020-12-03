@@ -27,10 +27,10 @@ class VariableReadConditionCalculator : ConditionCalculator {
         val constraint = (declaration?.let { state.frame.getConstraint(it) } as? BooleanConstraint) ?: BooleanConstraint.createUnknown()
 
         return ConditionCalculatorResult(
-                thenFrame = if (constraint.isFalse) UnreachableFrame.after(state.frame) else thenFrame,
-                elseFrame = if (constraint.isTrue) UnreachableFrame.after(state.frame) else elseFrame,
-                value = value,
-                constraint = constraint
+            thenFrame = if (constraint.isFalse) UnreachableFrame.after(state.frame) else thenFrame,
+            elseFrame = if (constraint.isTrue) UnreachableFrame.after(state.frame) else elseFrame,
+            value = value,
+            constraint = constraint
         )
     }
 }

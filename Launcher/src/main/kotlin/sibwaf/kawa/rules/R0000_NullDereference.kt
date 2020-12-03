@@ -27,9 +27,9 @@ class R0000_NullDereference : Rule() {
         val frame = getFrame(flow, expression)?.takeUnless { it is UnreachableFrame } ?: return
 
         val target = expression.target
-                ?.takeUnless { it is CtThisAccess<*> }
-                ?.takeUnless { it is CtTypeReference<*> }
-                ?: return
+            ?.takeUnless { it is CtThisAccess<*> }
+            ?.takeUnless { it is CtTypeReference<*> }
+            ?: return
 
         val (value, constraint) = getValue(frame, target)
         if (constraint !is ReferenceConstraint) {

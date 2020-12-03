@@ -13,14 +13,14 @@ class NullMergingTest : MethodAnalyzerTestBase() {
 
     @Test fun `Test 'if' possible null merging single-branch`() {
         val method = parseMethod(
-                """
-                void test(boolean condition) {
-                    java.util.List<String> list = new java.util.ArrayList<>();
-                    if (condition) {
-                        list = null;
-                    }
+            """
+            void test(boolean condition) {
+                java.util.List<String> list = new java.util.ArrayList<>();
+                if (condition) {
+                    list = null;
                 }
-                """.trimIndent()
+            }
+            """.trimIndent()
         )
 
         val flow = runBlocking { analyze(method) }
@@ -28,25 +28,25 @@ class NullMergingTest : MethodAnalyzerTestBase() {
         val frame = flow.endFrame
 
         expectThat(frame.getConstraint(variables.getValue("list")))
-                .describedAs("list constraint")
-                .isNotNull()
-                .isA<ReferenceConstraint>()
-                .get { nullability }
-                .isEqualTo(Nullability.POSSIBLE_NULL)
+            .describedAs("list constraint")
+            .isNotNull()
+            .isA<ReferenceConstraint>()
+            .get { nullability }
+            .isEqualTo(Nullability.POSSIBLE_NULL)
     }
 
     @Test fun `Test 'if' possible null merging multi-branch`() {
         val method = parseMethod(
-                """
-                void test(boolean condition) {
-                    java.util.List<String> list;
-                    if (condition) {
-                        list = null;
-                    } else {
-                        list = new java.util.ArrayList<>();
-                    }
+            """
+            void test(boolean condition) {
+                java.util.List<String> list;
+                if (condition) {
+                    list = null;
+                } else {
+                    list = new java.util.ArrayList<>();
                 }
-                """.trimIndent()
+            }
+            """.trimIndent()
         )
 
         val flow = runBlocking { analyze(method) }
@@ -54,27 +54,27 @@ class NullMergingTest : MethodAnalyzerTestBase() {
         val frame = flow.endFrame
 
         expectThat(frame.getConstraint(variables.getValue("list")))
-                .describedAs("list constraint")
-                .isNotNull()
-                .isA<ReferenceConstraint>()
-                .get { nullability }
-                .isEqualTo(Nullability.POSSIBLE_NULL)
+            .describedAs("list constraint")
+            .isNotNull()
+            .isA<ReferenceConstraint>()
+            .get { nullability }
+            .isEqualTo(Nullability.POSSIBLE_NULL)
     }
 
     @Test fun `Test 'if (x == null) { x = not-null }' merging`() {
         val method = parseMethod(
-                """
-                void test(boolean condition) {
-                    java.util.List<String> list = new java.util.ArrayList<>();
-                    if (condition) {
-                        list = null;
-                    }
-
-                    if (list == null) {
-                        list = new java.util.ArrayList<>();
-                    }
+            """
+            void test(boolean condition) {
+                java.util.List<String> list = new java.util.ArrayList<>();
+                if (condition) {
+                    list = null;
                 }
-                """.trimIndent()
+
+                if (list == null) {
+                    list = new java.util.ArrayList<>();
+                }
+            }
+            """.trimIndent()
         )
 
         val flow = runBlocking { analyze(method) }
@@ -82,10 +82,10 @@ class NullMergingTest : MethodAnalyzerTestBase() {
         val frame = flow.endFrame//.previous!!
 
         expectThat(frame.getConstraint(variables.getValue("list")))
-                .describedAs("list constraint")
-                .isNotNull()
-                .isA<ReferenceConstraint>()
-                .get { nullability }
-                .isEqualTo(Nullability.NEVER_NULL)
+            .describedAs("list constraint")
+            .isNotNull()
+            .isA<ReferenceConstraint>()
+            .get { nullability }
+            .isEqualTo(Nullability.NEVER_NULL)
     }
 }

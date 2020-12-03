@@ -1,7 +1,7 @@
 package sibwaf.kawa.analysis
 
-import sibwaf.kawa.DataFrame
 import sibwaf.kawa.AnalyzerState
+import sibwaf.kawa.DataFrame
 import sibwaf.kawa.calculation.ValueCalculator
 import spoon.reflect.code.CtExpression
 import spoon.reflect.code.CtStatement

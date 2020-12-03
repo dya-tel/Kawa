@@ -15,7 +15,11 @@ class CtInvocationCalculator : CtTargetedExpressionCalculator() {
 
     override fun supports(expression: CtExpression<*>) = expression is CtInvocation<*>
 
-    override suspend fun calculate(state: AnalyzerState, expression: CtExpression<*>, target: ConstrainedValue): Pair<DataFrame, ConstrainedValue> {
+    override suspend fun calculate(
+        state: AnalyzerState,
+        expression: CtExpression<*>,
+        target: ConstrainedValue
+    ): Pair<DataFrame, ConstrainedValue> {
         expression as CtInvocation<*>
 
         var currentState = state

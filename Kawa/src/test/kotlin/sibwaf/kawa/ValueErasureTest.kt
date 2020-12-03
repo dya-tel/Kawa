@@ -10,11 +10,11 @@ class ValueErasureTest : MethodAnalyzerTestBase() {
 
     @Test fun `Test value erasure`() {
         val method = parseMethod(
-                """
-                void test() {
-                    Object x = null;
-                }
-                """.trimIndent()
+            """
+            void test() {
+                Object x = null;
+            }
+            """.trimIndent()
         )
 
         val flow = runBlocking { analyze(method) }
@@ -24,13 +24,13 @@ class ValueErasureTest : MethodAnalyzerTestBase() {
         val nextFrame = assignmentFrame.next!!
 
         expectThat(assignmentFrame.eraseValues())
-                .describedAs("erased frame")
-                .and {
-                    get { getValue(variable) }
-                            .isNotSameInstanceAs(nextFrame.getValue(variable))
+            .describedAs("erased frame")
+            .and {
+                get { getValue(variable) }
+                    .isNotSameInstanceAs(nextFrame.getValue(variable))
 
-                    get { getConstraint(variable) }
-                            .isNotSameInstanceAs(nextFrame.getConstraint(variable))
-                }
+                get { getConstraint(variable) }
+                    .isNotSameInstanceAs(nextFrame.getConstraint(variable))
+            }
     }
 }

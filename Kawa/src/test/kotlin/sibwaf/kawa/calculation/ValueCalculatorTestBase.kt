@@ -13,8 +13,8 @@ import java.util.Collections
 abstract class ValueCalculatorTestBase {
 
     protected open class TestValueCalculator(
-            private val calculators: List<ValueCalculator>,
-            private val conditionCalculators: List<ConditionCalculator> = calculators.filterIsInstance<ConditionCalculator>()
+        private val calculators: List<ValueCalculator>,
+        private val conditionCalculators: List<ConditionCalculator> = calculators.filterIsInstance<ConditionCalculator>()
     ) : ConditionCalculator {
 
         override fun supports(expression: CtExpression<*>) = true
@@ -42,15 +42,15 @@ abstract class ValueCalculatorTestBase {
 
     protected fun createState(calculator: ConditionCalculator): AnalyzerState {
         return AnalyzerState(
-                annotation = EmptyFlow,
-                frame = MutableDataFrame(null),
-                localVariables = Collections.emptySet(),
-                returnPoints = Collections.emptySet(),
-                jumpPoints = Collections.emptySet(),
-                methodFlowProvider = { EmptyFlow },
-                statementFlowProvider = { _, _ -> throw IllegalStateException() },
-                valueProvider = { state, currentExpression -> calculator.calculate(state, currentExpression) },
-                conditionValueProvider = { state, currentExpression -> calculator.calculateCondition(state, currentExpression) }
+            annotation = EmptyFlow,
+            frame = MutableDataFrame(null),
+            localVariables = Collections.emptySet(),
+            returnPoints = Collections.emptySet(),
+            jumpPoints = Collections.emptySet(),
+            methodFlowProvider = { EmptyFlow },
+            statementFlowProvider = { _, _ -> throw IllegalStateException() },
+            valueProvider = { state, currentExpression -> calculator.calculate(state, currentExpression) },
+            conditionValueProvider = { state, currentExpression -> calculator.calculateCondition(state, currentExpression) }
         )
     }
 

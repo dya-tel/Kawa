@@ -43,21 +43,21 @@ class Hibernate_AuditProcess_executeInSession : MethodAnalyzerTestBase() {
 
     @Test fun `Test 'vwu' is non-null after assignment with check`() {
         val loopStarts = method.getElementsOf<CtWhile>()
-                .map { it.body as CtBlock<*> }
-                .map { it.first() }
+            .map { it.body as CtBlock<*> }
+            .map { it.first() }
 
         val vwu = method.extractVariables().getValue("vwu")
 
         val flow = runBlocking { analyze(method) }
 
         expectThat(loopStarts)
-                .describedAs("for first statements in loops")
-                .all {
-                    get { flow.frames.getValue(this).getConstraint(vwu) }
-                            .describedAs("vwu constraint")
-                            .isA<ReferenceConstraint>()
-                            .get { nullability }
-                            .isEqualTo(Nullability.NEVER_NULL)
-                }
+            .describedAs("for first statements in loops")
+            .all {
+                get { flow.frames.getValue(this).getConstraint(vwu) }
+                    .describedAs("vwu constraint")
+                    .isA<ReferenceConstraint>()
+                    .get { nullability }
+                    .isEqualTo(Nullability.NEVER_NULL)
+            }
     }
 }

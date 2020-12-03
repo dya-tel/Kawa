@@ -15,13 +15,13 @@ class ConditionTest : MethodAnalyzerTestBase() {
 
     @Test fun `Test single null-checked value inside 'if' branches`() {
         val method = parseMethod(
-                """
-                void test(Object x) {
-                    if (x == null) {
-                    } else {
-                    }
+            """
+            void test(Object x) {
+                if (x == null) {
+                } else {
                 }
-                """.trimIndent()
+            }
+            """.trimIndent()
         )
 
         val flow = runBlocking { analyze(method) }
@@ -33,26 +33,26 @@ class ConditionTest : MethodAnalyzerTestBase() {
 
         expect {
             that(thenBranchFrame.getConstraint(parameter) as ReferenceConstraint)
-                    .describedAs("parameter constraint in then-branch")
-                    .get { nullability }
-                    .isEqualTo(Nullability.ALWAYS_NULL)
+                .describedAs("parameter constraint in then-branch")
+                .get { nullability }
+                .isEqualTo(Nullability.ALWAYS_NULL)
 
             that(elseBranchFrame.getConstraint(parameter) as ReferenceConstraint)
-                    .describedAs("parameter constraint in else-branch")
-                    .get { nullability }
-                    .isEqualTo(Nullability.NEVER_NULL)
+                .describedAs("parameter constraint in else-branch")
+                .get { nullability }
+                .isEqualTo(Nullability.NEVER_NULL)
         }
     }
 
     @Test fun `Test single non-null-checked value inside 'if' branches`() {
         val method = parseMethod(
-                """
-                void test(Object x) {
-                    if (x != null) {
-                    } else {
-                    }
+            """
+            void test(Object x) {
+                if (x != null) {
+                } else {
                 }
-                """.trimIndent()
+            }
+            """.trimIndent()
         )
 
         val flow = runBlocking { analyze(method) }
@@ -64,28 +64,28 @@ class ConditionTest : MethodAnalyzerTestBase() {
 
         expect {
             that(thenBranchFrame.getConstraint(parameter) as ReferenceConstraint)
-                    .describedAs("parameter constraint in then-branch")
-                    .get { nullability }
-                    .isEqualTo(Nullability.NEVER_NULL)
+                .describedAs("parameter constraint in then-branch")
+                .get { nullability }
+                .isEqualTo(Nullability.NEVER_NULL)
 
             that(elseBranchFrame.getConstraint(parameter) as ReferenceConstraint)
-                    .describedAs("parameter constraint in else-branch")
-                    .get { nullability }
-                    .isEqualTo(Nullability.ALWAYS_NULL)
+                .describedAs("parameter constraint in else-branch")
+                .get { nullability }
+                .isEqualTo(Nullability.ALWAYS_NULL)
         }
     }
 
     @Test fun `Test null-check with optional flow break doesn't affect next frame`() {
         val method = parseMethod(
-                """
-                void test(boolean condition, Object x) {
-                    if (x == null || condition) {
-                        if (condition) {
-                            return;
-                        }
+            """
+            void test(boolean condition, Object x) {
+                if (x == null || condition) {
+                    if (condition) {
+                        return;
                     }
                 }
-                """.trimIndent()
+            }
+            """.trimIndent()
         )
 
         val flow = runBlocking { analyze(method) }
@@ -95,23 +95,23 @@ class ConditionTest : MethodAnalyzerTestBase() {
 
         expect {
             that(frame.getConstraint(parameter))
-                    .describedAs("parameter constraint")
-                    .isNotNull()
-                    .isA<ReferenceConstraint>()
-                    .get { nullability }
-                    .isEqualTo(Nullability.UNKNOWN)
+                .describedAs("parameter constraint")
+                .isNotNull()
+                .isA<ReferenceConstraint>()
+                .get { nullability }
+                .isEqualTo(Nullability.UNKNOWN)
         }
     }
 
     @Test fun `Test null-check with flow break affects next frames`() {
         val method = parseMethod(
-                """
-                void test(Object x) {
-                    if (x == null) {
-                        return;
-                    }
+            """
+            void test(Object x) {
+                if (x == null) {
+                    return;
                 }
-                """.trimIndent()
+            }
+            """.trimIndent()
         )
 
         val flow = runBlocking { analyze(method) }
@@ -121,23 +121,23 @@ class ConditionTest : MethodAnalyzerTestBase() {
 
         expect {
             that(frame.getConstraint(parameter))
-                    .describedAs("parameter constraint")
-                    .isNotNull()
-                    .isA<ReferenceConstraint>()
-                    .get { nullability }
-                    .isEqualTo(Nullability.NEVER_NULL)
+                .describedAs("parameter constraint")
+                .isNotNull()
+                .isA<ReferenceConstraint>()
+                .get { nullability }
+                .isEqualTo(Nullability.NEVER_NULL)
         }
     }
 
     @Test fun `Test 'if' merging doesn't change nullability information`() {
         val method = parseMethod(
-                """
-                void test(Object x) {
-                    if (x == null) {
-                    } else {
-                    }
+            """
+            void test(Object x) {
+                if (x == null) {
+                } else {
                 }
-                """.trimIndent()
+            }
+            """.trimIndent()
         )
 
         val flow = runBlocking { analyze(method) }
@@ -145,10 +145,10 @@ class ConditionTest : MethodAnalyzerTestBase() {
         val frame = flow.endFrame
 
         expectThat(frame.getConstraint(parameter))
-                .describedAs("parameter constraint")
-                .isNotNull()
-                .isA<ReferenceConstraint>()
-                .get { nullability }
-                .isEqualTo(Nullability.UNKNOWN)
+            .describedAs("parameter constraint")
+            .isNotNull()
+            .isA<ReferenceConstraint>()
+            .get { nullability }
+            .isEqualTo(Nullability.UNKNOWN)
     }
 }

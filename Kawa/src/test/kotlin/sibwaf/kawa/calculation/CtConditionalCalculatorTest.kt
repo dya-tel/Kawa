@@ -25,11 +25,11 @@ class CtConditionalCalculatorTest : ValueCalculatorTestBase() {
 
     @Test fun `Test null check inferred constraints in branches`() {
         val method = parseMethod(
-                """
-                void test(Object x) {
-                    Object y = x == null ? x : x; 
-                }
-                """.trimIndent()
+            """
+            void test(Object x) {
+                Object y = x == null ? x : x; 
+            }
+            """.trimIndent()
         )
 
         val x = method.extractVariables().getValue("x")
@@ -39,12 +39,12 @@ class CtConditionalCalculatorTest : ValueCalculatorTestBase() {
         lateinit var thenFrame: DataFrame
         lateinit var elseFrame: DataFrame
         val calculator = object : TestValueCalculator(
-                calculators = listOf(
-                        EqualityConditionCalculator(),
-                        CtVariableReadCalculator(),
-                        CtConditionalCalculator(),
-                        CtLiteralCalculator()
-                )
+            calculators = listOf(
+                EqualityConditionCalculator(),
+                CtVariableReadCalculator(),
+                CtConditionalCalculator(),
+                CtLiteralCalculator()
+            )
         ) {
             override suspend fun calculate(state: AnalyzerState, expression: CtExpression<*>): Pair<DataFrame, ConstrainedValue> {
                 val parent = expression.parent
@@ -69,20 +69,20 @@ class CtConditionalCalculatorTest : ValueCalculatorTestBase() {
 
         expect {
             that(thenFrame)
-                    .describedAs("then frame")
-                    .get { getConstraint(x) }
-                    .describedAs("inferred x constraint")
-                    .isA<ReferenceConstraint>()
-                    .get { nullability }
-                    .isEqualTo(Nullability.ALWAYS_NULL)
+                .describedAs("then frame")
+                .get { getConstraint(x) }
+                .describedAs("inferred x constraint")
+                .isA<ReferenceConstraint>()
+                .get { nullability }
+                .isEqualTo(Nullability.ALWAYS_NULL)
 
             that(elseFrame)
-                    .describedAs("else frame")
-                    .get { getConstraint(x) }
-                    .describedAs("inferred x constraint")
-                    .isA<ReferenceConstraint>()
-                    .get { nullability }
-                    .isEqualTo(Nullability.NEVER_NULL)
+                .describedAs("else frame")
+                .get { getConstraint(x) }
+                .describedAs("inferred x constraint")
+                .isA<ReferenceConstraint>()
+                .get { nullability }
+                .isEqualTo(Nullability.NEVER_NULL)
         }
     }
 }

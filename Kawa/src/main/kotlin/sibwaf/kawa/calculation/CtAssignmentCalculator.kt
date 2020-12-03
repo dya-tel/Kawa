@@ -19,9 +19,9 @@ class CtAssignmentCalculator : ValueCalculator {
         val (frame, result) = state.getValue(expression.assignment)
 
         val variable = (expression.assigned as? CtVariableAccess<*>)
-                ?.variable
-                ?.declaration
-                ?.takeUnless { it is CtField<*> }
+            ?.variable
+            ?.declaration
+            ?.takeUnless { it is CtField<*> }
 
         val resultFrame = if (variable != null) {
             MutableDataFrame(frame).apply {

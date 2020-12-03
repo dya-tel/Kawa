@@ -13,9 +13,9 @@ import spoon.reflect.code.CtTargetedExpression
 abstract class CtTargetedExpressionCalculator : ValueCalculator {
 
     protected abstract suspend fun calculate(
-            state: AnalyzerState,
-            expression: CtExpression<*>,
-            target: ConstrainedValue
+        state: AnalyzerState,
+        expression: CtExpression<*>,
+        target: ConstrainedValue
     ): Pair<DataFrame, ConstrainedValue>
 
     final override suspend fun calculate(state: AnalyzerState, expression: CtExpression<*>): Pair<DataFrame, ConstrainedValue> {

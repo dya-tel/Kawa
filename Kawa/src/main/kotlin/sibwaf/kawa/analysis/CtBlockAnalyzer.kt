@@ -1,10 +1,10 @@
 package sibwaf.kawa.analysis
 
+import sibwaf.kawa.AnalyzerState
 import sibwaf.kawa.BlockFlow
 import sibwaf.kawa.DataFrame
 import sibwaf.kawa.IdentityHashSet
 import sibwaf.kawa.MutableDataFrame
-import sibwaf.kawa.AnalyzerState
 import sibwaf.kawa.UnreachableFrame
 import spoon.reflect.code.CtBlock
 import spoon.reflect.code.CtStatement
@@ -19,8 +19,8 @@ class CtBlockAnalyzer : StatementAnalyzer {
 
         val startFrame: DataFrame = MutableDataFrame(state.frame)
         var localState = state.copy(
-                frame = startFrame,
-                localVariables = IdentityHashSet()
+            frame = startFrame,
+            localVariables = IdentityHashSet()
         )
 
         for (nestedStatement in statement.statements) {
@@ -42,8 +42,8 @@ class CtBlockAnalyzer : StatementAnalyzer {
 
         return if (endFrame is UnreachableFrame) {
             val cleanedFrame = endFrame.previous
-                    .compact(state.frame)
-                    .copy(retiredVariables = localState.localVariables)
+                .compact(state.frame)
+                .copy(retiredVariables = localState.localVariables)
 
             UnreachableFrame.after(cleanedFrame)
         } else {

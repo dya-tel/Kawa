@@ -14,7 +14,7 @@ import spoon.reflect.code.CtExpression
 class InstanceOfCalculator : ConditionCalculator {
 
     override fun supports(expression: CtExpression<*>) =
-            expression is CtBinaryOperator<*> && expression.kind == BinaryOperatorKind.INSTANCEOF
+        expression is CtBinaryOperator<*> && expression.kind == BinaryOperatorKind.INSTANCEOF
 
     override suspend fun calculateCondition(state: AnalyzerState, expression: CtExpression<*>): ConditionCalculatorResult {
         expression as CtBinaryOperator<*>
@@ -34,10 +34,10 @@ class InstanceOfCalculator : ConditionCalculator {
 
         // FIXME: reachability
         return ConditionCalculatorResult(
-                thenFrame = thenFrame,
-                elseFrame = elseFrame,
-                value = BooleanValue(ValueSource.NONE),
-                constraint = resultConstraint
+            thenFrame = thenFrame,
+            elseFrame = elseFrame,
+            value = BooleanValue(ValueSource.NONE),
+            constraint = resultConstraint
         )
     }
 }

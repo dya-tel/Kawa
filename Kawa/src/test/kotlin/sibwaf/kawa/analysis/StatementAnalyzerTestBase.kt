@@ -1,9 +1,9 @@
 package sibwaf.kawa.analysis
 
+import sibwaf.kawa.AnalyzerState
 import sibwaf.kawa.DataFrame
 import sibwaf.kawa.EmptyFlow
 import sibwaf.kawa.MutableDataFrame
-import sibwaf.kawa.AnalyzerState
 import sibwaf.kawa.calculation.DelegatingValueCalculator
 import sibwaf.kawa.calculation.conditions.DelegatingConditionCalculator
 import spoon.reflect.code.CtStatement
@@ -20,20 +20,20 @@ abstract class StatementAnalyzerTestBase {
     }
 
     protected suspend fun analyzeStatement(
-            statementAnalyzer: StatementAnalyzer,
-            statement: CtStatement,
-            customizeState: AnalyzerState.() -> AnalyzerState = { this }
+        statementAnalyzer: StatementAnalyzer,
+        statement: CtStatement,
+        customizeState: AnalyzerState.() -> AnalyzerState = { this }
     ): DataFrame {
         val state = AnalyzerState(
-                annotation = EmptyFlow,
-                frame = MutableDataFrame(null),
-                localVariables = Collections.emptySet(),
-                returnPoints = Collections.emptySet(),
-                jumpPoints = Collections.emptyList(),
-                methodFlowProvider = { EmptyFlow },
-                statementFlowProvider = statementAnalyzer::analyze,
-                valueProvider = DelegatingValueCalculator(emptyList())::calculate,
-                conditionValueProvider = DelegatingConditionCalculator(emptyList())::calculateCondition
+            annotation = EmptyFlow,
+            frame = MutableDataFrame(null),
+            localVariables = Collections.emptySet(),
+            returnPoints = Collections.emptySet(),
+            jumpPoints = Collections.emptyList(),
+            methodFlowProvider = { EmptyFlow },
+            statementFlowProvider = statementAnalyzer::analyze,
+            valueProvider = DelegatingValueCalculator(emptyList())::calculate,
+            conditionValueProvider = DelegatingConditionCalculator(emptyList())::calculateCondition
         )
 
         return state.customizeState().getStatementFlow(statement)

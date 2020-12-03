@@ -46,8 +46,8 @@ class Analyzer(private val modelLoader: ModelLoader, private val baseCoroutineCo
             val allWarnings = runBlocking {
                 val processors = types.splitIntoParts(baseCoroutineCount).map { part ->
                     val rules = ruleTypes
-                            .map { it.newInstance() }
-                            .onEach { it.flow = flow }
+                        .map { it.newInstance() }
+                        .onEach { it.flow = flow }
 
                     val scanner = object : CtScanner() {
                         override fun scan(element: CtElement?) {

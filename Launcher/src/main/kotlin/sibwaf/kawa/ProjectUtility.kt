@@ -10,13 +10,13 @@ fun collectSources(vararg paths: Path): Collection<File> {
 
 fun collectSources(paths: Iterable<Path>): Collection<File> {
     return paths.asSequence()
-            .flatMap { Files.walk(it, 1).iterator().asSequence() }
-            .plus(paths)
-            .map { it.resolve("src").resolve("main").resolve("java") }
-            .filter { Files.exists(it) }
-            .filter {
-                Files.walk(it).noneMatch { file -> file.fileName.toString() == "module-info.java" }
-            }
-            .map { it.toFile() }
-            .toList()
+        .flatMap { Files.walk(it, 1).iterator().asSequence() }
+        .plus(paths)
+        .map { it.resolve("src").resolve("main").resolve("java") }
+        .filter { Files.exists(it) }
+        .filter {
+            Files.walk(it).noneMatch { file -> file.fileName.toString() == "module-info.java" }
+        }
+        .map { it.toFile() }
+        .toList()
 }

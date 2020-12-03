@@ -19,11 +19,11 @@ class VariableReadConditionCalculatorTest : ValueCalculatorTestBase() {
 
     @Test fun `Test inferred constraint`() {
         val method = parseMethod(
-                """
-                void test(boolean x) {
-                    boolean y = x;
-                }
-                """.trimIndent()
+            """
+            void test(boolean x) {
+                boolean y = x;
+            }
+            """.trimIndent()
         )
 
         val x = method.extractVariables().getValue("x")
@@ -41,16 +41,16 @@ class VariableReadConditionCalculatorTest : ValueCalculatorTestBase() {
 
         expect {
             that(result.thenFrame.getConstraint(x))
-                    .describedAs("x constraint in then-frame")
-                    .isA<BooleanConstraint>()
-                    .get { isTrue }
-                    .isTrue()
+                .describedAs("x constraint in then-frame")
+                .isA<BooleanConstraint>()
+                .get { isTrue }
+                .isTrue()
 
             that(result.elseFrame.getConstraint(x))
-                    .describedAs("x constraint in else-frame")
-                    .isA<BooleanConstraint>()
-                    .get { isFalse }
-                    .isTrue()
+                .describedAs("x constraint in else-frame")
+                .isA<BooleanConstraint>()
+                .get { isFalse }
+                .isTrue()
         }
     }
 }

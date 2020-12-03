@@ -1,8 +1,8 @@
 package sibwaf.kawa.analysis
 
 import kotlinx.coroutines.runBlocking
-import sibwaf.kawa.DataFrame
 import sibwaf.kawa.AnalyzerState
+import sibwaf.kawa.DataFrame
 import sibwaf.kawa.calculation.CtLiteralCalculator
 import sibwaf.kawa.getElementsOf
 import sibwaf.kawa.parseMethod
@@ -20,14 +20,14 @@ class CtBlockAnalyzerTest : StatementAnalyzerTestBase() {
 
     @Test fun `Test local variable context isolation`() {
         val method = parseMethod(
-                """
-                void test() {
-                    String x = null;
-                    {
-                        String y = null;
-                    }
+            """
+            void test() {
+                String x = null;
+                {
+                    String y = null;
                 }
-                """.trimIndent()
+            }
+            """.trimIndent()
         )
 
         val outerBlock = method.body!!
@@ -61,14 +61,14 @@ class CtBlockAnalyzerTest : StatementAnalyzerTestBase() {
 
         expect {
             that(outerBlockVariables)
-                    .describedAs("outer block variables")
-                    .map { it.simpleName }
-                    .containsExactly("x")
+                .describedAs("outer block variables")
+                .map { it.simpleName }
+                .containsExactly("x")
 
             that(innerBlockVariables)
-                    .describedAs("inner block variables")
-                    .map { it.simpleName }
-                    .containsExactly("y")
+                .describedAs("inner block variables")
+                .map { it.simpleName }
+                .containsExactly("y")
         }
     }
 
@@ -78,13 +78,13 @@ class CtBlockAnalyzerTest : StatementAnalyzerTestBase() {
 
     @Test fun `Test inner frame chaining`() {
         val method = parseMethod(
-                """
-                void test() {
-                    String x = null;
-                    String y = null;
-                    String z = null;
-                }
-                """.trimIndent()
+            """
+            void test() {
+                String x = null;
+                String y = null;
+                String z = null;
+            }
+            """.trimIndent()
         )
 
         val (xVariable, yVariable, zVariable) = method.getElementsOf<CtLocalVariable<*>>()
@@ -110,26 +110,26 @@ class CtBlockAnalyzerTest : StatementAnalyzerTestBase() {
 
         expect {
             that(frames[xVariable])
-                    .describedAs("first frame")
-                    .isNotNull()
-                    .and {
-                        get { next }.isNotNull().isSameInstanceAs(frames[yVariable])
-                    }
+                .describedAs("first frame")
+                .isNotNull()
+                .and {
+                    get { next }.isNotNull().isSameInstanceAs(frames[yVariable])
+                }
 
             that(frames[yVariable])
-                    .describedAs("middle frame")
-                    .isNotNull()
-                    .and {
-                        get { previous }.isNotNull().isSameInstanceAs(frames[xVariable])
-                        get { next }.isNotNull().isSameInstanceAs(frames[zVariable])
-                    }
+                .describedAs("middle frame")
+                .isNotNull()
+                .and {
+                    get { previous }.isNotNull().isSameInstanceAs(frames[xVariable])
+                    get { next }.isNotNull().isSameInstanceAs(frames[zVariable])
+                }
 
             that(frames[zVariable])
-                    .describedAs("last frame")
-                    .isNotNull()
-                    .and {
-                        get { previous }.isNotNull().isSameInstanceAs(frames[yVariable])
-                    }
+                .describedAs("last frame")
+                .isNotNull()
+                .and {
+                    get { previous }.isNotNull().isSameInstanceAs(frames[yVariable])
+                }
         }
     }
 

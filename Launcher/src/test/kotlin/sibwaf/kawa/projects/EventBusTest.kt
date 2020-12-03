@@ -5,7 +5,7 @@ import sibwaf.kawa.ModelLoader
 
 class EventBusTest : DiffTesterBase() {
     override val model = ModelLoader(
-            "event-bus",
-            "EventBus-master/EventBus/src"
+        "event-bus",
+        "EventBus-master/EventBus/src"
     )
 }

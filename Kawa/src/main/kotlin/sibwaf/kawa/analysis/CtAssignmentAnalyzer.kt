@@ -1,9 +1,9 @@
 package sibwaf.kawa.analysis
 
+import sibwaf.kawa.AnalyzerState
 import sibwaf.kawa.DataFrame
 import sibwaf.kawa.MethodPurity
 import sibwaf.kawa.MutableDataFrame
-import sibwaf.kawa.AnalyzerState
 import spoon.reflect.code.CtAssignment
 import spoon.reflect.code.CtFieldWrite
 import spoon.reflect.code.CtStatement
@@ -21,8 +21,8 @@ class CtAssignmentAnalyzer : StatementAnalyzer {
             state.annotation.purity = MethodPurity.DIRTIES_THIS // TODO
         } else {
             val targetVariable = (target as? CtVariableAccess<*>)
-                    ?.variable
-                    ?.declaration
+                ?.variable
+                ?.declaration
 
             if (targetVariable != null) {
                 val (frame, result) = state.getValue(statement.assignment)

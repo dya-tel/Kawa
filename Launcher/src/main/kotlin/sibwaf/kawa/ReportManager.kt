@@ -21,8 +21,8 @@ class ReportManager(private val directory: Path = Paths.get("reports")) {
         val WARNING_COMPARATOR = fileComparator.then(positionComparator)
 
         fun getDiff(
-                previous: Collection<SerializableWarningWrapper>,
-                current: Collection<SerializableWarningWrapper>
+            previous: Collection<SerializableWarningWrapper>,
+            current: Collection<SerializableWarningWrapper>
         ): Map<SerializableWarningWrapper, DiffType> {
             val result = IdentityHashMap<SerializableWarningWrapper, DiffType>()
 

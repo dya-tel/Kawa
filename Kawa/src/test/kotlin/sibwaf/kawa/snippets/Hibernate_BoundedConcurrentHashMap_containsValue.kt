@@ -38,11 +38,11 @@ class Hibernate_BoundedConcurrentHashMap_containsValue : MethodAnalyzerTestBase(
         val frame = flow.endFrame
 
         expectThat(frame.getConstraint(cleanSweep))
-                .describedAs("cleanSweep")
-                .isA<BooleanConstraint>()
-                .and {
-                    get { isFalse }.isFalse()
-                    get { isTrue }.isFalse()
-                }
+            .describedAs("cleanSweep")
+            .isA<BooleanConstraint>()
+            .and {
+                get { isFalse }.isFalse()
+                get { isTrue }.isFalse()
+            }
     }
 }

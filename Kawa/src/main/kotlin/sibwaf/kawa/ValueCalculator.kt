@@ -51,10 +51,10 @@ private object FallbackCalculator : ConditionCalculator {
         }
 
         return ConditionCalculatorResult(
-                thenFrame = MutableDataFrame(state.frame),
-                elseFrame = MutableDataFrame(state.frame),
-                value = BooleanValue(ValueSource.NONE),
-                constraint = BooleanConstraint.createUnknown()
+            thenFrame = MutableDataFrame(state.frame),
+            elseFrame = MutableDataFrame(state.frame),
+            value = BooleanValue(ValueSource.NONE),
+            constraint = BooleanConstraint.createUnknown()
         )
     }
 }
@@ -62,27 +62,27 @@ private object FallbackCalculator : ConditionCalculator {
 object ValueCalculator {
 
     private val calculators = listOf(
-            BooleanAndCalculator(),
-            BooleanOrCalculator(),
-            EqualityConditionCalculator(),
-            LiteralConditionCalculator(),
-            InvertedConditionCalculator(),
-            InstanceOfCalculator(),
-            CtUnaryOperatorIncDecCalculator(),
-            CtVariableReadCalculator(),
-            CtConstructorCallCalculator(),
-            CtInvocationCalculator(),
-            CtLiteralCalculator(),
-            CtConditionalCalculator(),
-            CtAssignmentCalculator(),
-            CtNewArrayCalculator(),
-            CtLambdaCalculator(),
-            CtExecutableReferenceExpressionCalculator(),
-            FallbackCalculator
+        BooleanAndCalculator(),
+        BooleanOrCalculator(),
+        EqualityConditionCalculator(),
+        LiteralConditionCalculator(),
+        InvertedConditionCalculator(),
+        InstanceOfCalculator(),
+        CtUnaryOperatorIncDecCalculator(),
+        CtVariableReadCalculator(),
+        CtConstructorCallCalculator(),
+        CtInvocationCalculator(),
+        CtLiteralCalculator(),
+        CtConditionalCalculator(),
+        CtAssignmentCalculator(),
+        CtNewArrayCalculator(),
+        CtLambdaCalculator(),
+        CtExecutableReferenceExpressionCalculator(),
+        FallbackCalculator
     )
 
     private val conditionCalculators = listOf(
-            VariableReadConditionCalculator()
+        VariableReadConditionCalculator()
     ) + calculators.filterIsInstance<ConditionCalculator>()
 
     private val calculator = DelegatingValueCalculator(calculators)
@@ -95,38 +95,38 @@ object ValueCalculator {
         conditionCalculator.calculateCondition(state, expression)
 
     private fun createState(
-            annotation: MethodFlow,
-            frame: DataFrame,
-            flowProvider: suspend (CtExecutableReference<*>) -> MethodFlow
+        annotation: MethodFlow,
+        frame: DataFrame,
+        flowProvider: suspend (CtExecutableReference<*>) -> MethodFlow
     ): AnalyzerState {
         return AnalyzerState(
-                annotation = annotation,
-                frame = frame,
-                localVariables = Collections.emptySet(),
-                returnPoints = Collections.emptySet(),
-                jumpPoints = Collections.emptySet(),
-                methodFlowProvider = flowProvider,
-                statementFlowProvider = { _, _ -> throw IllegalStateException() },
-                valueProvider = { state, expr -> calculateValue(state, expr) },
-                conditionValueProvider = { state, expr -> calculateCondition(state, expr) }
+            annotation = annotation,
+            frame = frame,
+            localVariables = Collections.emptySet(),
+            returnPoints = Collections.emptySet(),
+            jumpPoints = Collections.emptySet(),
+            methodFlowProvider = flowProvider,
+            statementFlowProvider = { _, _ -> throw IllegalStateException() },
+            valueProvider = { state, expr -> calculateValue(state, expr) },
+            conditionValueProvider = { state, expr -> calculateCondition(state, expr) }
         )
     }
 
     suspend fun calculateValue(
-            annotation: MethodFlow,
-            frame: DataFrame,
-            expression: CtExpression<*>,
-            flowProvider: suspend (CtExecutableReference<*>) -> MethodFlow
+        annotation: MethodFlow,
+        frame: DataFrame,
+        expression: CtExpression<*>,
+        flowProvider: suspend (CtExecutableReference<*>) -> MethodFlow
     ): Pair<DataFrame, ConstrainedValue> {
         val state = createState(annotation, frame, flowProvider)
         return calculateValue(state, expression)
     }
 
     suspend fun calculateCondition(
-            annotation: MethodFlow,
-            frame: DataFrame,
-            expression: CtExpression<*>,
-            flowProvider: suspend (CtExecutableReference<*>) -> MethodFlow
+        annotation: MethodFlow,
+        frame: DataFrame,
+        expression: CtExpression<*>,
+        flowProvider: suspend (CtExecutableReference<*>) -> MethodFlow
     ): ConditionCalculatorResult {
         val state = createState(annotation, frame, flowProvider)
         return calculateCondition(state, expression)

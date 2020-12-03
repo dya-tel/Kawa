@@ -1,7 +1,7 @@
 package sibwaf.kawa.analysis
 
-import sibwaf.kawa.DataFrame
 import sibwaf.kawa.AnalyzerState
+import sibwaf.kawa.DataFrame
 import spoon.reflect.code.CtStatement
 
 class DelegatingStatementAnalyzer(private val analyzers: List<StatementAnalyzer>) : StatementAnalyzer {

@@ -13,19 +13,19 @@ class EqualityComparisonTest : MethodAnalyzerTestBase() {
 
     private fun evaluate(expression: String, prepare: String = "", type: String = "Object"): BooleanConstraint {
         val parameters = VARIABLE_REGEX.findAll(expression)
-                .map { it.groupValues[1] }
-                .distinct()
-                .joinToString { "$type $it" }
+            .map { it.groupValues[1] }
+            .distinct()
+            .joinToString { "$type $it" }
 
         val cleanExpression = expression.replace(VARIABLE_REGEX, "$1")
 
         val method = parseMethod(
-                """
-                void test($parameters) {
-                    $prepare;
-                    boolean result = $cleanExpression;
-                }
-                """.trimIndent()
+            """
+            void test($parameters) {
+                $prepare;
+                boolean result = $cleanExpression;
+            }
+            """.trimIndent()
         )
 
         val flow = runBlocking { analyze(method) }
@@ -35,14 +35,14 @@ class EqualityComparisonTest : MethodAnalyzerTestBase() {
 
     private fun checkExact(expression: String, expected: Boolean, prepare: String = "", type: String = "Object") {
         expectThat(evaluate(expression, prepare, type))
-                .describedAs("result")
-                .assertThat("is $expected") {
-                    if (expected) {
-                        it.isTrue
-                    } else {
-                        it.isFalse
-                    }
+            .describedAs("result")
+            .assertThat("is $expected") {
+                if (expected) {
+                    it.isTrue
+                } else {
+                    it.isFalse
                 }
+            }
     }
 
     @Test fun `(null == null) == true`() = checkExact("null == null", true)
@@ -55,9 +55,9 @@ class EqualityComparisonTest : MethodAnalyzerTestBase() {
 
     @Test fun `Same values are equal`() {
         checkExact(
-                prepare = "Object y = x;",
-                expression = "@x == y",
-                expected = true
+            prepare = "Object y = x;",
+            expression = "@x == y",
+            expected = true
         )
     }
 }

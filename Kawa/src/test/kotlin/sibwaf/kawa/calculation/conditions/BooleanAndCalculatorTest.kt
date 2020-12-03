@@ -23,11 +23,11 @@ class BooleanAndCalculatorTest : ValueCalculatorTestBase() {
 
     @Test fun `Test inferred constraints with multiple null checks`() {
         val method = parseMethod(
-                """
-                void test(Object x, Object y) {
-                    boolean a = x == null && y == null;
-                }
-                """.trimIndent()
+            """
+            void test(Object x, Object y) {
+                boolean a = x == null && y == null;
+            }
+            """.trimIndent()
         )
 
         val variables = method.extractVariables()
@@ -36,12 +36,12 @@ class BooleanAndCalculatorTest : ValueCalculatorTestBase() {
         val expression = method.getElementsOf<CtLocalVariable<*>>().single().defaultExpression
 
         val calculator = TestValueCalculator(
-                calculators = listOf(
-                        BooleanAndCalculator(),
-                        CtVariableReadCalculator(),
-                        EqualityConditionCalculator(),
-                        CtLiteralCalculator()
-                )
+            calculators = listOf(
+                BooleanAndCalculator(),
+                CtVariableReadCalculator(),
+                EqualityConditionCalculator(),
+                CtLiteralCalculator()
+            )
         )
 
         val frame = MutableDataFrame(null).apply {
@@ -58,34 +58,34 @@ class BooleanAndCalculatorTest : ValueCalculatorTestBase() {
         expect {
             that(result.thenFrame).describedAs("then frame").and {
                 get { getConstraint(x) }
-                        .describedAs("inferred x constraint")
-                        .isA<ReferenceConstraint>()
-                        .get { nullability }
-                        .isEqualTo(Nullability.ALWAYS_NULL)
+                    .describedAs("inferred x constraint")
+                    .isA<ReferenceConstraint>()
+                    .get { nullability }
+                    .isEqualTo(Nullability.ALWAYS_NULL)
 
                 get { getConstraint(y) }
-                        .describedAs("inferred y constraint")
-                        .isA<ReferenceConstraint>()
-                        .get { nullability }
-                        .isEqualTo(Nullability.ALWAYS_NULL)
+                    .describedAs("inferred y constraint")
+                    .isA<ReferenceConstraint>()
+                    .get { nullability }
+                    .isEqualTo(Nullability.ALWAYS_NULL)
             }
 
             // TODO: proper nullability
 
             that(result.elseFrame).describedAs("else frame").and {
                 get { getConstraint(x) }
-                        .describedAs("old x constraint")
-                        .isA<ReferenceConstraint>()
-                        .get { nullability }
+                    .describedAs("old x constraint")
+                    .isA<ReferenceConstraint>()
+                    .get { nullability }
 //                        .isEqualTo((frame.getConstraint(x) as ReferenceConstraint).nullability)
-                        .isOneOf(Nullability.UNKNOWN, Nullability.POSSIBLE_NULL)
+                    .isOneOf(Nullability.UNKNOWN, Nullability.POSSIBLE_NULL)
 
                 get { getConstraint(y) }
-                        .describedAs("old y constraint")
-                        .isA<ReferenceConstraint>()
-                        .get { nullability }
+                    .describedAs("old y constraint")
+                    .isA<ReferenceConstraint>()
+                    .get { nullability }
 //                        .isEqualTo((frame.getConstraint(y) as ReferenceConstraint).nullability)
-                        .isOneOf(Nullability.UNKNOWN, Nullability.POSSIBLE_NULL)
+                    .isOneOf(Nullability.UNKNOWN, Nullability.POSSIBLE_NULL)
             }
         }
     }

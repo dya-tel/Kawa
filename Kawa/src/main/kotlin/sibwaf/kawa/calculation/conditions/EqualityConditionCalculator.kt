@@ -15,15 +15,15 @@ import spoon.reflect.code.CtExpression
 import spoon.reflect.code.CtLiteral
 
 private data class InferredConstraint(
-        val value: Value,
-        val thenConstraint: Constraint,
-        val elseConstraint: Constraint
+    val value: Value,
+    val thenConstraint: Constraint,
+    val elseConstraint: Constraint
 )
 
 class EqualityConditionCalculator : ConditionCalculator {
 
     override fun supports(expression: CtExpression<*>) =
-            expression is CtBinaryOperator<*> && (expression.kind == BinaryOperatorKind.EQ || expression.kind == BinaryOperatorKind.NE)
+        expression is CtBinaryOperator<*> && (expression.kind == BinaryOperatorKind.EQ || expression.kind == BinaryOperatorKind.NE)
 
     private fun inferEqualityConstraint(operator: CtBinaryOperator<*>, leftValue: Value, rightValue: Value): InferredConstraint? {
         val leftOperand = operator.leftHandOperand
@@ -31,15 +31,15 @@ class EqualityConditionCalculator : ConditionCalculator {
 
         return if (leftOperand is CtLiteral<*> && leftOperand.value == null) {
             InferredConstraint(
-                    value = rightValue,
-                    thenConstraint = ReferenceConstraint.createNull(),
-                    elseConstraint = ReferenceConstraint.createNonNull()
+                value = rightValue,
+                thenConstraint = ReferenceConstraint.createNull(),
+                elseConstraint = ReferenceConstraint.createNonNull()
             )
         } else if (rightOperand is CtLiteral<*> && rightOperand.value == null) {
             InferredConstraint(
-                    value = leftValue,
-                    thenConstraint = ReferenceConstraint.createNull(),
-                    elseConstraint = ReferenceConstraint.createNonNull()
+                value = leftValue,
+                thenConstraint = ReferenceConstraint.createNull(),
+                elseConstraint = ReferenceConstraint.createNonNull()
             )
         } else {
             null
@@ -75,17 +75,17 @@ class EqualityConditionCalculator : ConditionCalculator {
 
         return if (expression.kind == BinaryOperatorKind.EQ) {
             ConditionCalculatorResult(
-                    thenFrame = thenFrame,
-                    elseFrame = elseFrame,
-                    value = BooleanValue(ValueSource.NONE),
-                    constraint = resultConstraint
+                thenFrame = thenFrame,
+                elseFrame = elseFrame,
+                value = BooleanValue(ValueSource.NONE),
+                constraint = resultConstraint
             )
         } else {
             ConditionCalculatorResult(
-                    thenFrame = elseFrame,
-                    elseFrame = thenFrame,
-                    value = BooleanValue(ValueSource.NONE),
-                    constraint = resultConstraint.invert()
+                thenFrame = elseFrame,
+                elseFrame = thenFrame,
+                value = BooleanValue(ValueSource.NONE),
+                constraint = resultConstraint.invert()
             )
         }
     }

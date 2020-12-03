@@ -1,8 +1,8 @@
 package sibwaf.kawa.analysis
 
+import sibwaf.kawa.AnalyzerState
 import sibwaf.kawa.DataFrame
 import sibwaf.kawa.MutableDataFrame
-import sibwaf.kawa.AnalyzerState
 import sibwaf.kawa.calculation.conditions.ConditionCalculatorResult
 import spoon.reflect.code.CtBreak
 import spoon.reflect.code.CtContinue

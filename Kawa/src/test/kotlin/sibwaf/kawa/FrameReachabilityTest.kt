@@ -10,15 +10,15 @@ class FrameReachabilityTest : MethodAnalyzerTestBase() {
 
     @Test fun `Test branch reachability with always false condition`() {
         val method = parseMethod(
-                """
-                void test() {
-                    if (false) {
-                        Object x = null;
-                    } else {
-                        Object y = null;
-                    }
+            """
+            void test() {
+                if (false) {
+                    Object x = null;
+                } else {
+                    Object y = null;
                 }
-                """.trimIndent()
+            }
+            """.trimIndent()
         )
 
         val flow = runBlocking { analyze(method) }
@@ -29,24 +29,24 @@ class FrameReachabilityTest : MethodAnalyzerTestBase() {
 
         expect {
             that(thenBranchFrame)
-                    .describedAs("then-branch frame")
-                    .isA<UnreachableFrame>()
+                .describedAs("then-branch frame")
+                .isA<UnreachableFrame>()
 
             that(elseBranchFrame)
-                    .describedAs("else-branch frame")
-                    .not().isA<UnreachableFrame>()
+                .describedAs("else-branch frame")
+                .not().isA<UnreachableFrame>()
         }
     }
 
     @Test fun `Test branch reachability with always true condition`() {
         val method = parseMethod(
-                """
-                void test() {
-                    if (true) {
-                    } else {
-                    }
+            """
+            void test() {
+                if (true) {
+                } else {
                 }
-                """.trimIndent()
+            }
+            """.trimIndent()
         )
 
         val flow = runBlocking { analyze(method) }
@@ -57,12 +57,12 @@ class FrameReachabilityTest : MethodAnalyzerTestBase() {
 
         expect {
             that(thenBranchFrame)
-                    .describedAs("then-branch frame")
-                    .not().isA<UnreachableFrame>()
+                .describedAs("then-branch frame")
+                .not().isA<UnreachableFrame>()
 
             that(elseBranchFrame)
-                    .describedAs("else-branch frame")
-                    .isA<UnreachableFrame>()
+                .describedAs("else-branch frame")
+                .isA<UnreachableFrame>()
         }
     }
 }

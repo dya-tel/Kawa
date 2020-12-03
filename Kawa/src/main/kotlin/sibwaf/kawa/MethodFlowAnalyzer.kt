@@ -171,16 +171,16 @@ class MethodFlowAnalyzer private constructor() {
     )
 
     private suspend fun getFlowFor(
-            method: CtExecutableReference<*>,
-            callChain: RightChain<CtExecutable<*>>?
+        method: CtExecutableReference<*>,
+        callChain: RightChain<CtExecutable<*>>?
     ): MethodFlow {
         val declaration = method.executableDeclaration ?: return EmptyFlow
         return getFlowFor(declaration, callChain)
     }
 
     private suspend fun getFlowFor(
-            method: CtExecutable<*>,
-            callChain: RightChain<CtExecutable<*>>?
+        method: CtExecutable<*>,
+        callChain: RightChain<CtExecutable<*>>?
     ): MethodFlow {
         // TODO: if method.simpleName in manualAnnotations
 
@@ -219,8 +219,8 @@ class MethodFlowAnalyzer private constructor() {
     }
 
     private suspend fun analyze(
-            method: CtExecutable<*>,
-            callChain: RightChain<CtExecutable<*>>?
+        method: CtExecutable<*>,
+        callChain: RightChain<CtExecutable<*>>?
     ): MethodFlow {
         val annotation = MethodFlow()
 
@@ -237,15 +237,15 @@ class MethodFlowAnalyzer private constructor() {
 
         val flowProvider: suspend (CtExecutableReference<*>) -> MethodFlow = { getFlowFor(it, callChain) }
         val analyzerState = AnalyzerState(
-                annotation = annotation,
-                frame = startFrame,
-                localVariables = Collections.emptySet(),
-                returnPoints = IdentityHashSet(),
-                jumpPoints = ArrayList(),
-                methodFlowProvider = flowProvider,
-                statementFlowProvider = analyzer::analyze,
-                valueProvider = ValueCalculator::calculateValue,
-                conditionValueProvider = ValueCalculator::calculateCondition
+            annotation = annotation,
+            frame = startFrame,
+            localVariables = Collections.emptySet(),
+            returnPoints = IdentityHashSet(),
+            jumpPoints = ArrayList(),
+            methodFlowProvider = flowProvider,
+            statementFlowProvider = analyzer::analyze,
+            valueProvider = ValueCalculator::calculateValue,
+            conditionValueProvider = ValueCalculator::calculateCondition
         )
 
         analyzer.analyze(analyzerState, bodyBlock)

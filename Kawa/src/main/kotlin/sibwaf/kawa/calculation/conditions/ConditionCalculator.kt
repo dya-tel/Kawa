@@ -9,10 +9,10 @@ import sibwaf.kawa.values.ConstrainedValue
 import spoon.reflect.code.CtExpression
 
 data class ConditionCalculatorResult(
-        val thenFrame: DataFrame,
-        val elseFrame: DataFrame,
-        val value: BooleanValue,
-        val constraint: BooleanConstraint
+    val thenFrame: DataFrame,
+    val elseFrame: DataFrame,
+    val value: BooleanValue,
+    val constraint: BooleanConstraint
 )
 
 interface ConditionCalculator : ValueCalculator {
@@ -24,9 +24,9 @@ interface ConditionCalculator : ValueCalculator {
 
         // TODO: is it needed?
         val resultFrame = DataFrame.merge(
-                state.frame,
-                thenFrame.compact(state.frame),
-                elseFrame.compact(state.frame)
+            state.frame,
+            thenFrame.compact(state.frame),
+            elseFrame.compact(state.frame)
         )
 
         return resultFrame to ConstrainedValue(value, constraint)

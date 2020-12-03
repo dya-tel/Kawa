@@ -15,8 +15,8 @@ import spoon.reflect.declaration.CtField
 class CtUnaryOperatorIncDecCalculator : ValueCalculator {
 
     private val supportedKinds = listOf(
-            UnaryOperatorKind.POSTINC, UnaryOperatorKind.POSTDEC,
-            UnaryOperatorKind.PREINC, UnaryOperatorKind.PREDEC
+        UnaryOperatorKind.POSTINC, UnaryOperatorKind.POSTDEC,
+        UnaryOperatorKind.PREINC, UnaryOperatorKind.PREDEC
     )
 
     override fun supports(expression: CtExpression<*>) = expression is CtUnaryOperator<*> && expression.kind in supportedKinds
@@ -28,9 +28,9 @@ class CtUnaryOperatorIncDecCalculator : ValueCalculator {
         val operatorValue = ConstrainedValue.from(expression, ValueSource.NONE) // TODO
 
         val variable = (expression.operand as? CtVariableAccess<*>)
-                ?.variable
-                ?.declaration
-                ?.takeUnless { it is CtField<*> }
+            ?.variable
+            ?.declaration
+            ?.takeUnless { it is CtField<*> }
 
         val resultFrame = if (variable != null && frame !is UnreachableFrame) {
             MutableDataFrame(frame).apply {

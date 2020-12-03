@@ -29,7 +29,7 @@ abstract class Rule : CtAbstractVisitor() {
 
     fun getFlow(element: CtElement): MethodFlow? {
         return element.getParent(CtExecutable::class.java)
-                ?.let { flow[it] }
+            ?.let { flow[it] }
     }
 
     fun getFrame(flow: MethodFlow, element: CtElement): DataFrame? {

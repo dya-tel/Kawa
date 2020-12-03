@@ -21,9 +21,9 @@ class CtConditionalCalculator : ValueCalculator {
         val (elseFrame2, elseValue) = state.copy(frame = elseFrame).getValue(expression.elseExpression)
 
         val resultFrame = DataFrame.merge(
-                state.frame,
-                thenFrame2.compact(state.frame),
-                elseFrame2.compact(state.frame)
+            state.frame,
+            thenFrame2.compact(state.frame),
+            elseFrame2.compact(state.frame)
         )
 
         val resultValue = Value.from(expression, ValueSource.NONE)

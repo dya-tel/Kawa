@@ -12,5 +12,5 @@ class CtDoAnalyzer : CtLoopAnalyzer<CtDo>() {
     override suspend fun getPreCondition(state: AnalyzerState, loop: CtDo): ConditionCalculatorResult? = null
 
     override suspend fun getPostCondition(state: AnalyzerState, loop: CtDo) =
-            state.getConditionValue(loop.loopingExpression)
+        state.getConditionValue(loop.loopingExpression)
 }

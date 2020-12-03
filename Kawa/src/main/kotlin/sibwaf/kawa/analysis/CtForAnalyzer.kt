@@ -1,8 +1,8 @@
 package sibwaf.kawa.analysis
 
+import sibwaf.kawa.AnalyzerState
 import sibwaf.kawa.DataFrame
 import sibwaf.kawa.IdentityHashSet
-import sibwaf.kawa.AnalyzerState
 import sibwaf.kawa.UnreachableFrame
 import sibwaf.kawa.calculation.conditions.ConditionCalculatorResult
 import spoon.reflect.code.CtFor
@@ -13,10 +13,10 @@ class CtForAnalyzer : CtLoopAnalyzer<CtFor>() {
     override fun supports(statement: CtStatement) = statement is CtFor
 
     override suspend fun getPreCondition(state: AnalyzerState, loop: CtFor) =
-            loop.expression?.let { state.getConditionValue(it) }
+        loop.expression?.let { state.getConditionValue(it) }
 
     override suspend fun getPostCondition(state: AnalyzerState, loop: CtFor): ConditionCalculatorResult? =
-            null
+        null
 
     override suspend fun getBodyFlow(state: AnalyzerState, loop: CtFor): DataFrame {
         var resultFrame = super.getBodyFlow(state, loop)
@@ -37,7 +37,7 @@ class CtForAnalyzer : CtLoopAnalyzer<CtFor>() {
         val resultFrame = super.analyze(initializerState, statement).compact(state.frame)
         return if (resultFrame is UnreachableFrame) {
             val cleanedFrame = resultFrame.previous
-                    .copy(retiredVariables = initializerState.localVariables)
+                .copy(retiredVariables = initializerState.localVariables)
 
             UnreachableFrame.after(cleanedFrame)
         } else {

@@ -10,13 +10,13 @@ class RecursionSingleWorkerTest : MethodAnalyzerTestBase() {
 
     @Test fun `Test direct recursion`() {
         val type = parse(
-                """
-                class A {
-                    private int x1() {
-                        return x1(); 
-                    }
+            """
+            class A {
+                private int x1() {
+                    return x1(); 
                 }
-                """.trimIndent()
+            }
+            """.trimIndent()
         )
 
         runBlocking {
@@ -28,19 +28,19 @@ class RecursionSingleWorkerTest : MethodAnalyzerTestBase() {
 
     @Test fun `Test indirect recursion`() {
         val type = parse(
-                """
-                class A {
-                    private int x1() {
-                        return x2(); 
-                    }
-                    private int x2() {
-                        return x3();
-                    }
-                    private int x3() {
-                        return x1();
-                    }
+            """
+            class A {
+                private int x1() {
+                    return x2(); 
                 }
-                """.trimIndent()
+                private int x2() {
+                    return x3();
+                }
+                private int x3() {
+                    return x1();
+                }
+            }
+            """.trimIndent()
         )
 
         runBlocking {
@@ -57,13 +57,13 @@ class RecursionMultiWorkerTest : MethodAnalyzerTestBase() {
 
     @Test fun `Test direct recursion`() {
         val type = parse(
-                """
-                class A {
-                    private int x1() {
-                        return x1(); 
-                    }
+            """
+            class A {
+                private int x1() {
+                    return x1(); 
                 }
-                """.trimIndent()
+            }
+            """.trimIndent()
         )
 
         runBlocking {
@@ -75,19 +75,19 @@ class RecursionMultiWorkerTest : MethodAnalyzerTestBase() {
 
     @Test fun `Test indirect recursion`() {
         val type = parse(
-                """
-                class A {
-                    private int x1() {
-                        return x2(); 
-                    }
-                    private int x2() {
-                        return x3();
-                    }
-                    private int x3() {
-                        return x1();
-                    }
+            """
+            class A {
+                private int x1() {
+                    return x2(); 
                 }
-                """.trimIndent()
+                private int x2() {
+                    return x3();
+                }
+                private int x3() {
+                    return x1();
+                }
+            }
+            """.trimIndent()
         )
 
         runBlocking {

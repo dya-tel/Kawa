@@ -1,7 +1,7 @@
 package sibwaf.kawa.analysis
 
-import sibwaf.kawa.DataFrame
 import sibwaf.kawa.AnalyzerState
+import sibwaf.kawa.DataFrame
 import sibwaf.kawa.UnreachableFrame
 import spoon.reflect.code.CtStatement
 import spoon.reflect.code.CtTry
@@ -28,7 +28,7 @@ class CtTryAnalyzer : StatementAnalyzer {
         // TODO: some throws can be caught by our catchers
         val catcherState = localState.copy(frame = lastReachableBodyFrame)
         val catcherFrames = statement.catchers
-                .map { catcherState.getStatementFlow(it.body).compact(localState.frame) }
+            .map { catcherState.getStatementFlow(it.body).compact(localState.frame) }
 
         state.jumpPoints.addAll(localState.jumpPoints)
 
@@ -37,17 +37,17 @@ class CtTryAnalyzer : StatementAnalyzer {
             DataFrame.merge(state.frame, catcherFrames + bodyFrame)
         } else {
             val jumpFrames = localState.returnPoints
-                    .asSequence()
-                    .filter { it.hasParent(statement) }
-                    .map { localState.annotation.frames.getValue(it) }
-                    .plus(localState.jumpPoints.map { it.second })
-                    .map { it.compact(state.frame) }
+                .asSequence()
+                .filter { it.hasParent(statement) }
+                .map { localState.annotation.frames.getValue(it) }
+                .plus(localState.jumpPoints.map { it.second })
+                .map { it.compact(state.frame) }
 
             // FIXME: next frame reachability should be determined only by framesToMerge
 
             val finalizerFrame = DataFrame.merge(
-                    state.frame,
-                    (jumpFrames + catcherFrames + lastReachableBodyFrame).toList()
+                state.frame,
+                (jumpFrames + catcherFrames + lastReachableBodyFrame).toList()
             )
 
             val resultFrame = state.copy(frame = finalizerFrame).getStatementFlow(finalizer)

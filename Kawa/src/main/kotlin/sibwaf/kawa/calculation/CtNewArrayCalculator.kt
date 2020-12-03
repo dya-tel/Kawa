@@ -3,7 +3,6 @@ package sibwaf.kawa.calculation
 import sibwaf.kawa.AnalyzerState
 import sibwaf.kawa.DataFrame
 import sibwaf.kawa.MutableDataFrame
-import sibwaf.kawa.constraints.Nullability
 import sibwaf.kawa.constraints.ReferenceConstraint
 import sibwaf.kawa.values.ConstrainedValue
 import sibwaf.kawa.values.ReferenceValue
@@ -18,8 +17,8 @@ class CtNewArrayCalculator : ValueCalculator {
     override suspend fun calculate(state: AnalyzerState, expression: CtExpression<*>): Pair<DataFrame, ConstrainedValue> {
         // TODO
         val value = ConstrainedValue(
-                ReferenceValue(ValueSource.NONE),
-                ReferenceConstraint.createNonNull()
+            ReferenceValue(ValueSource.NONE),
+            ReferenceConstraint.createNonNull()
         )
 
         return MutableDataFrame(state.frame) to value

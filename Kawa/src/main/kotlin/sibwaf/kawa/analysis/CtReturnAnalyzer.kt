@@ -1,7 +1,7 @@
 package sibwaf.kawa.analysis
 
-import sibwaf.kawa.DataFrame
 import sibwaf.kawa.AnalyzerState
+import sibwaf.kawa.DataFrame
 import sibwaf.kawa.UnreachableFrame
 import spoon.reflect.code.CtReturn
 import spoon.reflect.code.CtStatement

@@ -6,7 +6,7 @@ import sibwaf.kawa.collectSources
 
 class HibernateTest : DiffTesterBase() {
     override val model = ModelLoader(
-            "hibernate",
-            collectSources(baseProjectPath.resolve("hibernate-orm-master"))
+        "hibernate",
+        collectSources(baseProjectPath.resolve("hibernate-orm-master"))
     )
 }

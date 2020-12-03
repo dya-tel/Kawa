@@ -12,16 +12,16 @@ import spoon.reflect.code.CtStatement
 import spoon.reflect.reference.CtExecutableReference
 
 data class AnalyzerState(
-        val annotation: MethodFlow,
-        val frame: DataFrame,
-        val localVariables: MutableSet<CtLocalVariable<*>>,
-        val returnPoints: MutableSet<CtStatement>,
-        val jumpPoints: MutableCollection<Pair<CtCFlowBreak, DataFrame>>,
+    val annotation: MethodFlow,
+    val frame: DataFrame,
+    val localVariables: MutableSet<CtLocalVariable<*>>,
+    val returnPoints: MutableSet<CtStatement>,
+    val jumpPoints: MutableCollection<Pair<CtCFlowBreak, DataFrame>>,
 
-        private val methodFlowProvider: suspend (CtExecutableReference<*>) -> MethodFlow,
-        private val statementFlowProvider: suspend (AnalyzerState, CtStatement) -> DataFrame,
-        private val valueProvider: suspend (AnalyzerState, CtExpression<*>) -> Pair<DataFrame, ConstrainedValue>,
-        private val conditionValueProvider: suspend (AnalyzerState, CtExpression<*>) -> ConditionCalculatorResult
+    private val methodFlowProvider: suspend (CtExecutableReference<*>) -> MethodFlow,
+    private val statementFlowProvider: suspend (AnalyzerState, CtStatement) -> DataFrame,
+    private val valueProvider: suspend (AnalyzerState, CtExpression<*>) -> Pair<DataFrame, ConstrainedValue>,
+    private val conditionValueProvider: suspend (AnalyzerState, CtExpression<*>) -> ConditionCalculatorResult
 ) {
 
     suspend fun getMethodFlow(executable: CtExecutableReference<*>): MethodFlow {

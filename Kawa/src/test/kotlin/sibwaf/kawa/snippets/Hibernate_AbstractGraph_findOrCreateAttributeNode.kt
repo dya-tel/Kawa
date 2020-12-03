@@ -47,9 +47,9 @@ class Hibernate_AbstractGraph_findOrCreateAttributeNode : MethodAnalyzerTestBase
         val frame = flow.frames.getValue(ifStatement)
 
         expectThat(frame.getConstraint(attrNode))
-                .describedAs("attrNode constraint")
-                .isA<ReferenceConstraint>()
-                .get { nullability }
-                .isEqualTo(Nullability.POSSIBLE_NULL)
+            .describedAs("attrNode constraint")
+            .isA<ReferenceConstraint>()
+            .get { nullability }
+            .isEqualTo(Nullability.POSSIBLE_NULL)
     }
 }

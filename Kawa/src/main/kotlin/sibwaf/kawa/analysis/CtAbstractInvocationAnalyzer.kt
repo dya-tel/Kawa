@@ -6,9 +6,9 @@ import sibwaf.kawa.calculation.DelegatingValueCalculator
 
 class CtAbstractInvocationAnalyzer : ExpressionStatementAnalyzer() {
     override val calculator = DelegatingValueCalculator(
-            listOf(
-                    CtConstructorCallCalculator(),
-                    CtInvocationCalculator()
-            )
+        listOf(
+            CtConstructorCallCalculator(),
+            CtInvocationCalculator()
+        )
     )
 }

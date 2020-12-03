@@ -22,22 +22,22 @@ class EqualityConditionCalculatorTest : ValueCalculatorTestBase() {
 
     @Test fun `Test inferred null constraint with null check`() {
         val method = parseMethod(
-                """
-                void test(Object x) {
-                    boolean isNull = x == null;
-                }
-                """.trimIndent()
+            """
+            void test(Object x) {
+                boolean isNull = x == null;
+            }
+            """.trimIndent()
         )
 
         val x = method.extractVariables().getValue("x")
         val expression = method.getElementsOf<CtLocalVariable<*>>().single().defaultExpression
 
         val calculator = TestValueCalculator(
-                calculators = listOf(
-                        CtVariableReadCalculator(),
-                        EqualityConditionCalculator(),
-                        CtLiteralCalculator()
-                )
+            calculators = listOf(
+                CtVariableReadCalculator(),
+                EqualityConditionCalculator(),
+                CtLiteralCalculator()
+            )
         )
 
         val frame = MutableDataFrame(null).apply {
@@ -50,37 +50,37 @@ class EqualityConditionCalculatorTest : ValueCalculatorTestBase() {
 
         expect {
             that(result.thenFrame.getConstraint(x))
-                    .describedAs("x constraint in then-frame")
-                    .isA<ReferenceConstraint>()
-                    .get { nullability }
-                    .isEqualTo(Nullability.ALWAYS_NULL)
+                .describedAs("x constraint in then-frame")
+                .isA<ReferenceConstraint>()
+                .get { nullability }
+                .isEqualTo(Nullability.ALWAYS_NULL)
 
             that(result.elseFrame.getConstraint(x))
-                    .describedAs("x constraint in else-frame")
-                    .isA<ReferenceConstraint>()
-                    .get { nullability }
-                    .isEqualTo(Nullability.NEVER_NULL)
+                .describedAs("x constraint in else-frame")
+                .isA<ReferenceConstraint>()
+                .get { nullability }
+                .isEqualTo(Nullability.NEVER_NULL)
         }
     }
 
     @Test fun `Test inferred null constraint with not-null check`() {
         val method = parseMethod(
-                """
-                void test(Object x) {
-                    boolean isNull = x != null;
-                }
-                """.trimIndent()
+            """
+            void test(Object x) {
+                boolean isNull = x != null;
+            }
+            """.trimIndent()
         )
 
         val x = method.extractVariables().getValue("x")
         val expression = method.getElementsOf<CtLocalVariable<*>>().single().defaultExpression
 
         val calculator = TestValueCalculator(
-                calculators = listOf(
-                        CtVariableReadCalculator(),
-                        EqualityConditionCalculator(),
-                        CtLiteralCalculator()
-                )
+            calculators = listOf(
+                CtVariableReadCalculator(),
+                EqualityConditionCalculator(),
+                CtLiteralCalculator()
+            )
         )
 
         val frame = MutableDataFrame(null).apply {
@@ -93,16 +93,16 @@ class EqualityConditionCalculatorTest : ValueCalculatorTestBase() {
 
         expect {
             that(result.thenFrame.getConstraint(x))
-                    .describedAs("x constraint in then-frame")
-                    .isA<ReferenceConstraint>()
-                    .get { nullability }
-                    .isEqualTo(Nullability.NEVER_NULL)
+                .describedAs("x constraint in then-frame")
+                .isA<ReferenceConstraint>()
+                .get { nullability }
+                .isEqualTo(Nullability.NEVER_NULL)
 
             that(result.elseFrame.getConstraint(x))
-                    .describedAs("x constraint in else-frame")
-                    .isA<ReferenceConstraint>()
-                    .get { nullability }
-                    .isEqualTo(Nullability.ALWAYS_NULL)
+                .describedAs("x constraint in else-frame")
+                .isA<ReferenceConstraint>()
+                .get { nullability }
+                .isEqualTo(Nullability.ALWAYS_NULL)
         }
     }
 }

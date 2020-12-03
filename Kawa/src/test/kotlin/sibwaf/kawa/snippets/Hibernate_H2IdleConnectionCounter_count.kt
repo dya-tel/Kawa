@@ -43,6 +43,6 @@ class Hibernate_H2IdleConnectionCounter_count : MethodAnalyzerTestBase() {
         val frame = flow.frames.getValue(returnStatement)
 
         expectThat(frame)
-                .not().isA<UnreachableFrame>()
+            .not().isA<UnreachableFrame>()
     }
 }

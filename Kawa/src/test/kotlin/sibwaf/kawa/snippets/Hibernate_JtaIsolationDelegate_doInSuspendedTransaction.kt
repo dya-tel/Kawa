@@ -62,11 +62,11 @@ class Hibernate_JtaIsolationDelegate_doInSuspendedTransaction : MethodAnalyzerTe
         val frame = flow.frames.getValue(ifStatement)
 
         expectThat(frame.getConstraint(hadProblems))
-                .describedAs("hadProblems constraint")
-                .isA<BooleanConstraint>()
-                .and {
-                    get { isFalse }.isFalse()
-                    get { isTrue }.isFalse()
-                }
+            .describedAs("hadProblems constraint")
+            .isA<BooleanConstraint>()
+            .and {
+                get { isFalse }.isFalse()
+                get { isTrue }.isFalse()
+            }
     }
 }

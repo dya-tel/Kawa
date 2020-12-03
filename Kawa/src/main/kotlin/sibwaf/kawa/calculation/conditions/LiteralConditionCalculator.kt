@@ -11,7 +11,8 @@ import spoon.reflect.code.CtLiteral
 
 class LiteralConditionCalculator : ConditionCalculator {
 
-    override fun supports(expression: CtExpression<*>) = expression is CtLiteral<*> && (expression.value == true || expression.value == false)
+    override fun supports(expression: CtExpression<*>) =
+        expression is CtLiteral<*> && (expression.value == true || expression.value == false)
 
     override suspend fun calculateCondition(state: AnalyzerState, expression: CtExpression<*>): ConditionCalculatorResult {
         val value = (expression as CtLiteral<*>).value as Boolean
@@ -26,10 +27,10 @@ class LiteralConditionCalculator : ConditionCalculator {
         }
 
         return ConditionCalculatorResult(
-                thenFrame = if (constraint.isFalse) UnreachableFrame.after(state.frame) else thenFrame,
-                elseFrame = if (constraint.isTrue) UnreachableFrame.after(state.frame) else elseFrame,
-                value = BooleanValue(ValueSource.NONE),
-                constraint = constraint
+            thenFrame = if (constraint.isFalse) UnreachableFrame.after(state.frame) else thenFrame,
+            elseFrame = if (constraint.isTrue) UnreachableFrame.after(state.frame) else elseFrame,
+            value = BooleanValue(ValueSource.NONE),
+            constraint = constraint
         )
     }
 }

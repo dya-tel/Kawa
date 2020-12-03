@@ -17,11 +17,11 @@ class CtForAnalyzerTest : StatementAnalyzerTestBase() {
         val variable = statement.extractVariables().getValue("i")
 
         val analyzer = DelegatingStatementAnalyzer(
-                listOf(
-                        CtForAnalyzer(),
-                        CtLocalVariableAnalyzer(),
-                        CtBlockAnalyzer()
-                )
+            listOf(
+                CtForAnalyzer(),
+                CtLocalVariableAnalyzer(),
+                CtBlockAnalyzer()
+            )
         )
 
         val frame = runBlocking {

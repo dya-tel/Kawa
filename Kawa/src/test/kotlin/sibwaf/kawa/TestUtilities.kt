@@ -18,15 +18,15 @@ fun parseMethod(text: String): CtMethod<*> {
 }
 
 inline fun <reified T : CtStatement> parseStatement(text: String, vararg parameters: String) =
-        parseStatement<T>(text, parameters.asIterable())
+    parseStatement<T>(text, parameters.asIterable())
 
 inline fun <reified T : CtStatement> parseStatement(text: String, parameters: Iterable<String>): T {
     val method = parseMethod(
-            """
-            void test(${parameters.joinToString()}) {
-                $text;
-            }
-            """.trimIndent()
+        """
+        void test(${parameters.joinToString()}) {
+            $text;
+        }
+        """.trimIndent()
     )
 
     return method.body.getStatement(0)
@@ -36,8 +36,8 @@ fun parseExpression(text: String, vararg parameters: String) = parseExpression(t
 
 fun parseExpression(text: String, parameters: Iterable<String>): CtExpression<*> {
     val statement = parseStatement<CtLocalVariable<*>>(
-            text = "Object x = $text",
-            parameters = parameters
+        text = "Object x = $text",
+        parameters = parameters
     )
 
     return statement.defaultExpression
@@ -45,8 +45,8 @@ fun parseExpression(text: String, parameters: Iterable<String>): CtExpression<*>
 
 fun CtElement.extractVariables(): Map<String, CtVariable<*>> {
     return getElementsOf<CtVariable<*>>()
-            .groupBy { it.simpleName }
-            .mapValues { (_, value) -> value.single() }
+        .groupBy { it.simpleName }
+        .mapValues { (_, value) -> value.single() }
 }
 
 //inline fun <reified T : CtElement> CtElement.getElementsOf(): List<T> = getElements(TypeFilter(T::class.java))

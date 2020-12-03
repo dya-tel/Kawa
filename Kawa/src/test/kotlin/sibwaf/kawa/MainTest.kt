@@ -14,13 +14,13 @@ class MainTest : MethodAnalyzerTestBase() {
 
     @Test fun `Test unknown method`() {
         val type = parse(
-                """
-                class A {
-                    boolean x1() {
-                        return x2();
-                    }
+            """
+            class A {
+                boolean x1() {
+                    return x2();
                 }
-                """.trimIndent()
+            }
+            """.trimIndent()
         )
 
         val result = runBlocking {
@@ -43,16 +43,16 @@ class MainTest : MethodAnalyzerTestBase() {
 
     @Test fun `Test every method gets analyzed`() {
         val type = parse(
-                """
-                class A {
-                    boolean x1() {
-                        return true;
-                    }
-                    boolean x2() {
-                        return false;
-                    }
+            """
+            class A {
+                boolean x1() {
+                    return true;
                 }
-                """.trimIndent()
+                boolean x2() {
+                    return false;
+                }
+            }
+            """.trimIndent()
         )
 
         val result = runBlocking {
@@ -64,8 +64,8 @@ class MainTest : MethodAnalyzerTestBase() {
         expectThat(result) {
             get { size }.isEqualTo(2)
             get { keys.map { it.simpleName } }
-                    .describedAs("analyzed methods")
-                    .containsExactlyInAnyOrder("x1", "x2")
+                .describedAs("analyzed methods")
+                .containsExactlyInAnyOrder("x1", "x2")
         }
     }
 }

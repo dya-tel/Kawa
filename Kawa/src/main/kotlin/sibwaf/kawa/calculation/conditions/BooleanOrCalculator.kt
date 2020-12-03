@@ -49,10 +49,10 @@ class BooleanOrCalculator : ConditionCalculator {
         }
 
         return ConditionCalculatorResult(
-                thenFrame = if (result.isFalse) UnreachableFrame.after(thenFrame) else MutableDataFrame(thenFrame),
-                elseFrame = if (result.isTrue) UnreachableFrame.after(elseFrame) else MutableDataFrame(elseFrame),
-                value = BooleanValue(ValueSource.NONE),
-                constraint = result
+            thenFrame = if (result.isFalse) UnreachableFrame.after(thenFrame) else MutableDataFrame(thenFrame),
+            elseFrame = if (result.isTrue) UnreachableFrame.after(elseFrame) else MutableDataFrame(elseFrame),
+            value = BooleanValue(ValueSource.NONE),
+            constraint = result
         )
     }
 }

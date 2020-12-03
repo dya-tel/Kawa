@@ -16,12 +16,12 @@ class ValuesTest {
 
         expect {
             that(composite)
-                    .describedAs("composite")
-                    .and {
-                        get { isSameAs(value1) }.isTrue()
-                        get { isSameAs(value2) }.isTrue()
-                        get { isSameAs(value3) }.isFalse()
-                    }
+                .describedAs("composite")
+                .and {
+                    get { isSameAs(value1) }.isTrue()
+                    get { isSameAs(value2) }.isTrue()
+                    get { isSameAs(value3) }.isFalse()
+                }
 
             that(value1).describedAs("value1").get { isSameAs(composite) }.isTrue()
             that(value2).describedAs("value2").get { isSameAs(composite) }.isTrue()

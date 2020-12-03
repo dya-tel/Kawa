@@ -14,10 +14,10 @@ class InvertedConditionCalculator : ConditionCalculator {
 
         val (thenFrame, elseFrame, operandValue, operandConstraint) = state.getConditionValue(expression.operand)
         return ConditionCalculatorResult(
-                thenFrame = elseFrame,
-                elseFrame = thenFrame,
-                value = operandValue.invert(),
-                constraint = operandConstraint.invert()
+            thenFrame = elseFrame,
+            elseFrame = thenFrame,
+            value = operandValue.invert(),
+            constraint = operandConstraint.invert()
         )
     }
 }
