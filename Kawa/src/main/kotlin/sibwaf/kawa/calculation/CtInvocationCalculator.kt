@@ -2,6 +2,7 @@ package sibwaf.kawa.calculation
 
 import sibwaf.kawa.DataFrame
 import sibwaf.kawa.MutableDataFrame
+import sibwaf.kawa.UnreachableFrame
 import sibwaf.kawa.constraints.Constraint
 import sibwaf.kawa.values.ConstrainedValue
 import sibwaf.kawa.values.Value
@@ -23,12 +24,14 @@ class CtInvocationCalculator : CtTargetedExpressionCalculator() {
         }
 
         val flow = currentState.getMethodFlow(expression.executable)
+        if (flow.neverReturns) {
+            return UnreachableFrame.after(currentState.frame) to ConstrainedValue.from(expression, ValueSource.NONE)
+        }
 
         val value = Value.from(expression.type, ValueSource.NONE)
         val constraint = flow.returnConstraint?.copy() ?: Constraint.from(value)
 
         // TODO: invocation side-effects
-        // TODO: no-return invocations
 
         return MutableDataFrame(currentState.frame) to ConstrainedValue(value, constraint)
     }
