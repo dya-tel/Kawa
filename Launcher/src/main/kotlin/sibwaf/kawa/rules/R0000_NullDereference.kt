@@ -1,6 +1,5 @@
 package sibwaf.kawa.rules
 
-import sibwaf.kawa.UnreachableFrame
 import sibwaf.kawa.constraints.Nullability
 import sibwaf.kawa.constraints.ReferenceConstraint
 import sibwaf.kawa.values.Value
@@ -24,7 +23,7 @@ class R0000_NullDereference : Rule() {
 
     private fun checkDereference(expression: CtTargetedExpression<*, *>) {
         val flow = getFlow(expression) ?: return
-        val frame = getFrame(flow, expression)?.takeUnless { it is UnreachableFrame } ?: return
+        val frame = getFrame(flow, expression) ?: return
 
         val target = expression.target
             ?.takeUnless { it is CtThisAccess<*> }

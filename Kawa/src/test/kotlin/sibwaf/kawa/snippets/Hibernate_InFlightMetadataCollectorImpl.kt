@@ -2,6 +2,7 @@ package sibwaf.kawa.snippets
 
 import kotlinx.coroutines.runBlocking
 import sibwaf.kawa.MethodAnalyzerTestBase
+import sibwaf.kawa.UnreachableFrame
 import sibwaf.kawa.constraints.Nullability
 import sibwaf.kawa.constraints.ReferenceConstraint
 import sibwaf.kawa.extractVariables
@@ -56,8 +57,9 @@ class Hibernate_InFlightMetadataCollectorImpl : MethodAnalyzerTestBase() {
         val currentTable = method.extractVariables().getValue("currentTable")
 
         val flow = runBlocking { analyze(method) }
+        val frame = (flow.endFrame as UnreachableFrame).previous
 
-        expectThat(flow.endFrame.getConstraint(currentTable))
+        expectThat(frame.getConstraint(currentTable))
             .isA<ReferenceConstraint>()
             .get { nullability }
             .isEqualTo(Nullability.POSSIBLE_NULL)

@@ -2,6 +2,7 @@ package sibwaf.kawa.analysis
 
 import sibwaf.kawa.AnalyzerState
 import sibwaf.kawa.DataFrame
+import sibwaf.kawa.ReachableFrame
 import sibwaf.kawa.UnreachableFrame
 import spoon.reflect.code.CtStatement
 import spoon.reflect.code.CtTry
@@ -22,7 +23,7 @@ class CtTryAnalyzer : StatementAnalyzer {
         val lastReachableBodyFrame = if (bodyFrame is UnreachableFrame) {
             bodyFrame.previous
         } else {
-            bodyFrame
+            bodyFrame as ReachableFrame
         }.eraseValues()
 
         // TODO: some throws can be caught by our catchers
@@ -47,8 +48,8 @@ class CtTryAnalyzer : StatementAnalyzer {
 
             val finalizerFrame = DataFrame.merge(
                 state.frame,
-                (jumpFrames + catcherFrames + lastReachableBodyFrame).toList()
-            )
+                (jumpFrames + catcherFrames + lastReachableBodyFrame).asIterable()
+            ) as ReachableFrame
 
             val resultFrame = state.copy(frame = finalizerFrame).getStatementFlow(finalizer)
             if (bodyFrame is UnreachableFrame && catcherFrames.all { it is UnreachableFrame }) {

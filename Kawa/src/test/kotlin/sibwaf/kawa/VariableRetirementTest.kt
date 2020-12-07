@@ -24,7 +24,7 @@ class VariableRetirementTest : MethodAnalyzerTestBase() {
 
         val flow = runBlocking { analyze(method) }
         val variables = method.extractVariables()
-        val frame = flow.endFrame
+        val frame = flow.endFrame as ReachableFrame
 
         expect {
             that(frame.getValue(variables.getValue("a")))
@@ -53,7 +53,7 @@ class VariableRetirementTest : MethodAnalyzerTestBase() {
 
         val flow = runBlocking { analyze(method) }
         val variables = method.extractVariables()
-        val frame = flow.endFrame
+        val frame = flow.endFrame as ReachableFrame
 
         expect {
             that(frame.getValue(variables.getValue("a")))

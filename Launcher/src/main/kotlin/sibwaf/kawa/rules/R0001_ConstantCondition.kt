@@ -1,6 +1,5 @@
 package sibwaf.kawa.rules
 
-import sibwaf.kawa.UnreachableFrame
 import sibwaf.kawa.constraints.BooleanConstraint
 import spoon.reflect.code.CtIf
 
@@ -10,7 +9,7 @@ class R0001_ConstantCondition : Rule() {
         val condition = ifElement.condition
 
         val methodFlow = getFlow(condition) ?: return
-        val frame = getFrame(methodFlow, ifElement)?.takeUnless { it is UnreachableFrame } ?: return
+        val frame = getFrame(methodFlow, ifElement) ?: return
 
         val (_, constraint) = getValue(frame, condition)
         if (constraint !is BooleanConstraint) {

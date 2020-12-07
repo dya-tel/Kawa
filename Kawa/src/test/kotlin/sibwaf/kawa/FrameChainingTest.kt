@@ -6,9 +6,9 @@ import spoon.reflect.code.CtLocalVariable
 import spoon.reflect.code.CtStatement
 import strikt.api.expect
 import strikt.api.expectThat
-import strikt.assertions.isA
 import strikt.assertions.isNotNull
 import strikt.assertions.isNotSameInstanceAs
+import strikt.assertions.isNull
 import strikt.assertions.isSameInstanceAs
 import kotlin.test.Test
 
@@ -181,6 +181,6 @@ class FrameChainingTest : MethodAnalyzerTestBase() {
 
         expectThat(unreachableFrame)
             .describedAs("unreachable frame")
-            .isA<UnreachableFrame>()
+            .isNull()
     }
 }

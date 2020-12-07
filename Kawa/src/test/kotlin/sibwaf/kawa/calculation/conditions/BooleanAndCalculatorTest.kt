@@ -2,6 +2,7 @@ package sibwaf.kawa.calculation.conditions
 
 import kotlinx.coroutines.runBlocking
 import sibwaf.kawa.MutableDataFrame
+import sibwaf.kawa.ReachableFrame
 import sibwaf.kawa.calculation.CtLiteralCalculator
 import sibwaf.kawa.calculation.CtVariableReadCalculator
 import sibwaf.kawa.calculation.ValueCalculatorTestBase
@@ -56,7 +57,7 @@ class BooleanAndCalculatorTest : ValueCalculatorTestBase() {
         val result = runBlocking { calculator.calculateCondition(state, expression) }
 
         expect {
-            that(result.thenFrame).describedAs("then frame").and {
+            that(result.thenFrame as ReachableFrame).describedAs("then frame").and {
                 get { getConstraint(x) }
                     .describedAs("inferred x constraint")
                     .isA<ReferenceConstraint>()
@@ -72,7 +73,7 @@ class BooleanAndCalculatorTest : ValueCalculatorTestBase() {
 
             // TODO: proper nullability
 
-            that(result.elseFrame).describedAs("else frame").and {
+            that(result.elseFrame as ReachableFrame).describedAs("else frame").and {
                 get { getConstraint(x) }
                     .describedAs("old x constraint")
                     .isA<ReferenceConstraint>()

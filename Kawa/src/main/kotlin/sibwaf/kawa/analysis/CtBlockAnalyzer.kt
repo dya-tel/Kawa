@@ -5,6 +5,7 @@ import sibwaf.kawa.BlockFlow
 import sibwaf.kawa.DataFrame
 import sibwaf.kawa.IdentityHashSet
 import sibwaf.kawa.MutableDataFrame
+import sibwaf.kawa.ReachableFrame
 import sibwaf.kawa.UnreachableFrame
 import spoon.reflect.code.CtBlock
 import spoon.reflect.code.CtStatement
@@ -17,37 +18,36 @@ class CtBlockAnalyzer : StatementAnalyzer {
     override suspend fun analyze(state: AnalyzerState, statement: CtStatement): DataFrame {
         statement as CtStatementList
 
-        val startFrame: DataFrame = MutableDataFrame(state.frame)
-        var localState = state.copy(
-            frame = startFrame,
-            localVariables = IdentityHashSet()
-        )
+        val startFrame: ReachableFrame = MutableDataFrame(state.frame)
+        val localState = state.copy(localVariables = IdentityHashSet())
 
+        var lastFrame: DataFrame = startFrame
         for (nestedStatement in statement.statements) {
-            val nextFrame = localState.getStatementFlow(nestedStatement)
-            if (nextFrame == localState.frame) {
+            if (lastFrame !is ReachableFrame) {
+                break
+            }
+
+            val nextFrame = localState.copy(frame = lastFrame).getStatementFlow(nestedStatement)
+            if (nextFrame == lastFrame) {
                 continue
             }
 
-            localState.frame.next = nextFrame
-            localState = localState.copy(frame = nextFrame)
+            lastFrame.next = nextFrame
+            lastFrame = nextFrame
         }
-
-        val endFrame = localState.frame
 
         state.annotation.blocks[statement] = BlockFlow().also {
             it.startFrame = startFrame
-            it.endFrame = endFrame
+            it.endFrame = lastFrame
         }
 
-        return if (endFrame is UnreachableFrame) {
-            val cleanedFrame = endFrame.previous
-                .compact(state.frame)
-                .copy(retiredVariables = localState.localVariables)
+        lastFrame = lastFrame.compact(state.frame)
 
+        return if (lastFrame is UnreachableFrame) {
+            val cleanedFrame = lastFrame.previous.copy(retiredVariables = localState.localVariables)
             UnreachableFrame.after(cleanedFrame)
         } else {
-            endFrame.compact(state.frame).copy(retiredVariables = localState.localVariables)
+            (lastFrame as ReachableFrame).copy(retiredVariables = localState.localVariables)
         }
     }
 }

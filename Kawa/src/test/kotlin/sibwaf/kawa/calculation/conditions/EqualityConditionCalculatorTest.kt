@@ -2,6 +2,7 @@ package sibwaf.kawa.calculation.conditions
 
 import kotlinx.coroutines.runBlocking
 import sibwaf.kawa.MutableDataFrame
+import sibwaf.kawa.ReachableFrame
 import sibwaf.kawa.calculation.CtLiteralCalculator
 import sibwaf.kawa.calculation.CtVariableReadCalculator
 import sibwaf.kawa.calculation.ValueCalculatorTestBase
@@ -49,13 +50,13 @@ class EqualityConditionCalculatorTest : ValueCalculatorTestBase() {
         val result = runBlocking { calculator.calculateCondition(state, expression) }
 
         expect {
-            that(result.thenFrame.getConstraint(x))
+            that((result.thenFrame as ReachableFrame).getConstraint(x))
                 .describedAs("x constraint in then-frame")
                 .isA<ReferenceConstraint>()
                 .get { nullability }
                 .isEqualTo(Nullability.ALWAYS_NULL)
 
-            that(result.elseFrame.getConstraint(x))
+            that((result.elseFrame as ReachableFrame).getConstraint(x))
                 .describedAs("x constraint in else-frame")
                 .isA<ReferenceConstraint>()
                 .get { nullability }
@@ -92,13 +93,13 @@ class EqualityConditionCalculatorTest : ValueCalculatorTestBase() {
         val result = runBlocking { calculator.calculateCondition(state, expression) }
 
         expect {
-            that(result.thenFrame.getConstraint(x))
+            that((result.thenFrame as ReachableFrame).getConstraint(x))
                 .describedAs("x constraint in then-frame")
                 .isA<ReferenceConstraint>()
                 .get { nullability }
                 .isEqualTo(Nullability.NEVER_NULL)
 
-            that(result.elseFrame.getConstraint(x))
+            that((result.elseFrame as ReachableFrame).getConstraint(x))
                 .describedAs("x constraint in else-frame")
                 .isA<ReferenceConstraint>()
                 .get { nullability }

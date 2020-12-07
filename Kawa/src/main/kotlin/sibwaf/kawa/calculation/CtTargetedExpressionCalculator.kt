@@ -3,10 +3,12 @@ package sibwaf.kawa.calculation
 import sibwaf.kawa.AnalyzerState
 import sibwaf.kawa.DataFrame
 import sibwaf.kawa.MutableDataFrame
+import sibwaf.kawa.ReachableFrame
 import sibwaf.kawa.UnreachableFrame
 import sibwaf.kawa.constraints.Nullability
 import sibwaf.kawa.constraints.ReferenceConstraint
 import sibwaf.kawa.values.ConstrainedValue
+import sibwaf.kawa.values.ValueSource
 import spoon.reflect.code.CtExpression
 import spoon.reflect.code.CtTargetedExpression
 
@@ -24,14 +26,18 @@ abstract class CtTargetedExpressionCalculator : ValueCalculator {
         val (targetFrame, targetValue) = state.getValue(expression.target)
 
         val nullability = (targetValue.constraint as? ReferenceConstraint)?.nullability
-        val frame = if (nullability == Nullability.ALWAYS_NULL) {
-            UnreachableFrame.after(state.frame)
+        val frame = if (nullability == Nullability.ALWAYS_NULL || targetFrame !is ReachableFrame) {
+            UnreachableFrame.after(targetFrame)
         } else {
             MutableDataFrame(targetFrame).apply {
                 setConstraint(targetValue.value, ReferenceConstraint.createNonNull())
             }
         }
 
-        return calculate(state.copy(frame = frame), expression, targetValue)
+        return if (frame !is ReachableFrame) {
+            frame to ConstrainedValue.from(expression, ValueSource.NONE)
+        } else {
+            calculate(state.copy(frame = frame), expression, targetValue)
+        }
     }
 }

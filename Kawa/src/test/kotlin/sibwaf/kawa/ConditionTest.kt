@@ -91,7 +91,7 @@ class ConditionTest : MethodAnalyzerTestBase() {
         val flow = runBlocking { analyze(method) }
 
         val parameter = method.extractVariables().getValue("x")
-        val frame = flow.endFrame
+        val frame = flow.endFrame as ReachableFrame
 
         expect {
             that(frame.getConstraint(parameter))
@@ -117,7 +117,7 @@ class ConditionTest : MethodAnalyzerTestBase() {
         val flow = runBlocking { analyze(method) }
 
         val parameter = method.extractVariables().values.single()
-        val frame = flow.endFrame
+        val frame = flow.endFrame as ReachableFrame
 
         expect {
             that(frame.getConstraint(parameter))
@@ -142,7 +142,7 @@ class ConditionTest : MethodAnalyzerTestBase() {
 
         val flow = runBlocking { analyze(method) }
         val parameter = method.extractVariables().values.single()
-        val frame = flow.endFrame
+        val frame = flow.endFrame as ReachableFrame
 
         expectThat(frame.getConstraint(parameter))
             .describedAs("parameter constraint")

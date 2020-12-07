@@ -96,7 +96,7 @@ object ValueCalculator {
 
     private fun createState(
         annotation: MethodFlow,
-        frame: DataFrame,
+        frame: ReachableFrame,
         flowProvider: suspend (CtExecutableReference<*>) -> MethodFlow
     ): AnalyzerState {
         return AnalyzerState(
@@ -114,7 +114,7 @@ object ValueCalculator {
 
     suspend fun calculateValue(
         annotation: MethodFlow,
-        frame: DataFrame,
+        frame: ReachableFrame,
         expression: CtExpression<*>,
         flowProvider: suspend (CtExecutableReference<*>) -> MethodFlow
     ): Pair<DataFrame, ConstrainedValue> {
@@ -124,7 +124,7 @@ object ValueCalculator {
 
     suspend fun calculateCondition(
         annotation: MethodFlow,
-        frame: DataFrame,
+        frame: ReachableFrame,
         expression: CtExpression<*>,
         flowProvider: suspend (CtExecutableReference<*>) -> MethodFlow
     ): ConditionCalculatorResult {

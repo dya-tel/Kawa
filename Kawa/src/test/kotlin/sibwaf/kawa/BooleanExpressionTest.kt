@@ -30,7 +30,7 @@ class BooleanExpressionTest : MethodAnalyzerTestBase() {
 
         val flow = runBlocking { analyze(method) }
         val variable = method.extractVariables().getValue("result")
-        return flow.endFrame.getConstraint(variable) as BooleanConstraint
+        return (flow.endFrame as ReachableFrame).getConstraint(variable) as BooleanConstraint
     }
 
     private fun checkExact(expression: String, expected: Boolean, prepare: String = "") {

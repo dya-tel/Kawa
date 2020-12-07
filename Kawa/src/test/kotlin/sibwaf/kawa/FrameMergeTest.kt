@@ -32,7 +32,7 @@ class FrameMergeTest : MethodAnalyzerTestBase() {
 
         val flow = runBlocking { analyze(method) }
         val variables = method.extractVariables()
-        val frame = flow.endFrame
+        val frame = flow.endFrame as ReachableFrame
 
         expect {
             that(frame.getValue(variables.getValue("x")))
@@ -65,7 +65,7 @@ class FrameMergeTest : MethodAnalyzerTestBase() {
 
         val flow = runBlocking { analyze(method) }
         val variables = method.extractVariables()
-        val frame = flow.endFrame
+        val frame = flow.endFrame as ReachableFrame
 
         expect {
             that(frame.getValue(variables.getValue("x")))
@@ -92,7 +92,7 @@ class FrameMergeTest : MethodAnalyzerTestBase() {
 
         val flow = runBlocking { analyze(method) }
         val variables = method.extractVariables()
-        val frame = flow.endFrame
+        val frame = flow.endFrame as ReachableFrame
 
         expectThat(frame.getValue(variables.getValue("x")))
             .describedAs("x value")
@@ -117,7 +117,7 @@ class FrameMergeTest : MethodAnalyzerTestBase() {
 
         val flow = runBlocking { analyze(method) }
         val variables = method.extractVariables()
-        val frame = flow.endFrame
+        val frame = flow.endFrame as ReachableFrame
 
         expectThat(frame.getValue(variables.getValue("x")))
             .describedAs("x value")
@@ -142,7 +142,7 @@ class FrameMergeTest : MethodAnalyzerTestBase() {
 
         val flow = runBlocking { analyze(method) }
         val variables = method.extractVariables()
-        val frame = flow.endFrame
+        val frame = flow.endFrame as ReachableFrame
 
         expectThat(frame.getValue(variables.getValue("x")))
             .describedAs("x value")
@@ -184,7 +184,7 @@ class FrameMergeTest : MethodAnalyzerTestBase() {
 
         val flow = runBlocking { analyze(method) }
         val variables = method.extractVariables()
-        val frame = flow.endFrame
+        val frame = flow.endFrame as ReachableFrame
 
         expectThat(frame.getValue(variables.getValue("x")))
             .describedAs("x value")
@@ -209,7 +209,7 @@ class FrameMergeTest : MethodAnalyzerTestBase() {
 
         val flow = runBlocking { analyze(method) }
         val variables = method.extractVariables()
-        val frame = flow.endFrame
+        val frame = flow.endFrame as ReachableFrame
 
         expectThat(frame.getValue(variables.getValue("y")))
             .describedAs("y value")

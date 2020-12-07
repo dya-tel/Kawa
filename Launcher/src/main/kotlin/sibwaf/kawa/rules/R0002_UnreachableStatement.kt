@@ -1,6 +1,5 @@
 package sibwaf.kawa.rules
 
-import sibwaf.kawa.UnreachableFrame
 import spoon.reflect.code.CtBlock
 import spoon.reflect.code.CtComment
 
@@ -14,8 +13,7 @@ class R0002_UnreachableStatement : Rule() {
                 continue
             }
 
-            val frame = getFrame(flow, statement) ?: continue
-            if (frame is UnreachableFrame) {
+            if (getFrame(flow, statement) == null) {
                 warn("Unreachable statement", statement)
                 break
             }

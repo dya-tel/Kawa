@@ -3,6 +3,7 @@ package sibwaf.kawa.analysis
 import sibwaf.kawa.AnalyzerState
 import sibwaf.kawa.DataFrame
 import sibwaf.kawa.MutableDataFrame
+import sibwaf.kawa.ReachableFrame
 import sibwaf.kawa.calculation.conditions.ConditionCalculatorResult
 import spoon.reflect.code.CtBreak
 import spoon.reflect.code.CtContinue
@@ -29,7 +30,12 @@ abstract class CtLoopAnalyzer<T : CtLoop> : StatementAnalyzer {
         val exitFrames = LinkedList<DataFrame>()
 
         for (iteration in 0 until 2) {
-            val iterationState = localState.copy(frame = DataFrame.merge(localState.frame, startFrames))
+            val iterationFrame = DataFrame.merge(localState.frame, startFrames)
+            if (iterationFrame !is ReachableFrame) {
+                break
+            }
+
+            val iterationState = localState.copy(frame = iterationFrame)
 
             var bodyFrame: DataFrame
 
@@ -38,19 +44,15 @@ abstract class CtLoopAnalyzer<T : CtLoop> : StatementAnalyzer {
 
             val preCondition = getPreCondition(iterationState, statement)
             if (preCondition != null) {
+                if (preCondition.thenFrame !is ReachableFrame) {
+                    break
+                }
+
                 bodyFrame = getBodyFlow(iterationState.copy(frame = preCondition.thenFrame), statement)
                 exitFrames += preCondition.elseFrame.compact(state.frame)
             } else {
                 bodyFrame = getBodyFlow(iterationState, statement)
             }
-
-            val postCondition = getPostCondition(iterationState.copy(frame = bodyFrame), statement)
-            if (postCondition != null) {
-                bodyFrame = postCondition.thenFrame
-                exitFrames += postCondition.elseFrame.compact(state.frame)
-            }
-
-            startFrames += bodyFrame.compact(localState.frame)
 
             for (jump in localState.jumpPoints) {
                 when (jump.first) {
@@ -60,6 +62,18 @@ abstract class CtLoopAnalyzer<T : CtLoop> : StatementAnalyzer {
                 }
             }
             localState.jumpPoints.clear()
+
+            if (bodyFrame !is ReachableFrame) {
+                continue
+            }
+
+            val postCondition = getPostCondition(iterationState.copy(frame = bodyFrame), statement)
+            if (postCondition != null) {
+                bodyFrame = postCondition.thenFrame
+                exitFrames += postCondition.elseFrame.compact(state.frame)
+            }
+
+            startFrames += bodyFrame.compact(localState.frame)
         }
 
         return DataFrame.merge(state.frame, exitFrames)

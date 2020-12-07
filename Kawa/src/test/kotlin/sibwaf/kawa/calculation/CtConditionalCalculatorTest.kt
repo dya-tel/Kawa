@@ -4,6 +4,7 @@ import kotlinx.coroutines.runBlocking
 import sibwaf.kawa.AnalyzerState
 import sibwaf.kawa.DataFrame
 import sibwaf.kawa.MutableDataFrame
+import sibwaf.kawa.ReachableFrame
 import sibwaf.kawa.calculation.conditions.EqualityConditionCalculator
 import sibwaf.kawa.constraints.Nullability
 import sibwaf.kawa.constraints.ReferenceConstraint
@@ -36,8 +37,8 @@ class CtConditionalCalculatorTest : ValueCalculatorTestBase() {
 
         val conditional = method.getElementsOf<CtLocalVariable<*>>().single().defaultExpression
 
-        lateinit var thenFrame: DataFrame
-        lateinit var elseFrame: DataFrame
+        lateinit var thenFrame: ReachableFrame
+        lateinit var elseFrame: ReachableFrame
         val calculator = object : TestValueCalculator(
             calculators = listOf(
                 EqualityConditionCalculator(),

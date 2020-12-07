@@ -2,6 +2,7 @@ package sibwaf.kawa.calculation.conditions
 
 import sibwaf.kawa.AnalyzerState
 import sibwaf.kawa.MutableDataFrame
+import sibwaf.kawa.ReachableFrame
 import sibwaf.kawa.UnreachableFrame
 import sibwaf.kawa.constraints.BooleanConstraint
 import sibwaf.kawa.constraints.Constraint
@@ -29,6 +30,7 @@ class EqualityConditionCalculator : ConditionCalculator {
         val leftOperand = operator.leftHandOperand
         val rightOperand = operator.rightHandOperand
 
+        // TODO: equal values
         return if (leftOperand is CtLiteral<*> && leftOperand.value == null) {
             InferredConstraint(
                 value = rightValue,
@@ -50,7 +52,14 @@ class EqualityConditionCalculator : ConditionCalculator {
         expression as CtBinaryOperator<*>
 
         val (leftFrame, leftValue) = state.getValue(expression.leftHandOperand)
+        if (leftFrame !is ReachableFrame) {
+            return ConditionCalculatorResult(leftFrame, leftFrame, BooleanValue(ValueSource.NONE), BooleanConstraint.createUnknown())
+        }
+
         val (rightFrame, rightValue) = state.copy(frame = leftFrame).getValue(expression.rightHandOperand)
+        if (rightFrame !is ReachableFrame) {
+            return ConditionCalculatorResult(rightFrame, rightFrame, BooleanValue(ValueSource.NONE), BooleanConstraint.createUnknown())
+        }
 
         val leftConstraint = leftValue.constraint
         val rightConstraint = rightValue.constraint

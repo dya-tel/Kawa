@@ -1,1 +1,12 @@
-[]
+[
+  {
+    "rule": "R0000",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/azure-maven-plugins-develop/azure-tools-common/src/main/java/com/microsoft/azure/common/utils/IndentUtil.java",
+      "line": 22,
+      "start": 997,
+      "end": 1010
+    },
+    "message": "Possible null dereference of \u0027line\u0027"
+  }
+]

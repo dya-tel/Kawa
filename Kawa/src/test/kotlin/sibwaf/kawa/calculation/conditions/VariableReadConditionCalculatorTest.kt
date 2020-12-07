@@ -2,6 +2,7 @@ package sibwaf.kawa.calculation.conditions
 
 import kotlinx.coroutines.runBlocking
 import sibwaf.kawa.MutableDataFrame
+import sibwaf.kawa.ReachableFrame
 import sibwaf.kawa.calculation.ValueCalculatorTestBase
 import sibwaf.kawa.constraints.BooleanConstraint
 import sibwaf.kawa.extractVariables
@@ -40,13 +41,13 @@ class VariableReadConditionCalculatorTest : ValueCalculatorTestBase() {
         val result = runBlocking { calculator.calculateCondition(state, expression) }
 
         expect {
-            that(result.thenFrame.getConstraint(x))
+            that((result.thenFrame as ReachableFrame).getConstraint(x))
                 .describedAs("x constraint in then-frame")
                 .isA<BooleanConstraint>()
                 .get { isTrue }
                 .isTrue()
 
-            that(result.elseFrame.getConstraint(x))
+            that((result.elseFrame as ReachableFrame).getConstraint(x))
                 .describedAs("x constraint in else-frame")
                 .isA<BooleanConstraint>()
                 .get { isFalse }

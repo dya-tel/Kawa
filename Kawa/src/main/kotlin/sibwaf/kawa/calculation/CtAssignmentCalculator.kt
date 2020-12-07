@@ -3,6 +3,7 @@ package sibwaf.kawa.calculation
 import sibwaf.kawa.AnalyzerState
 import sibwaf.kawa.DataFrame
 import sibwaf.kawa.MutableDataFrame
+import sibwaf.kawa.ReachableFrame
 import sibwaf.kawa.values.ConstrainedValue
 import spoon.reflect.code.CtAssignment
 import spoon.reflect.code.CtExpression
@@ -17,13 +18,14 @@ class CtAssignmentCalculator : ValueCalculator {
         expression as CtAssignment<*, *>
 
         val (frame, result) = state.getValue(expression.assignment)
+        // TODO: exit on UnreachableFrame with invalid value
 
         val variable = (expression.assigned as? CtVariableAccess<*>)
             ?.variable
             ?.declaration
             ?.takeUnless { it is CtField<*> }
 
-        val resultFrame = if (variable != null) {
+        val resultFrame = if (variable != null && frame is ReachableFrame) {
             MutableDataFrame(frame).apply {
                 setValue(variable, result.value)
                 setConstraint(result.value, result.constraint)

@@ -12,9 +12,9 @@ enum class MethodPurity {
 }
 
 open class BlockFlow {
-    lateinit var startFrame: DataFrame
+    lateinit var startFrame: ReachableFrame
         internal set
-    lateinit var endFrame: DataFrame
+    lateinit var endFrame: DataFrame // TODO: 'ReachableFrame?' should be better
         internal set
 }
 
@@ -23,7 +23,7 @@ open class MethodFlow : BlockFlow() {
 
     val parameters = ArrayList<Value>()
 
-    val frames = IdentityHashMap<CtElement, DataFrame>()
+    val frames = IdentityHashMap<CtElement, ReachableFrame>()
     val blocks = IdentityHashMap<CtStatementList, BlockFlow>()
     val statements = IdentityHashMap<CtStatement, Int>()
 

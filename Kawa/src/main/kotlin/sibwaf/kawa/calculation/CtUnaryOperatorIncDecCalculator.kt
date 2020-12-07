@@ -3,7 +3,7 @@ package sibwaf.kawa.calculation
 import sibwaf.kawa.AnalyzerState
 import sibwaf.kawa.DataFrame
 import sibwaf.kawa.MutableDataFrame
-import sibwaf.kawa.UnreachableFrame
+import sibwaf.kawa.ReachableFrame
 import sibwaf.kawa.values.ConstrainedValue
 import sibwaf.kawa.values.ValueSource
 import spoon.reflect.code.CtExpression
@@ -25,6 +25,8 @@ class CtUnaryOperatorIncDecCalculator : ValueCalculator {
         expression as CtUnaryOperator<*>
 
         val (frame, operandValue) = state.getValue(expression.operand)
+        // TODO: exit on UnreachableFrame with invalid value
+
         val operatorValue = ConstrainedValue.from(expression, ValueSource.NONE) // TODO
 
         val variable = (expression.operand as? CtVariableAccess<*>)
@@ -32,7 +34,7 @@ class CtUnaryOperatorIncDecCalculator : ValueCalculator {
             ?.declaration
             ?.takeUnless { it is CtField<*> }
 
-        val resultFrame = if (variable != null && frame !is UnreachableFrame) {
+        val resultFrame = if (variable != null && frame is ReachableFrame) {
             MutableDataFrame(frame).apply {
                 setValue(variable, operatorValue.value)
                 setConstraint(operatorValue.value, operatorValue.constraint)

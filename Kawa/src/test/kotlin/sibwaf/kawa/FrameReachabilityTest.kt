@@ -4,6 +4,7 @@ import kotlinx.coroutines.runBlocking
 import spoon.reflect.code.CtIf
 import strikt.api.expect
 import strikt.assertions.isA
+import strikt.assertions.isNull
 import kotlin.test.Test
 
 class FrameReachabilityTest : MethodAnalyzerTestBase() {
@@ -24,17 +25,17 @@ class FrameReachabilityTest : MethodAnalyzerTestBase() {
         val flow = runBlocking { analyze(method) }
 
         val ifStatement = method.getElementsOf<CtIf>().single()
-        val thenBranchFrame = flow.frames.getValue(ifStatement.thenBlock)
-        val elseBranchFrame = flow.frames.getValue(ifStatement.elseBlock!!)
+        val thenBranchFrame = flow.frames[ifStatement.thenBlock]
+        val elseBranchFrame = flow.frames[ifStatement.elseBlock!!]
 
         expect {
             that(thenBranchFrame)
                 .describedAs("then-branch frame")
-                .isA<UnreachableFrame>()
+                .isNull()
 
             that(elseBranchFrame)
                 .describedAs("else-branch frame")
-                .not().isA<UnreachableFrame>()
+                .isA<ReachableFrame>()
         }
     }
 
@@ -52,17 +53,17 @@ class FrameReachabilityTest : MethodAnalyzerTestBase() {
         val flow = runBlocking { analyze(method) }
 
         val ifStatement = method.getElementsOf<CtIf>().single()
-        val thenBranchFrame = flow.frames.getValue(ifStatement.thenBlock)
-        val elseBranchFrame = flow.frames.getValue(ifStatement.elseBlock!!)
+        val thenBranchFrame = flow.frames[ifStatement.thenBlock]
+        val elseBranchFrame = flow.frames[ifStatement.elseBlock!!]
 
         expect {
             that(thenBranchFrame)
                 .describedAs("then-branch frame")
-                .not().isA<UnreachableFrame>()
+                .isA<ReachableFrame>()
 
             that(elseBranchFrame)
                 .describedAs("else-branch frame")
-                .isA<UnreachableFrame>()
+                .isNull()
         }
     }
 }

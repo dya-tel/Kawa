@@ -3,6 +3,7 @@ package sibwaf.kawa.analysis
 import kotlinx.coroutines.runBlocking
 import sibwaf.kawa.AnalyzerState
 import sibwaf.kawa.DataFrame
+import sibwaf.kawa.ReachableFrame
 import sibwaf.kawa.calculation.CtLiteralCalculator
 import sibwaf.kawa.getElementsOf
 import sibwaf.kawa.parseMethod
@@ -109,24 +110,21 @@ class CtBlockAnalyzerTest : StatementAnalyzerTestBase() {
         }
 
         expect {
-            that(frames[xVariable])
+            that(frames[xVariable] as ReachableFrame)
                 .describedAs("first frame")
-                .isNotNull()
                 .and {
                     get { next }.isNotNull().isSameInstanceAs(frames[yVariable])
                 }
 
-            that(frames[yVariable])
+            that(frames[yVariable] as ReachableFrame)
                 .describedAs("middle frame")
-                .isNotNull()
                 .and {
                     get { previous }.isNotNull().isSameInstanceAs(frames[xVariable])
                     get { next }.isNotNull().isSameInstanceAs(frames[zVariable])
                 }
 
-            that(frames[zVariable])
+            that(frames[zVariable] as ReachableFrame)
                 .describedAs("last frame")
-                .isNotNull()
                 .and {
                     get { previous }.isNotNull().isSameInstanceAs(frames[yVariable])
                 }

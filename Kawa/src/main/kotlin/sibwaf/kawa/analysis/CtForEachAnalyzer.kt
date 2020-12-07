@@ -3,6 +3,7 @@ package sibwaf.kawa.analysis
 import sibwaf.kawa.AnalyzerState
 import sibwaf.kawa.DataFrame
 import sibwaf.kawa.MutableDataFrame
+import sibwaf.kawa.ReachableFrame
 import sibwaf.kawa.UnreachableFrame
 import sibwaf.kawa.calculation.conditions.ConditionCalculatorResult
 import sibwaf.kawa.constraints.BooleanConstraint
@@ -44,6 +45,9 @@ class CtForEachAnalyzer : CtLoopAnalyzer<CtForEach>() {
         statement as CtForEach
 
         val (frame, _) = state.getValue(statement.expression)
+        if (frame !is ReachableFrame) {
+            return frame
+        }
 
         val resultFrame = super.analyze(state.copy(frame = frame), statement).compact(state.frame)
         return if (resultFrame is UnreachableFrame) {
@@ -52,7 +56,7 @@ class CtForEachAnalyzer : CtLoopAnalyzer<CtForEach>() {
 
             UnreachableFrame.after(cleanedFrame)
         } else {
-            resultFrame.copy(retiredVariables = listOf(statement.variable))
+            (resultFrame as ReachableFrame).copy(retiredVariables = listOf(statement.variable))
         }
     }
 }

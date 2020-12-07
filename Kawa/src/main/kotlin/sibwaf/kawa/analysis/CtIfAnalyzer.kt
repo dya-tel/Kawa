@@ -2,6 +2,7 @@ package sibwaf.kawa.analysis
 
 import sibwaf.kawa.AnalyzerState
 import sibwaf.kawa.DataFrame
+import sibwaf.kawa.ReachableFrame
 import sibwaf.kawa.elseBlock
 import sibwaf.kawa.thenBlock
 import spoon.reflect.code.CtIf
@@ -14,22 +15,21 @@ class CtIfAnalyzer : StatementAnalyzer {
     override suspend fun analyze(state: AnalyzerState, statement: CtStatement): DataFrame {
         statement as CtIf
 
-        val (thenStartFrame, elseStartFrame, _, conditionConstraint) = state.getConditionValue(statement.condition)
+        var (thenBranch, elseBranch, _, _) = state.getConditionValue(statement.condition)
 
-        val thenBranch = state.copy(frame = thenStartFrame).getStatementFlow(statement.thenBlock)
-            .compact(state.frame)
-
-        val elseBranch = (statement.elseBlock?.let { state.copy(frame = elseStartFrame).getStatementFlow(it) } ?: elseStartFrame)
-            .compact(state.frame)
-
-        return if (conditionConstraint.isFalse != conditionConstraint.isTrue) {
-            if (conditionConstraint.isTrue) {
-                thenBranch
-            } else {
-                elseBranch
-            }
-        } else {
-            DataFrame.merge(state.frame, thenBranch, elseBranch)
+        if (thenBranch is ReachableFrame) {
+            thenBranch = state.copy(frame = thenBranch).getStatementFlow(statement.thenBlock)
         }
+
+        val elseBlock = statement.elseBlock
+        if (elseBranch is ReachableFrame && elseBlock != null) {
+            elseBranch = state.copy(frame = elseBranch).getStatementFlow(elseBlock)
+        }
+
+        return DataFrame.merge(
+            state.frame,
+            thenBranch.compact(state.frame),
+            elseBranch.compact(state.frame)
+        )
     }
 }

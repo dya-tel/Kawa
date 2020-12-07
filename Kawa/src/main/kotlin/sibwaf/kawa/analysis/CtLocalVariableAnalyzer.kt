@@ -3,6 +3,7 @@ package sibwaf.kawa.analysis
 import sibwaf.kawa.AnalyzerState
 import sibwaf.kawa.DataFrame
 import sibwaf.kawa.MutableDataFrame
+import sibwaf.kawa.ReachableFrame
 import spoon.reflect.code.CtLocalVariable
 import spoon.reflect.code.CtStatement
 
@@ -17,9 +18,13 @@ class CtLocalVariableAnalyzer : StatementAnalyzer {
         val expression = statement.defaultExpression
         return if (expression != null) {
             val (frame, result) = state.getValue(expression)
-            MutableDataFrame(frame).apply {
-                setValue(statement, result.value)
-                setConstraint(result.value, result.constraint)
+            if (frame is ReachableFrame) {
+                MutableDataFrame(frame).apply {
+                    setValue(statement, result.value)
+                    setConstraint(result.value, result.constraint)
+                }
+            } else {
+                frame
             }
         } else {
             state.frame

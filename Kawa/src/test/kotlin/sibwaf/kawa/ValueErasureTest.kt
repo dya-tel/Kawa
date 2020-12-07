@@ -21,7 +21,7 @@ class ValueErasureTest : MethodAnalyzerTestBase() {
         val variable = method.extractVariables().values.single() as CtLocalVariable<*>
 
         val assignmentFrame = flow.frames.getValue(variable)
-        val nextFrame = assignmentFrame.next!!
+        val nextFrame = assignmentFrame.next!! as ReachableFrame
 
         expectThat(assignmentFrame.eraseValues())
             .describedAs("erased frame")

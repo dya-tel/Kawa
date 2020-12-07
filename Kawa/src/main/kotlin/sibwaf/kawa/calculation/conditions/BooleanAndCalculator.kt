@@ -2,7 +2,7 @@ package sibwaf.kawa.calculation.conditions
 
 import sibwaf.kawa.AnalyzerState
 import sibwaf.kawa.DataFrame
-import sibwaf.kawa.MutableDataFrame
+import sibwaf.kawa.ReachableFrame
 import sibwaf.kawa.UnreachableFrame
 import sibwaf.kawa.constraints.BooleanConstraint
 import sibwaf.kawa.utility.flattenExpression
@@ -21,7 +21,7 @@ open class BooleanAndCalculator : ConditionCalculator {
 
         val operands = flattenExpression(expression, BinaryOperatorKind.AND)
 
-        var thenFrame = state.frame
+        var thenFrame: DataFrame = state.frame
         val elseFrames = ArrayList<DataFrame>(operands.size)
 
         val constraints = ArrayList<BooleanConstraint>(operands.size)
@@ -33,6 +33,9 @@ open class BooleanAndCalculator : ConditionCalculator {
             thenFrame = operandThenFrame
             elseFrames += operandElseFrame.compact(state.frame)
 
+            if (operandThenFrame !is ReachableFrame) {
+                break
+            }
             nextState = state.copy(frame = operandThenFrame)
         }
 
@@ -49,8 +52,8 @@ open class BooleanAndCalculator : ConditionCalculator {
         }
 
         return ConditionCalculatorResult(
-            thenFrame = if (result.isFalse) UnreachableFrame.after(thenFrame) else MutableDataFrame(thenFrame),
-            elseFrame = if (result.isTrue) UnreachableFrame.after(elseFrame) else MutableDataFrame(elseFrame),
+            thenFrame = if (result.isFalse) UnreachableFrame.after(thenFrame) else thenFrame,
+            elseFrame = if (result.isTrue) UnreachableFrame.after(elseFrame) else elseFrame,
             value = BooleanValue(ValueSource.NONE),
             constraint = result
         )

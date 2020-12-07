@@ -1,93 +1,13 @@
 [
   {
-    "rule": "R0000",
+    "rule": "R0003",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage/src/main/java/mage/abilities/AbilityImpl.java",
-      "line": 1043,
-      "start": 41350,
-      "end": 41368
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage.Client/src/main/java/org/mage/plugins/card/images/ImageCache.java",
+      "line": 355,
+      "start": 15289,
+      "end": 15293
     },
-    "message": "Possible null dereference of \u0027object\u0027"
-  },
-  {
-    "rule": "R0000",
-    "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage/src/main/java/mage/abilities/condition/common/SourceHasCounterCondition.java",
-      "line": 53,
-      "start": 1445,
-      "end": 1471
-    },
-    "message": "Possible null dereference of \u0027permanent\u0027"
-  },
-  {
-    "rule": "R0000",
-    "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage/src/main/java/mage/abilities/condition/common/TargetHasCounterCondition.java",
-      "line": 53,
-      "start": 1449,
-      "end": 1475
-    },
-    "message": "Possible null dereference of \u0027permanent\u0027"
-  },
-  {
-    "rule": "R0001",
-    "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage/src/main/java/mage/abilities/effects/common/continuous/ExchangeControlTargetEffect.java",
-      "line": 85,
-      "start": 3039,
-      "end": 3056
-    },
-    "message": "Condition is always true: \u0027permanent2 \u003d\u003d null\u0027"
-  },
-  {
-    "rule": "R0001",
-    "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage/src/main/java/mage/abilities/effects/common/continuous/ExchangeControlTargetEffect.java",
-      "line": 93,
-      "start": 3356,
-      "end": 3373
-    },
-    "message": "Condition is always true: \u0027permanent2 \u003d\u003d null\u0027"
-  },
-  {
-    "rule": "R0000",
-    "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage/src/main/java/mage/abilities/effects/common/cost/PlanarDieRollCostIncreasingEffect.java",
-      "line": 39,
-      "start": 1261,
-      "end": 1280
-    },
-    "message": "Possible null dereference of \u0027activePlayer\u0027"
-  },
-  {
-    "rule": "R0000",
-    "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage/src/main/java/mage/abilities/effects/common/search/SearchLibraryPutInHandOrOnBattlefieldEffect.java",
-      "line": 84,
-      "start": 3326,
-      "end": 3351
-    },
-    "message": "Possible null dereference of \u0027cardToPutOnBf\u0027"
-  },
-  {
-    "rule": "R0000",
-    "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage/src/main/java/mage/cards/CardImpl.java",
-      "line": 843,
-      "start": 32128,
-      "end": 32152
-    },
-    "message": "Possible null dereference of \u0027secondCard\u0027"
-  },
-  {
-    "rule": "R0000",
-    "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage/src/main/java/mage/cards/CardImpl.java",
-      "line": 935,
-      "start": 35521,
-      "end": 35548
-    },
-    "message": "Possible null dereference of \u0027attachment\u0027"
+    "message": "The returned value is always null: \u0027image\u0027"
   },
   {
     "rule": "R0002",
@@ -108,6 +28,56 @@
       "end": 8614
     },
     "message": "Unreachable statement"
+  },
+  {
+    "rule": "R0002",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage.Client/src/main/java/org/mage/card/arcane/ManaSymbols.java",
+      "line": 281,
+      "start": 11964,
+      "end": 12037
+    },
+    "message": "Unreachable statement"
+  },
+  {
+    "rule": "R0002",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage.Client/src/main/java/org/mage/card/arcane/ManaSymbols.java",
+      "line": 297,
+      "start": 12465,
+      "end": 12515
+    },
+    "message": "Unreachable statement"
+  },
+  {
+    "rule": "R0002",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage.Client/src/main/java/org/mage/card/arcane/ManaSymbols.java",
+      "line": 347,
+      "start": 14691,
+      "end": 15068
+    },
+    "message": "Unreachable statement"
+  },
+  {
+    "rule": "R0001",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage/src/main/java/mage/abilities/effects/common/continuous/ExchangeControlTargetEffect.java",
+      "line": 85,
+      "start": 3039,
+      "end": 3056
+    },
+    "message": "Condition is always true: \u0027permanent2 \u003d\u003d null\u0027"
+  },
+  {
+    "rule": "R0001",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage/src/main/java/mage/abilities/effects/common/continuous/ExchangeControlTargetEffect.java",
+      "line": 93,
+      "start": 3356,
+      "end": 3373
+    },
+    "message": "Condition is always true: \u0027permanent2 \u003d\u003d null\u0027"
   },
   {
     "rule": "R0001",
@@ -168,6 +138,116 @@
       "end": 8557
     },
     "message": "Condition is always false: \u0027xCost\u0027"
+  },
+  {
+    "rule": "R0001",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage.Server/src/main/java/mage/server/util/SystemUtil.java",
+      "line": 401,
+      "start": 15255,
+      "end": 15276
+    },
+    "message": "Condition is always true: \u0027feedbackPlayer !\u003d null\u0027"
+  },
+  {
+    "rule": "R0001",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage.Server/src/main/java/mage/server/util/SystemUtil.java",
+      "line": 408,
+      "start": 15609,
+      "end": 15630
+    },
+    "message": "Condition is always true: \u0027feedbackPlayer !\u003d null\u0027"
+  },
+  {
+    "rule": "R0001",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage.Server/src/main/java/mage/server/util/SystemUtil.java",
+      "line": 417,
+      "start": 16149,
+      "end": 16170
+    },
+    "message": "Condition is always true: \u0027feedbackPlayer !\u003d null\u0027"
+  },
+  {
+    "rule": "R0001",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage.Client/src/main/java/org/mage/card/arcane/ManaSymbols.java",
+      "line": 280,
+      "start": 11888,
+      "end": 11947
+    },
+    "message": "Condition is always false: \u0027useShadow \u0026\u0026 ((resizeToWidth \u003c\u003d 0) || (resizeToHeight \u003c\u003d 0))\u0027"
+  },
+  {
+    "rule": "R0001",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage.Client/src/main/java/org/mage/card/arcane/ManaSymbols.java",
+      "line": 295,
+      "start": 12378,
+      "end": 12386
+    },
+    "message": "Condition is always false: \u0027useShadow\u0027"
+  },
+  {
+    "rule": "R0001",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage.Client/src/main/java/org/mage/card/arcane/ManaSymbols.java",
+      "line": 341,
+      "start": 14411,
+      "end": 14451
+    },
+    "message": "Condition is always false: \u0027useShadow \u0026\u0026 (originImage.getWidth() \u003e 0)\u0027"
+  },
+  {
+    "rule": "R0001",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage.Client/src/main/java/org/mage/plugins/theme/ThemePluginImpl.java",
+      "line": 164,
+      "start": 6431,
+      "end": 6439
+    },
+    "message": "Condition is always true: \u0027f !\u003d null\u0027"
+  },
+  {
+    "rule": "R0000",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage/src/main/java/mage/abilities/condition/common/SourceHasCounterCondition.java",
+      "line": 53,
+      "start": 1445,
+      "end": 1471
+    },
+    "message": "Possible null dereference of \u0027permanent\u0027"
+  },
+  {
+    "rule": "R0000",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage/src/main/java/mage/abilities/condition/common/TargetHasCounterCondition.java",
+      "line": 53,
+      "start": 1449,
+      "end": 1475
+    },
+    "message": "Possible null dereference of \u0027permanent\u0027"
+  },
+  {
+    "rule": "R0000",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage/src/main/java/mage/abilities/effects/common/cost/PlanarDieRollCostIncreasingEffect.java",
+      "line": 39,
+      "start": 1261,
+      "end": 1280
+    },
+    "message": "Possible null dereference of \u0027activePlayer\u0027"
+  },
+  {
+    "rule": "R0000",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage/src/main/java/mage/cards/CardImpl.java",
+      "line": 843,
+      "start": 32128,
+      "end": 32152
+    },
+    "message": "Possible null dereference of \u0027secondCard\u0027"
   },
   {
     "rule": "R0000",
@@ -233,31 +313,11 @@
     "rule": "R0000",
     "position": {
       "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage/src/main/java/mage/game/GameImpl.java",
-      "line": 2069,
-      "start": 82546,
-      "end": 82570
+      "line": 2083,
+      "start": 83464,
+      "end": 83488
     },
     "message": "Possible null dereference of \u0027spellAbility\u0027"
-  },
-  {
-    "rule": "R0000",
-    "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage/src/main/java/mage/game/GameImpl.java",
-      "line": 2079,
-      "start": 83117,
-      "end": 83141
-    },
-    "message": "Possible null dereference of \u0027spellAbility\u0027"
-  },
-  {
-    "rule": "R0000",
-    "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage/src/main/java/mage/game/GameImpl.java",
-      "line": 2624,
-      "start": 107905,
-      "end": 107920
-    },
-    "message": "Possible null dereference of \u0027player\u0027"
   },
   {
     "rule": "R0000",
@@ -290,86 +350,6 @@
     "message": "Possible null dereference of \u0027attacker\u0027"
   },
   {
-    "rule": "R0003",
-    "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage.Client/src/main/java/org/mage/plugins/card/images/ImageCache.java",
-      "line": 355,
-      "start": 15289,
-      "end": 15293
-    },
-    "message": "The returned value is always null: \u0027image\u0027"
-  },
-  {
-    "rule": "R0002",
-    "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage.Client/src/main/java/org/mage/card/arcane/ManaSymbols.java",
-      "line": 281,
-      "start": 11964,
-      "end": 12037
-    },
-    "message": "Unreachable statement"
-  },
-  {
-    "rule": "R0002",
-    "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage.Client/src/main/java/org/mage/card/arcane/ManaSymbols.java",
-      "line": 297,
-      "start": 12465,
-      "end": 12515
-    },
-    "message": "Unreachable statement"
-  },
-  {
-    "rule": "R0002",
-    "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage.Client/src/main/java/org/mage/card/arcane/ManaSymbols.java",
-      "line": 347,
-      "start": 14691,
-      "end": 15068
-    },
-    "message": "Unreachable statement"
-  },
-  {
-    "rule": "R0001",
-    "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage.Client/src/main/java/org/mage/card/arcane/ManaSymbols.java",
-      "line": 280,
-      "start": 11888,
-      "end": 11947
-    },
-    "message": "Condition is always false: \u0027useShadow \u0026\u0026 ((resizeToWidth \u003c\u003d 0) || (resizeToHeight \u003c\u003d 0))\u0027"
-  },
-  {
-    "rule": "R0001",
-    "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage.Client/src/main/java/org/mage/card/arcane/ManaSymbols.java",
-      "line": 295,
-      "start": 12378,
-      "end": 12386
-    },
-    "message": "Condition is always false: \u0027useShadow\u0027"
-  },
-  {
-    "rule": "R0001",
-    "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage.Client/src/main/java/org/mage/card/arcane/ManaSymbols.java",
-      "line": 341,
-      "start": 14411,
-      "end": 14451
-    },
-    "message": "Condition is always false: \u0027useShadow \u0026\u0026 (originImage.getWidth() \u003e 0)\u0027"
-  },
-  {
-    "rule": "R0001",
-    "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage.Client/src/main/java/org/mage/plugins/theme/ThemePluginImpl.java",
-      "line": 164,
-      "start": 6431,
-      "end": 6439
-    },
-    "message": "Condition is always true: \u0027f !\u003d null\u0027"
-  },
-  {
     "rule": "R0000",
     "position": {
       "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage.Server.Plugins/Mage.Player.AI/src/main/java/mage/player/ai/ComputerPlayer.java",
@@ -388,16 +368,6 @@
       "end": 74813
     },
     "message": "Possible null dereference of \u0027specialAction\u0027"
-  },
-  {
-    "rule": "R0000",
-    "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage.Server.Plugins/Mage.Player.AI/src/main/java/mage/player/ai/ComputerPlayer.java",
-      "line": 2377,
-      "start": 108464,
-      "end": 108479
-    },
-    "message": "Possible null dereference of \u0027l\u0027"
   },
   {
     "rule": "R0000",

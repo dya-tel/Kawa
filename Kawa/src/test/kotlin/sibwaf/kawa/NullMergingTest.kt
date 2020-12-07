@@ -25,7 +25,7 @@ class NullMergingTest : MethodAnalyzerTestBase() {
 
         val flow = runBlocking { analyze(method) }
         val variables = method.extractVariables()
-        val frame = flow.endFrame
+        val frame = flow.endFrame as ReachableFrame
 
         expectThat(frame.getConstraint(variables.getValue("list")))
             .describedAs("list constraint")
@@ -51,7 +51,7 @@ class NullMergingTest : MethodAnalyzerTestBase() {
 
         val flow = runBlocking { analyze(method) }
         val variables = method.extractVariables()
-        val frame = flow.endFrame
+        val frame = flow.endFrame as ReachableFrame
 
         expectThat(frame.getConstraint(variables.getValue("list")))
             .describedAs("list constraint")
@@ -79,7 +79,7 @@ class NullMergingTest : MethodAnalyzerTestBase() {
 
         val flow = runBlocking { analyze(method) }
         val variables = method.extractVariables()
-        val frame = flow.endFrame//.previous!!
+        val frame = flow.endFrame as ReachableFrame//.previous!!
 
         expectThat(frame.getConstraint(variables.getValue("list")))
             .describedAs("list constraint")

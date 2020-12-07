@@ -3,6 +3,7 @@ package sibwaf.kawa.calculation
 import sibwaf.kawa.AnalyzerState
 import sibwaf.kawa.DataFrame
 import sibwaf.kawa.MutableDataFrame
+import sibwaf.kawa.ReachableFrame
 import sibwaf.kawa.UnreachableFrame
 import sibwaf.kawa.constraints.Constraint
 import sibwaf.kawa.values.ConstrainedValue
@@ -25,16 +26,18 @@ class CtInvocationCalculator : CtTargetedExpressionCalculator() {
         var currentState = state
         for (argument in expression.arguments) {
             val (nextFrame, _) = currentState.getValue(argument)
-            currentState = state.copy(frame = nextFrame)
+            if (nextFrame !is ReachableFrame) {
+                return nextFrame to ConstrainedValue.from(expression, ValueSource.NONE) // TODO: invalid value
+            }
+
+            currentState = currentState.copy(frame = nextFrame)
         }
 
-        if (currentState.frame is UnreachableFrame) {
-            return currentState.frame to ConstrainedValue.from(expression, ValueSource.NONE) // TODO: invalid value
-        }
+        val frame = currentState.frame
 
         val flow = currentState.getMethodFlow(expression.executable)
         if (flow.neverReturns) {
-            return UnreachableFrame.after(currentState.frame) to ConstrainedValue.from(expression, ValueSource.NONE) // TODO: invalid value
+            return UnreachableFrame.after(frame) to ConstrainedValue.from(expression, ValueSource.NONE) // TODO: invalid value
         }
 
         val value = Value.from(expression.type, ValueSource.NONE)
@@ -42,6 +45,6 @@ class CtInvocationCalculator : CtTargetedExpressionCalculator() {
 
         // TODO: invocation side-effects
 
-        return MutableDataFrame(currentState.frame) to ConstrainedValue(value, constraint)
+        return MutableDataFrame(frame) to ConstrainedValue(value, constraint)
     }
 }

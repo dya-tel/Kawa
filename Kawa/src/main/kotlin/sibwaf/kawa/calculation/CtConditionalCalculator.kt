@@ -2,11 +2,14 @@ package sibwaf.kawa.calculation
 
 import sibwaf.kawa.AnalyzerState
 import sibwaf.kawa.DataFrame
+import sibwaf.kawa.ReachableFrame
+import sibwaf.kawa.constraints.Constraint
 import sibwaf.kawa.values.ConstrainedValue
 import sibwaf.kawa.values.Value
 import sibwaf.kawa.values.ValueSource
 import spoon.reflect.code.CtConditional
 import spoon.reflect.code.CtExpression
+import java.util.LinkedList
 
 class CtConditionalCalculator : ValueCalculator {
 
@@ -15,19 +18,31 @@ class CtConditionalCalculator : ValueCalculator {
     override suspend fun calculate(state: AnalyzerState, expression: CtExpression<*>): Pair<DataFrame, ConstrainedValue> {
         expression as CtConditional<*>
 
-        val (thenFrame, elseFrame, _) = state.getConditionValue(expression.condition)
+        var (thenFrame, elseFrame, _) = state.getConditionValue(expression.condition)
 
-        val (thenFrame2, thenValue) = state.copy(frame = thenFrame).getValue(expression.thenExpression)
-        val (elseFrame2, elseValue) = state.copy(frame = elseFrame).getValue(expression.elseExpression)
+        val values = LinkedList<ConstrainedValue>()
+
+        if (thenFrame is ReachableFrame) {
+            val (frame, value) = state.copy(frame = thenFrame).getValue(expression.thenExpression)
+            thenFrame = frame
+            values += value
+        }
+
+        if (elseFrame is ReachableFrame) {
+            val (frame, value) = state.copy(frame = elseFrame).getValue(expression.elseExpression)
+            elseFrame = frame
+            values += value
+        }
 
         val resultFrame = DataFrame.merge(
             state.frame,
-            thenFrame2.compact(state.frame),
-            elseFrame2.compact(state.frame)
+            thenFrame.compact(state.frame),
+            elseFrame.compact(state.frame)
         )
 
+        // TODO: composite value
         val resultValue = Value.from(expression, ValueSource.NONE)
-        val resultConstraint = thenValue.constraint.merge(elseValue.constraint)
+        val resultConstraint = values.map { it.constraint }.reduce(Constraint::merge)
 
         return resultFrame to ConstrainedValue(resultValue, resultConstraint)
     }

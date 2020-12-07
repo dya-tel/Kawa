@@ -3,6 +3,7 @@ package sibwaf.kawa.analysis
 import sibwaf.kawa.AnalyzerState
 import sibwaf.kawa.DataFrame
 import sibwaf.kawa.IdentityHashSet
+import sibwaf.kawa.ReachableFrame
 import sibwaf.kawa.UnreachableFrame
 import sibwaf.kawa.calculation.conditions.ConditionCalculatorResult
 import spoon.reflect.code.CtFor
@@ -21,6 +22,10 @@ class CtForAnalyzer : CtLoopAnalyzer<CtFor>() {
     override suspend fun getBodyFlow(state: AnalyzerState, loop: CtFor): DataFrame {
         var resultFrame = super.getBodyFlow(state, loop)
         for (update in loop.forUpdate) {
+            if (resultFrame !is ReachableFrame) {
+                break
+            }
+
             resultFrame = state.copy(frame = resultFrame).getStatementFlow(update)
         }
         return resultFrame
@@ -29,19 +34,25 @@ class CtForAnalyzer : CtLoopAnalyzer<CtFor>() {
     override suspend fun analyze(state: AnalyzerState, statement: CtStatement): DataFrame {
         statement as CtFor
 
-        var initializerState = state.copy(localVariables = IdentityHashSet())
+        val initializerState = state.copy(localVariables = IdentityHashSet())
+        var frame: ReachableFrame = initializerState.frame
         for (initializer in statement.forInit) {
-            initializerState = initializerState.copy(frame = initializerState.getStatementFlow(initializer))
+            val initializerFrame = initializerState.copy(frame = frame).getStatementFlow(initializer)
+
+            if (initializerFrame !is ReachableFrame) {
+                return frame
+            }
+            frame = initializerFrame
         }
 
-        val resultFrame = super.analyze(initializerState, statement).compact(state.frame)
+        val resultFrame = super.analyze(initializerState.copy(frame = frame), statement).compact(state.frame)
         return if (resultFrame is UnreachableFrame) {
             val cleanedFrame = resultFrame.previous
                 .copy(retiredVariables = initializerState.localVariables)
 
             UnreachableFrame.after(cleanedFrame)
         } else {
-            resultFrame.copy(retiredVariables = initializerState.localVariables)
+            (resultFrame as ReachableFrame).copy(retiredVariables = initializerState.localVariables)
         }
     }
 }

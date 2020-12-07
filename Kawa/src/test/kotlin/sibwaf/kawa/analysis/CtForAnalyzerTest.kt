@@ -1,6 +1,7 @@
 package sibwaf.kawa.analysis
 
 import kotlinx.coroutines.runBlocking
+import sibwaf.kawa.ReachableFrame
 import sibwaf.kawa.extractVariables
 import sibwaf.kawa.parseStatement
 import sibwaf.kawa.values.ConstrainedValue
@@ -13,13 +14,14 @@ import kotlin.test.Test
 class CtForAnalyzerTest : StatementAnalyzerTestBase() {
 
     @Test fun `Test local variables from initializer are cleaned up`() {
-        val statement = parseStatement<CtFor>("for (int i = 0; ; ) {}")
+        val statement = parseStatement<CtFor>("for (int i = 0; ; ) { break; }")
         val variable = statement.extractVariables().getValue("i")
 
         val analyzer = DelegatingStatementAnalyzer(
             listOf(
                 CtForAnalyzer(),
                 CtLocalVariableAnalyzer(),
+                CtBreakAnalyzer(),
                 CtBlockAnalyzer()
             )
         )
@@ -28,7 +30,7 @@ class CtForAnalyzerTest : StatementAnalyzerTestBase() {
             analyzeStatement(analyzer, statement) {
                 copy(valueProvider = { state, expression -> state.frame to ConstrainedValue.from(expression, ValueSource.NONE) })
             }
-        }
+        } as ReachableFrame
 
         expectThat(frame.getValue(variable)).isNull()
     }

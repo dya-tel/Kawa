@@ -2,6 +2,7 @@ package sibwaf.kawa.snippets
 
 import kotlinx.coroutines.runBlocking
 import sibwaf.kawa.MethodAnalyzerTestBase
+import sibwaf.kawa.ReachableFrame
 import sibwaf.kawa.constraints.BooleanConstraint
 import sibwaf.kawa.extractVariables
 import sibwaf.kawa.parseMethod
@@ -35,7 +36,7 @@ class Hibernate_BoundedConcurrentHashMap_containsValue : MethodAnalyzerTestBase(
     @Test fun `Test 'cleanSweep' is not a constant value`() {
         val flow = runBlocking { analyze(method) }
         val cleanSweep = method.extractVariables().getValue("cleanSweep")
-        val frame = flow.endFrame
+        val frame = flow.endFrame as ReachableFrame
 
         expectThat(frame.getConstraint(cleanSweep))
             .describedAs("cleanSweep")
