@@ -35,6 +35,7 @@ import sibwaf.kawa.analysis.CtWhileAnalyzer
 import sibwaf.kawa.analysis.DelegatingStatementAnalyzer
 import sibwaf.kawa.analysis.StatementAnalyzer
 import sibwaf.kawa.constraints.Constraint
+import sibwaf.kawa.emulation.BasicMethodEmulator
 import sibwaf.kawa.values.Value
 import sibwaf.kawa.values.ValueSource
 import spoon.reflect.code.CtBlock
@@ -173,6 +174,8 @@ class MethodFlowAnalyzer private constructor() {
         )
     )
 
+    private val emulator = BasicMethodEmulator()
+
     private suspend fun getFlowFor(
         method: CtExecutableReference<*>,
         callChain: RightChain<CtExecutable<*>>?
@@ -245,6 +248,7 @@ class MethodFlowAnalyzer private constructor() {
             localVariables = Collections.emptySet(),
             jumpPoints = ArrayList(),
             methodFlowProvider = flowProvider,
+            methodEmulator = emulator::emulate,
             statementFlowProvider = analyzer::analyze,
             valueProvider = ValueCalculator::calculateValue,
             conditionValueProvider = ValueCalculator::calculateCondition

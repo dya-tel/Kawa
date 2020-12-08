@@ -8,6 +8,9 @@ import spoon.reflect.code.CtStatement
 import spoon.reflect.declaration.CtVariable
 import spoon.reflect.reference.CtExecutableReference
 
+// TODO: move frame tracing to a separate collection to get rid of side effects and allow no-trace runs
+// TODO: remove 'annotation'
+// TODO: move call chain tracking here
 data class AnalyzerState(
     val annotation: MethodFlow,
     val frame: ReachableFrame,
@@ -15,13 +18,23 @@ data class AnalyzerState(
     val jumpPoints: MutableCollection<Pair<CtCFlowBreak, ReachableFrame>>,
 
     private val methodFlowProvider: suspend (CtExecutableReference<*>) -> MethodFlow,
+
+    private val methodEmulator: suspend (AnalyzerState, CtExecutableReference<*>, List<ConstrainedValue>) -> Pair<DataFrame, ConstrainedValue?>,
     private val statementFlowProvider: suspend (AnalyzerState, CtStatement) -> DataFrame,
     private val valueProvider: suspend (AnalyzerState, CtExpression<*>) -> Pair<DataFrame, ConstrainedValue>,
     private val conditionValueProvider: suspend (AnalyzerState, CtExpression<*>) -> ConditionCalculatorResult
 ) {
 
+    // TODO: should probably be isolated inside BasicMethodEmulator
     suspend fun getMethodFlow(executable: CtExecutableReference<*>): MethodFlow {
         return methodFlowProvider(executable)
+    }
+
+    suspend fun getInvocationFlow(
+        executable: CtExecutableReference<*>,
+        arguments: List<ConstrainedValue>
+    ): Pair<DataFrame, ConstrainedValue?> {
+        return methodEmulator(this, executable, arguments)
     }
 
     suspend fun getStatementFlow(statement: CtStatement): DataFrame {

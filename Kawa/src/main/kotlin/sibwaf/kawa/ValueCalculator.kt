@@ -23,6 +23,7 @@ import sibwaf.kawa.calculation.conditions.InvertedConditionCalculator
 import sibwaf.kawa.calculation.conditions.LiteralConditionCalculator
 import sibwaf.kawa.calculation.conditions.VariableReadConditionCalculator
 import sibwaf.kawa.constraints.BooleanConstraint
+import sibwaf.kawa.emulation.BasicMethodEmulator
 import sibwaf.kawa.values.BooleanValue
 import sibwaf.kawa.values.ConstrainedValue
 import sibwaf.kawa.values.ValueSource
@@ -85,6 +86,7 @@ object ValueCalculator {
         VariableReadConditionCalculator()
     ) + calculators.filterIsInstance<ConditionCalculator>()
 
+    private val emulator = BasicMethodEmulator()
     private val calculator = DelegatingValueCalculator(calculators)
     private val conditionCalculator = DelegatingConditionCalculator(conditionCalculators)
 
@@ -105,6 +107,7 @@ object ValueCalculator {
             localVariables = Collections.emptySet(),
             jumpPoints = Collections.emptySet(),
             methodFlowProvider = flowProvider,
+            methodEmulator = emulator::emulate,
             statementFlowProvider = { _, _ -> throw IllegalStateException() },
             valueProvider = { state, expr -> calculateValue(state, expr) },
             conditionValueProvider = { state, expr -> calculateCondition(state, expr) }

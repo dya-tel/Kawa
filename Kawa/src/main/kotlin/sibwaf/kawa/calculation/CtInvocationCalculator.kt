@@ -2,15 +2,12 @@ package sibwaf.kawa.calculation
 
 import sibwaf.kawa.AnalyzerState
 import sibwaf.kawa.DataFrame
-import sibwaf.kawa.MutableDataFrame
 import sibwaf.kawa.ReachableFrame
-import sibwaf.kawa.UnreachableFrame
-import sibwaf.kawa.constraints.Constraint
 import sibwaf.kawa.values.ConstrainedValue
-import sibwaf.kawa.values.Value
 import sibwaf.kawa.values.ValueSource
 import spoon.reflect.code.CtExpression
 import spoon.reflect.code.CtInvocation
+import java.util.LinkedList
 
 class CtInvocationCalculator : CtTargetedExpressionCalculator() {
 
@@ -23,28 +20,25 @@ class CtInvocationCalculator : CtTargetedExpressionCalculator() {
     ): Pair<DataFrame, ConstrainedValue> {
         expression as CtInvocation<*>
 
+        // TODO: proper invalid value
+        fun invalidValue() = ConstrainedValue.from(expression, ValueSource.NONE)
+
+        val arguments = LinkedList<ConstrainedValue>()
+
         var currentState = state
         for (argument in expression.arguments) {
-            val (nextFrame, _) = currentState.getValue(argument)
+            val (nextFrame, value) = currentState.getValue(argument)
             if (nextFrame !is ReachableFrame) {
-                return nextFrame to ConstrainedValue.from(expression, ValueSource.NONE) // TODO: invalid value
+                return nextFrame to invalidValue()
             }
 
+            arguments += value
             currentState = currentState.copy(frame = nextFrame)
         }
 
-        val frame = currentState.frame
-
-        val flow = currentState.getMethodFlow(expression.executable)
-        if (flow.neverReturns) {
-            return UnreachableFrame.after(frame) to ConstrainedValue.from(expression, ValueSource.NONE) // TODO: invalid value
-        }
-
-        val value = Value.from(expression.type, ValueSource.NONE)
-        val constraint = flow.returnConstraint?.copy() ?: Constraint.from(value)
-
-        // TODO: invocation side-effects
-
-        return MutableDataFrame(frame) to ConstrainedValue(value, constraint)
+        // TODO: copy state with a target
+        // TODO: find proper executable by actual target type
+        val (frame, value) = currentState.getInvocationFlow(expression.executable, arguments)
+        return frame to (value ?: invalidValue())
     }
 }
