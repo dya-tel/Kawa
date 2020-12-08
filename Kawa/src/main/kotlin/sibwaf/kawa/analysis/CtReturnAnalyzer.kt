@@ -14,13 +14,12 @@ class CtReturnAnalyzer : StatementAnalyzer {
         statement as CtReturn<*>
         state.jumpPoints += statement to state.frame
 
-        val result = statement.returnedExpression?.let { state.getValue(it) }
-        if (result != null) {
-            val constraint = result.second.constraint
-            val existingConstraint = state.annotation.returnConstraint
-            state.annotation.returnConstraint = existingConstraint?.merge(constraint) ?: constraint
+        val frame = if (statement.returnedExpression != null) {
+            state.getValue(statement.returnedExpression).first
+        } else {
+            state.frame
         }
 
-        return UnreachableFrame.after(result?.first ?: state.frame)
+        return UnreachableFrame.after(frame)
     }
 }

@@ -38,6 +38,7 @@ import sibwaf.kawa.constraints.Constraint
 import sibwaf.kawa.values.Value
 import sibwaf.kawa.values.ValueSource
 import spoon.reflect.code.CtBlock
+import spoon.reflect.code.CtReturn
 import spoon.reflect.code.CtStatement
 import spoon.reflect.code.CtThrow
 import spoon.reflect.declaration.CtConstructor
@@ -47,6 +48,7 @@ import spoon.reflect.declaration.CtTypeMember
 import spoon.reflect.reference.CtExecutableReference
 import java.util.Collections
 import java.util.IdentityHashMap
+import java.util.LinkedList
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.Executors
 import kotlin.math.ceil
@@ -260,9 +262,29 @@ class MethodFlowAnalyzer private constructor() {
             annotation.purity = MethodPurity.PURE
         }
 
-        if (method.type.qualifiedName != "void" && annotation.returnConstraint == null) {
-            val unknownValue = Value.from(method.type, ValueSource.NONE)
-            annotation.returnConstraint = Constraint.from(unknownValue)
+        if (method.type.qualifiedName != "void") {
+            fun invalidConstraint() = Constraint.from(Value.from(method, ValueSource.NONE))
+
+            annotation.returnConstraint = if (annotation.neverReturns) {
+                invalidConstraint()
+            } else {
+                val returnedConstraints = LinkedList<Constraint>()
+                for ((statement, frame) in analyzerState.jumpPoints) {
+                    if (statement !is CtReturn<*> || statement.returnedExpression == null) {
+                        continue
+                    }
+
+                    // TODO: non-optimal, should use value cache in the future
+                    val (_, value) = analyzerState.copy(frame = frame).getValue(statement.returnedExpression)
+                    returnedConstraints += value.constraint
+                }
+
+                if (returnedConstraints.isEmpty()) {
+                    invalidConstraint()
+                } else {
+                    returnedConstraints.reduce(Constraint::merge)
+                }
+            }
         }
 
         return annotation
