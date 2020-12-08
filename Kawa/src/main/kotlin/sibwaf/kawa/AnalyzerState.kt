@@ -4,14 +4,14 @@ import sibwaf.kawa.calculation.conditions.ConditionCalculatorResult
 import sibwaf.kawa.values.ConstrainedValue
 import spoon.reflect.code.CtCFlowBreak
 import spoon.reflect.code.CtExpression
-import spoon.reflect.code.CtLocalVariable
 import spoon.reflect.code.CtStatement
+import spoon.reflect.declaration.CtVariable
 import spoon.reflect.reference.CtExecutableReference
 
 data class AnalyzerState(
     val annotation: MethodFlow,
     val frame: ReachableFrame,
-    val localVariables: MutableSet<CtLocalVariable<*>>,
+    val localVariables: MutableSet<CtVariable<*>>,
     val jumpPoints: MutableCollection<Pair<CtCFlowBreak, ReachableFrame>>,
 
     private val methodFlowProvider: suspend (CtExecutableReference<*>) -> MethodFlow,

@@ -10,6 +10,7 @@ import sibwaf.kawa.parseMethod
 import spoon.reflect.code.CtBlock
 import spoon.reflect.code.CtLocalVariable
 import spoon.reflect.code.CtStatement
+import spoon.reflect.declaration.CtVariable
 import strikt.api.expect
 import strikt.assertions.containsExactly
 import strikt.assertions.isNotNull
@@ -34,8 +35,8 @@ class CtBlockAnalyzerTest : StatementAnalyzerTestBase() {
         val outerBlock = method.body!!
         val innerBlock = outerBlock.directChildren.filterIsInstance<CtBlock<*>>().single()
 
-        lateinit var outerBlockVariables: Set<CtLocalVariable<*>>
-        lateinit var innerBlockVariables: Set<CtLocalVariable<*>>
+        lateinit var outerBlockVariables: Set<CtVariable<*>>
+        lateinit var innerBlockVariables: Set<CtVariable<*>>
 
         val statementAnalyzer = DelegatingStatementAnalyzer(listOf(CtLocalVariableAnalyzer(), CtBlockAnalyzer()))
         val wrappedStatementAnalyzer = object : StatementAnalyzerWrapper(statementAnalyzer) {
