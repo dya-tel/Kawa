@@ -37,12 +37,7 @@ class CtTryAnalyzer : StatementAnalyzer {
         return if (finalizer == null) {
             DataFrame.merge(state.frame, catcherFrames + bodyFrame)
         } else {
-            val jumpFrames = localState.returnPoints
-                .asSequence()
-                .filter { it.hasParent(statement) }
-                .map { localState.annotation.frames.getValue(it) }
-                .plus(localState.jumpPoints.map { it.second })
-                .map { it.compact(state.frame) }
+            val jumpFrames = localState.jumpPoints.map { it.second.compact(state.frame) }
 
             // FIXME: next frame reachability should be determined only by framesToMerge
 

@@ -103,7 +103,6 @@ object ValueCalculator {
             annotation = annotation,
             frame = frame,
             localVariables = Collections.emptySet(),
-            returnPoints = Collections.emptySet(),
             jumpPoints = Collections.emptySet(),
             methodFlowProvider = flowProvider,
             statementFlowProvider = { _, _ -> throw IllegalStateException() },

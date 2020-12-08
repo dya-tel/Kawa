@@ -12,8 +12,7 @@ class CtReturnAnalyzer : StatementAnalyzer {
 
     override suspend fun analyze(state: AnalyzerState, statement: CtStatement): DataFrame {
         statement as CtReturn<*>
-
-        state.returnPoints += statement
+        state.jumpPoints += statement to state.frame
 
         val result = statement.returnedExpression?.let { state.getValue(it) }
         if (result != null) {

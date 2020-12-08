@@ -45,7 +45,6 @@ abstract class ValueCalculatorTestBase {
             annotation = EmptyFlow,
             frame = MutableDataFrame(null),
             localVariables = Collections.emptySet(),
-            returnPoints = Collections.emptySet(),
             jumpPoints = Collections.emptySet(),
             methodFlowProvider = { EmptyFlow },
             statementFlowProvider = { _, _ -> throw IllegalStateException() },

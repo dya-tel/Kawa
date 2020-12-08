@@ -12,7 +12,6 @@ data class AnalyzerState(
     val annotation: MethodFlow,
     val frame: ReachableFrame,
     val localVariables: MutableSet<CtLocalVariable<*>>,
-    val returnPoints: MutableSet<CtStatement>,
     val jumpPoints: MutableCollection<Pair<CtCFlowBreak, ReachableFrame>>,
 
     private val methodFlowProvider: suspend (CtExecutableReference<*>) -> MethodFlow,

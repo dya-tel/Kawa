@@ -37,6 +37,7 @@ import sibwaf.kawa.analysis.StatementAnalyzer
 import sibwaf.kawa.constraints.Constraint
 import sibwaf.kawa.values.Value
 import sibwaf.kawa.values.ValueSource
+import spoon.reflect.code.CtBlock
 import spoon.reflect.code.CtStatement
 import spoon.reflect.code.CtThrow
 import spoon.reflect.declaration.CtConstructor
@@ -233,14 +234,13 @@ class MethodFlowAnalyzer private constructor() {
             startFrame.setConstraint(value, constraint)
         }
 
-        val bodyBlock = method.body
+        val bodyBlock: CtBlock<*> = method.body
 
         val flowProvider: suspend (CtExecutableReference<*>) -> MethodFlow = { getFlowFor(it, callChain) }
         val analyzerState = AnalyzerState(
             annotation = annotation,
             frame = startFrame,
             localVariables = Collections.emptySet(),
-            returnPoints = IdentityHashSet(),
             jumpPoints = ArrayList(),
             methodFlowProvider = flowProvider,
             statementFlowProvider = analyzer::analyze,
@@ -254,7 +254,7 @@ class MethodFlowAnalyzer private constructor() {
         annotation.startFrame = blockFlow.startFrame
         annotation.endFrame = blockFlow.endFrame
 
-        annotation.neverReturns = annotation.endFrame is UnreachableFrame && analyzerState.returnPoints.all { it is CtThrow }
+        annotation.neverReturns = annotation.endFrame is UnreachableFrame && analyzerState.jumpPoints.all { it.first is CtThrow }
 
         if (annotation.purity == null) {
             annotation.purity = MethodPurity.PURE

@@ -28,7 +28,6 @@ abstract class StatementAnalyzerTestBase {
             annotation = EmptyFlow,
             frame = MutableDataFrame(null),
             localVariables = Collections.emptySet(),
-            returnPoints = Collections.emptySet(),
             jumpPoints = Collections.emptyList(),
             methodFlowProvider = { EmptyFlow },
             statementFlowProvider = statementAnalyzer::analyze,

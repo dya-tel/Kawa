@@ -12,8 +12,7 @@ class CtThrowAnalyzer : StatementAnalyzer {
 
     override suspend fun analyze(state: AnalyzerState, statement: CtStatement): DataFrame {
         statement as CtThrow
-
-        state.returnPoints += statement
+        state.jumpPoints += statement to state.frame
 
         val (frame, _) = state.getValue(statement.thrownExpression)
         return UnreachableFrame.after(frame)
