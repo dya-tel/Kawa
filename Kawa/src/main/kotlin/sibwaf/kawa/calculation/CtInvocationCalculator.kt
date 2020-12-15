@@ -3,6 +3,7 @@ package sibwaf.kawa.calculation
 import sibwaf.kawa.AnalyzerState
 import sibwaf.kawa.DataFrame
 import sibwaf.kawa.ReachableFrame
+import sibwaf.kawa.emulation.SuccessfulInvocation
 import sibwaf.kawa.values.ConstrainedValue
 import sibwaf.kawa.values.ValueSource
 import spoon.reflect.code.CtExpression
@@ -38,7 +39,12 @@ class CtInvocationCalculator : CtTargetedExpressionCalculator() {
 
         // TODO: copy state with a target
         // TODO: find proper executable by actual target type
-        val (frame, value) = currentState.getInvocationFlow(expression.executable, arguments)
-        return frame to (value ?: invalidValue())
+        val invocationResult = currentState.getInvocationFlow(expression.executable, arguments)
+        if (invocationResult is SuccessfulInvocation) {
+            val (frame, value) = invocationResult
+            return frame to (value ?: invalidValue())
+        }
+
+        return currentState.frame to invalidValue()
     }
 }

@@ -1,6 +1,7 @@
 package sibwaf.kawa
 
 import sibwaf.kawa.calculation.conditions.ConditionCalculatorResult
+import sibwaf.kawa.emulation.InvocationResult
 import sibwaf.kawa.values.ConstrainedValue
 import spoon.reflect.code.CtCFlowBreak
 import spoon.reflect.code.CtExpression
@@ -19,7 +20,7 @@ data class AnalyzerState(
 
     private val methodFlowProvider: suspend (CtExecutableReference<*>) -> MethodFlow,
 
-    private val methodEmulator: suspend (AnalyzerState, CtExecutableReference<*>, List<ConstrainedValue>) -> Pair<DataFrame, ConstrainedValue?>,
+    private val methodEmulator: suspend (AnalyzerState, CtExecutableReference<*>, List<ConstrainedValue>) -> InvocationResult,
     private val statementFlowProvider: suspend (AnalyzerState, CtStatement) -> DataFrame,
     private val valueProvider: suspend (AnalyzerState, CtExpression<*>) -> Pair<DataFrame, ConstrainedValue>,
     private val conditionValueProvider: suspend (AnalyzerState, CtExpression<*>) -> ConditionCalculatorResult
@@ -30,10 +31,7 @@ data class AnalyzerState(
         return methodFlowProvider(executable)
     }
 
-    suspend fun getInvocationFlow(
-        executable: CtExecutableReference<*>,
-        arguments: List<ConstrainedValue>
-    ): Pair<DataFrame, ConstrainedValue?> {
+    suspend fun getInvocationFlow(executable: CtExecutableReference<*>, arguments: List<ConstrainedValue>): InvocationResult {
         return methodEmulator(this, executable, arguments)
     }
 
