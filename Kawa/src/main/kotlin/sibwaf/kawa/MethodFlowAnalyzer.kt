@@ -51,8 +51,10 @@ import java.util.Collections
 import java.util.IdentityHashMap
 import java.util.LinkedList
 import java.util.concurrent.ConcurrentHashMap
+import java.util.concurrent.ConcurrentLinkedQueue
 import java.util.concurrent.Executors
 import kotlin.math.ceil
+import kotlin.system.measureNanoTime
 
 private object FallbackAnalyzer : StatementAnalyzer {
 
@@ -136,6 +138,18 @@ class MethodFlowAnalyzer private constructor() {
                     processors.joinAll()
                     debugPrinter.cancelAndJoin()
 
+                    if (log.isDebugEnabled) {
+                        val topMethods = analyzer.benchmark.asSequence()
+                            .sortedByDescending { it.second }
+                            .take(16)
+
+                        for ((method, time) in topMethods) {
+                            method as CtTypeMember
+                            val name = "${method.declaringType.qualifiedName}.${method.simpleName}"
+                            log.debug("$name: %.2f ms".format(time.toDouble() / 1000 / 1000))
+                        }
+                    }
+
                     IdentityHashMap<CtExecutable<*>, MethodFlow>().apply {
                         for ((executable, flow) in analyzer.cache) {
                             put(executable, flow.await())
@@ -148,6 +162,8 @@ class MethodFlowAnalyzer private constructor() {
 
     // TODO: concurrent identity
     private val cache = ConcurrentHashMap<CtExecutable<*>, Deferred<MethodFlow>>()
+
+    private val benchmark = ConcurrentLinkedQueue<Pair<CtExecutable<*>, Long>>()
 
     private val analyzer = DelegatingStatementAnalyzer(
         listOf(
@@ -209,7 +225,17 @@ class MethodFlowAnalyzer private constructor() {
 
         return coroutineScope {
             val coroutine = async(CoroutineName("Method processor: ${method.simpleName}"), start = CoroutineStart.LAZY) {
-                analyze(method, RightChain(callChain, method))
+                val flow: MethodFlow
+                val time = measureNanoTime {
+                    flow = analyze(method, RightChain(callChain, method))
+                }
+
+                if (log.isDebugEnabled) {
+                    method as CtTypeMember
+                    benchmark += method to time
+                }
+
+                return@async flow
             }
 
             var task = cache.putIfAbsent(method, coroutine)
