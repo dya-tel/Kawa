@@ -25,14 +25,16 @@ class BasicMethodEmulator : MethodEmulator {
             )
         }
 
-        val value = Value.from(method.type, ValueSource.NONE)
-        val constraint = flow.returnConstraint?.copy() ?: Constraint.from(value)
+        val result = if (method.executableDeclaration.type.qualifiedName != "void") {
+            val value = Value.from(method.type, ValueSource.NONE)
+            val constraint = flow.returnConstraint?.copy() ?: Constraint.from(value)
+            ConstrainedValue(value, constraint)
+        } else {
+            null
+        }
 
         // TODO: invocation side-effects
 
-        return SuccessfulInvocation(
-            frame = MutableDataFrame(state.frame),
-            value = ConstrainedValue(value, constraint)
-        )
+        return SuccessfulInvocation(MutableDataFrame(state.frame), result)
     }
 }
