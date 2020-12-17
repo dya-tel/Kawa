@@ -20,7 +20,7 @@ class RecursionSingleWorkerTest : MethodAnalyzerTestBase() {
         )
 
         runBlocking {
-            withTimeout(100) {
+            withTimeout(500) {
                 analyze(type)
             }
         }
@@ -44,7 +44,7 @@ class RecursionSingleWorkerTest : MethodAnalyzerTestBase() {
         )
 
         runBlocking {
-            withTimeout(100) {
+            withTimeout(500) {
                 analyze(type)
             }
         }
