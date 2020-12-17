@@ -60,3 +60,11 @@ inline val CtIf.thenBlock: CtBlock<*>
 
 inline val CtIf.elseBlock: CtBlock<*>?
     get() = getElseStatement()
+
+// TODO: better naming
+fun <K, V> MutableMap<K, V>.withDefault2(default: V): MutableMap<K, V> {
+    val base = this
+    return object : MutableMap<K, V> by base {
+        override fun get(key: K) = base.getOrDefault(key, default)
+    }
+}

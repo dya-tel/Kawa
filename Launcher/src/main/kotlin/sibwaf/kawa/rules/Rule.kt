@@ -38,7 +38,7 @@ abstract class Rule : CtAbstractVisitor() {
 
     fun getValue(frame: ReachableFrame, expression: CtExpression<*>): ConstrainedValue {
         return runBlocking {
-            ValueCalculator.calculateValue(MethodFlow(), frame, expression, { flow[it] ?: EmptyFlow })
+            ValueCalculator.calculateValue(frame, expression, flow)
         }.second
     }
 

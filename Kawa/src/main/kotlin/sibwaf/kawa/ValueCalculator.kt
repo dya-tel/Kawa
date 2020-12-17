@@ -28,7 +28,8 @@ import sibwaf.kawa.values.BooleanValue
 import sibwaf.kawa.values.ConstrainedValue
 import sibwaf.kawa.values.ValueSource
 import spoon.reflect.code.CtExpression
-import spoon.reflect.reference.CtExecutableReference
+import spoon.reflect.declaration.CtExecutable
+import spoon.support.reflect.declaration.CtMethodImpl
 import java.util.Collections
 
 private object FallbackCalculator : ConditionCalculator {
@@ -86,7 +87,6 @@ object ValueCalculator {
         VariableReadConditionCalculator()
     ) + calculators.filterIsInstance<ConditionCalculator>()
 
-    private val emulator = BasicMethodEmulator()
     private val calculator = DelegatingValueCalculator(calculators)
     private val conditionCalculator = DelegatingConditionCalculator(conditionCalculators)
 
@@ -96,41 +96,41 @@ object ValueCalculator {
     suspend fun calculateCondition(state: AnalyzerState, expression: CtExpression<*>) =
         conditionCalculator.calculateCondition(state, expression)
 
+    private val placeholderExecutable = CtMethodImpl<Unit>()
+
     private fun createState(
-        annotation: MethodFlow,
         frame: ReachableFrame,
-        flowProvider: suspend (CtExecutableReference<*>) -> MethodFlow
+        cache: Map<CtExecutable<*>, MethodFlow>
     ): AnalyzerState {
+        val emulator = BasicMethodEmulator(Collections.unmodifiableMap(cache).withDefault2(EmptyFlow))
         return AnalyzerState(
-            annotation = annotation,
+            annotation = EmptyFlow,
             frame = frame,
             localVariables = Collections.emptySet(),
             jumpPoints = Collections.emptySet(),
-            methodFlowProvider = flowProvider,
+            callChain = RightChain(null, placeholderExecutable),
             methodEmulator = emulator::emulate,
             statementFlowProvider = { _, _ -> throw IllegalStateException() },
-            valueProvider = { state, expr -> calculateValue(state, expr) },
-            conditionValueProvider = { state, expr -> calculateCondition(state, expr) }
+            valueProvider = this::calculateValue,
+            conditionValueProvider = this::calculateCondition
         )
     }
 
     suspend fun calculateValue(
-        annotation: MethodFlow,
         frame: ReachableFrame,
         expression: CtExpression<*>,
-        flowProvider: suspend (CtExecutableReference<*>) -> MethodFlow
+        cache: Map<CtExecutable<*>, MethodFlow>
     ): Pair<DataFrame, ConstrainedValue> {
-        val state = createState(annotation, frame, flowProvider)
+        val state = createState(frame, cache)
         return calculateValue(state, expression)
     }
 
     suspend fun calculateCondition(
-        annotation: MethodFlow,
         frame: ReachableFrame,
         expression: CtExpression<*>,
-        flowProvider: suspend (CtExecutableReference<*>) -> MethodFlow
+        cache: Map<CtExecutable<*>, MethodFlow>
     ): ConditionCalculatorResult {
-        val state = createState(annotation, frame, flowProvider)
+        val state = createState(frame, cache)
         return calculateCondition(state, expression)
     }
 }

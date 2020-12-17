@@ -1,11 +1,8 @@
 package sibwaf.kawa
 
 import kotlinx.coroutines.CoroutineName
-import kotlinx.coroutines.CoroutineStart
-import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.asCoroutineDispatcher
-import kotlinx.coroutines.async
 import kotlinx.coroutines.cancelAndJoin
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
@@ -34,22 +31,13 @@ import sibwaf.kawa.analysis.CtUnaryOperatorAnalyzer
 import sibwaf.kawa.analysis.CtWhileAnalyzer
 import sibwaf.kawa.analysis.DelegatingStatementAnalyzer
 import sibwaf.kawa.analysis.StatementAnalyzer
-import sibwaf.kawa.constraints.Constraint
 import sibwaf.kawa.emulation.BasicMethodEmulator
-import sibwaf.kawa.values.Value
-import sibwaf.kawa.values.ValueSource
-import spoon.reflect.code.CtBlock
-import spoon.reflect.code.CtReturn
 import spoon.reflect.code.CtStatement
-import spoon.reflect.code.CtThrow
-import spoon.reflect.declaration.CtConstructor
 import spoon.reflect.declaration.CtExecutable
 import spoon.reflect.declaration.CtType
 import spoon.reflect.declaration.CtTypeMember
-import spoon.reflect.reference.CtExecutableReference
 import java.util.Collections
 import java.util.IdentityHashMap
-import java.util.LinkedList
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.ConcurrentLinkedQueue
 import java.util.concurrent.Executors
@@ -106,7 +94,7 @@ class MethodFlowAnalyzer private constructor() {
                     for ((index, chunk) in x.chunked(methodsPerProcessor).withIndex()) {
                         processors += launch(dispatcher + CoroutineName("Processor #$index")) {
                             for (method in chunk) {
-                                analyzer.getFlowFor(method, null)
+                                analyzer.analyze(method)
                             }
                         }
                     }
@@ -124,13 +112,8 @@ class MethodFlowAnalyzer private constructor() {
 
                     val debugPrinter = launch {
                         while (log.isDebugEnabled && isActive) {
-                            val cache = analyzer.cache
-                            val (completed, remaining) = cache.values.partition { it.isCompleted }
-
                             val time = (System.currentTimeMillis() - startTime) / 1000
-
-                            log.debug("${completed.size} analyzed out of ${completed.size + remaining.size} ($total sent, $time seconds)")
-
+                            log.debug("${analyzer.cache.size}/$total analyzed, $time seconds)")
                             delay(1000)
                         }
                     }
@@ -150,18 +133,14 @@ class MethodFlowAnalyzer private constructor() {
                         }
                     }
 
-                    IdentityHashMap<CtExecutable<*>, MethodFlow>().apply {
-                        for ((executable, flow) in analyzer.cache) {
-                            put(executable, flow.await())
-                        }
-                    }
+                    IdentityHashMap(analyzer.cache)
                 }
             }
         }
     }
 
     // TODO: concurrent identity
-    private val cache = ConcurrentHashMap<CtExecutable<*>, Deferred<MethodFlow>>()
+    private val cache = ConcurrentHashMap<CtExecutable<*>, MethodFlow>()
 
     private val benchmark = ConcurrentLinkedQueue<Pair<CtExecutable<*>, Long>>()
 
@@ -190,133 +169,29 @@ class MethodFlowAnalyzer private constructor() {
         )
     )
 
-    private val emulator = BasicMethodEmulator()
+    private val emulator = BasicMethodEmulator(cache)
+    private val interproceduralEmulator = emulator
 
-    private suspend fun getFlowFor(
-        method: CtExecutableReference<*>,
-        callChain: RightChain<CtExecutable<*>>?
-    ): MethodFlow {
-        val declaration = method.executableDeclaration ?: return EmptyFlow
-        return getFlowFor(declaration, callChain)
-    }
+    private val rootState = AnalyzerState(
+        annotation = EmptyFlow,
+        frame = MutableDataFrame(null),
+        localVariables = Collections.emptySet(),
+        jumpPoints = Collections.emptyList(),
+        methodEmulator = interproceduralEmulator::emulate,
+        statementFlowProvider = analyzer::analyze,
+        valueProvider = ValueCalculator::calculateValue,
+        conditionValueProvider = ValueCalculator::calculateCondition
+    )
 
-    private suspend fun getFlowFor(
-        method: CtExecutable<*>,
-        callChain: RightChain<CtExecutable<*>>?
-    ): MethodFlow {
-        // TODO: if method.simpleName in manualAnnotations
-
-        if (method.body == null) {
-            return EmptyFlow
+    private suspend fun analyze(method: CtExecutable<*>) {
+        val time = measureNanoTime {
+            val state = rootState.copy(callChain = RightChain(null, method))
+            emulator.emulate(state, method.reference, emptyList())
         }
 
-        if (callChain?.contains(method) == true) {
-            // TODO: handle recursive calls?
-            return EmptyFlow
+        if (log.isDebugEnabled) {
+            method as CtTypeMember
+            benchmark += method to time
         }
-
-        if (callChain != null && method is CtTypeMember && method !is CtConstructor<*>) {
-            if (!method.isPrivate && !method.isFinal && !method.isStatic) {
-                if (!method.declaringType.isFinal) {
-                    return EmptyFlow
-                }
-            }
-        }
-
-        return coroutineScope {
-            val coroutine = async(CoroutineName("Method processor: ${method.simpleName}"), start = CoroutineStart.LAZY) {
-                val flow: MethodFlow
-                val time = measureNanoTime {
-                    flow = analyze(method, RightChain(callChain, method))
-                }
-
-                if (log.isDebugEnabled) {
-                    method as CtTypeMember
-                    benchmark += method to time
-                }
-
-                return@async flow
-            }
-
-            var task = cache.putIfAbsent(method, coroutine)
-            if (task == null) {
-                task = coroutine // We are the first ones to create a task for this method
-                task.start()
-            } else {
-                coroutine.cancel() // This method is already being processed, no need for our coroutine
-            }
-
-            return@coroutineScope task.await()
-        }
-    }
-
-    private suspend fun analyze(
-        method: CtExecutable<*>,
-        callChain: RightChain<CtExecutable<*>>?
-    ): MethodFlow {
-        val annotation = MethodFlow()
-
-        val startFrame = MutableDataFrame(null)
-        for (parameter in method.parameters) {
-            val value = Value.from(parameter, ValueSource.PARAMETER)
-            startFrame.setValue(parameter, value)
-
-            val constraint = Constraint.from(value)
-            startFrame.setConstraint(value, constraint)
-        }
-
-        val bodyBlock: CtBlock<*> = method.body
-
-        val flowProvider: suspend (CtExecutableReference<*>) -> MethodFlow = { getFlowFor(it, callChain) }
-        val analyzerState = AnalyzerState(
-            annotation = annotation,
-            frame = startFrame,
-            localVariables = Collections.emptySet(),
-            jumpPoints = ArrayList(),
-            methodFlowProvider = flowProvider,
-            methodEmulator = emulator::emulate,
-            statementFlowProvider = analyzer::analyze,
-            valueProvider = ValueCalculator::calculateValue,
-            conditionValueProvider = ValueCalculator::calculateCondition
-        )
-
-        analyzer.analyze(analyzerState, bodyBlock)
-
-        val blockFlow = annotation.blocks.getValue(bodyBlock)
-        annotation.startFrame = blockFlow.startFrame
-        annotation.endFrame = blockFlow.endFrame
-
-        annotation.neverReturns = annotation.endFrame is UnreachableFrame && analyzerState.jumpPoints.all { it.first is CtThrow }
-
-        if (annotation.purity == null) {
-            annotation.purity = MethodPurity.PURE
-        }
-
-        if (method.type.qualifiedName != "void") {
-            fun invalidConstraint() = Constraint.from(Value.from(method, ValueSource.NONE))
-
-            annotation.returnConstraint = if (annotation.neverReturns) {
-                invalidConstraint()
-            } else {
-                val returnedConstraints = LinkedList<Constraint>()
-                for ((statement, frame) in analyzerState.jumpPoints) {
-                    if (statement !is CtReturn<*> || statement.returnedExpression == null) {
-                        continue
-                    }
-
-                    // TODO: non-optimal, should use value cache in the future
-                    val (_, value) = analyzerState.copy(frame = frame).getValue(statement.returnedExpression)
-                    returnedConstraints += value.constraint
-                }
-
-                if (returnedConstraints.isEmpty()) {
-                    invalidConstraint()
-                } else {
-                    returnedConstraints.reduce(Constraint::merge)
-                }
-            }
-        }
-
-        return annotation
     }
 }

@@ -46,7 +46,7 @@ abstract class ValueCalculatorTestBase {
             frame = MutableDataFrame(null),
             localVariables = Collections.emptySet(),
             jumpPoints = Collections.emptySet(),
-            methodFlowProvider = { EmptyFlow },
+            methodEmulator = { _, _, _ -> throw IllegalStateException() },
             statementFlowProvider = { _, _ -> throw IllegalStateException() },
             valueProvider = { state, currentExpression -> calculator.calculate(state, currentExpression) },
             conditionValueProvider = { state, currentExpression -> calculator.calculateCondition(state, currentExpression) }

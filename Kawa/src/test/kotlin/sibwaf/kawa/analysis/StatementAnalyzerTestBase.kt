@@ -29,7 +29,7 @@ abstract class StatementAnalyzerTestBase {
             frame = MutableDataFrame(null),
             localVariables = Collections.emptySet(),
             jumpPoints = Collections.emptyList(),
-            methodFlowProvider = { EmptyFlow },
+            methodEmulator = { _, _, _ -> throw IllegalStateException() },
             statementFlowProvider = statementAnalyzer::analyze,
             valueProvider = DelegatingValueCalculator(emptyList())::calculate,
             conditionValueProvider = DelegatingConditionCalculator(emptyList())::calculateCondition
