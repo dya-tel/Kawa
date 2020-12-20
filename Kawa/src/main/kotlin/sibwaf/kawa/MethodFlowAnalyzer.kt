@@ -4,6 +4,7 @@ import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.cancelAndJoin
+import kotlinx.coroutines.channels.produce
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
@@ -41,7 +42,6 @@ import java.util.IdentityHashMap
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.ConcurrentLinkedQueue
 import java.util.concurrent.Executors
-import kotlin.math.ceil
 import kotlin.system.measureNanoTime
 
 private object FallbackAnalyzer : StatementAnalyzer {
@@ -68,52 +68,30 @@ class MethodFlowAnalyzer private constructor() {
         suspend fun analyze(types: Iterable<CtType<*>>, baseCoroutineCount: Int): Map<CtExecutable<*>, MethodFlow> {
             return Executors.newFixedThreadPool(baseCoroutineCount).asCoroutineDispatcher().use { dispatcher ->
                 coroutineScope {
-//                val x = types.toList()
-//                var total = 0
-
-                    val x = types.flatMap { it.methods }.toList()
-                    val total = x.size
-
-                    // FIXME: no parallelism at all with producer
-                    //  Maybe raw channel should be used?
-                    /*val channel = produce<CtExecutable<*>>(Dispatchers.Unconfined, capacity = baseCoroutineCount * 128) {
-                    for (type in x) {
-                        for (method in type.methods) {
-                            total++
+                    val methods = types.flatMap { it.methods }
+                    val channel = produce<CtExecutable<*>> {
+                        for (method in methods) {
                             send(method)
                         }
                     }
-                }*/
 
                     val startTime = System.currentTimeMillis()
 
                     val analyzer = MethodFlowAnalyzer()
                     val processors = ArrayList<Job>(baseCoroutineCount)
 
-                    val methodsPerProcessor = ceil(x.size.toDouble() / baseCoroutineCount).toInt()
-                    for ((index, chunk) in x.chunked(methodsPerProcessor).withIndex()) {
+                    repeat(baseCoroutineCount) { index ->
                         processors += launch(dispatcher + CoroutineName("Processor #$index")) {
-                            for (method in chunk) {
+                            for (method in channel) {
                                 analyzer.analyze(method)
                             }
                         }
                     }
 
-                    /*repeat(baseCoroutineCount) { index ->
-                    processors += launch(dispatcher + CoroutineName("Processor #$index")) {
-                        while (isActive) {
-                            val method = channel.receiveOrNull() ?: break
-                            coroutineScope {
-                                analyzer.getFlowFor(method, null)
-                            }
-                        }
-                    }
-                }*/
-
                     val debugPrinter = launch {
                         while (log.isDebugEnabled && isActive) {
                             val time = (System.currentTimeMillis() - startTime) / 1000
-                            log.debug("${analyzer.cache.size}/$total analyzed, $time seconds)")
+                            log.debug("${analyzer.cache.size}/${methods.size} analyzed, $time seconds)")
                             delay(1000)
                         }
                     }
