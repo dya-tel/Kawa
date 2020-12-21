@@ -18,7 +18,8 @@ class ReportManager(private val directory: Path = Paths.get("reports")) {
 
         private val fileComparator: Comparator<SerializableWarningWrapper> = Comparator.comparing { it.position.file }
         private val positionComparator: Comparator<SerializableWarningWrapper> = Comparator.comparing { it.position.start }
-        val WARNING_COMPARATOR = fileComparator.then(positionComparator)
+        private val ruleComparator: Comparator<SerializableWarningWrapper> = Comparator.comparing { it.rule }
+        val WARNING_COMPARATOR = fileComparator.then(positionComparator).then(ruleComparator)
 
         fun getDiff(
             previous: Collection<SerializableWarningWrapper>,
@@ -63,7 +64,7 @@ class ReportManager(private val directory: Path = Paths.get("reports")) {
 
         val path = directory.resolve("$name.latest.json")
         path.toFile().writer().use {
-            gson.toJson(report, it)
+            gson.toJson(report.sortedWith(WARNING_COMPARATOR), it)
         }
     }
 
