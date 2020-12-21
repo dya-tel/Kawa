@@ -39,7 +39,6 @@ import spoon.reflect.declaration.CtType
 import spoon.reflect.declaration.CtTypeMember
 import java.util.Collections
 import java.util.IdentityHashMap
-import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.ConcurrentLinkedQueue
 import java.util.concurrent.Executors
 import kotlin.system.measureNanoTime
@@ -117,9 +116,6 @@ class MethodFlowAnalyzer private constructor() {
         }
     }
 
-    // TODO: concurrent identity
-    private val cache = ConcurrentHashMap<CtExecutable<*>, MethodFlow>()
-
     private val benchmark = ConcurrentLinkedQueue<Pair<CtExecutable<*>, Long>>()
 
     private val analyzer = DelegatingStatementAnalyzer(
@@ -147,6 +143,7 @@ class MethodFlowAnalyzer private constructor() {
         )
     )
 
+    private val cache = Collections.synchronizedMap(IdentityHashMap<CtExecutable<*>, MethodFlow>())
     private val emulator = BasicMethodEmulator(cache)
     private val interproceduralEmulator = emulator
 

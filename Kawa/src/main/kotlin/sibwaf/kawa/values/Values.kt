@@ -20,7 +20,7 @@ open class Value constructor(val source: ValueSource) {
     companion object {
         private val typeFactory = TypeFactory()
 
-        private val valueFactoryCache: ConcurrentMap<CtTypeReference<*>, () -> Value> = ConcurrentHashMap()
+        private val valueFactoryCache: ConcurrentMap<String, () -> Value> = ConcurrentHashMap()
 
         fun from(element: CtTypedElement<*>, source: ValueSource): Value {
             return from(element.type, source)
@@ -39,9 +39,9 @@ open class Value constructor(val source: ValueSource) {
                 return Value(source)
             }
 
-            val valueFactory = valueFactoryCache.computeIfAbsent(type) { key ->
+            val valueFactory = valueFactoryCache.computeIfAbsent(type.qualifiedName) {
                 try {
-                    if (key.isSubtypeOf(typeFactory.COLLECTION) || key.isSubtypeOf(typeFactory.MAP)) {
+                    if (type.isSubtypeOf(typeFactory.COLLECTION) || type.isSubtypeOf(typeFactory.MAP)) {
                         return@computeIfAbsent { CollectionValue(source) }
                     }
                 } catch (ignored: SpoonException) {

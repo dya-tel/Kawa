@@ -5,6 +5,7 @@ import sibwaf.kawa.values.Value
 import sibwaf.kawa.values.ValueSource
 import spoon.reflect.declaration.CtVariable
 import java.util.Collections
+import java.util.IdentityHashMap
 
 interface DataFrame {
 
@@ -19,11 +20,10 @@ interface DataFrame {
                 .onEach { require(it.previous == previous) { "Frames must be compacted before merging" } }
                 .toList()
 
-            if (reachableFrames.isEmpty()) {
-                return UnreachableFrame.after(previous)
+            when (reachableFrames.size) {
+                0 -> return UnreachableFrame.after(previous)
+                1 -> return reachableFrames.single()
             }
-
-            // TODO: (optimization) if there is a single reachable frame it should be returned as it is
 
             val result = MutableDataFrame(previous)
             // TODO: next?
@@ -211,7 +211,7 @@ internal class MutableDataFrame(previous: ReachableFrame?) : ReachableFrame(prev
         }
 
         if (valueDiff.isEmpty()) {
-            valueDiff = HashMap()
+            valueDiff = IdentityHashMap()
         }
 
         valueDiff[variable] = value
@@ -221,7 +221,7 @@ internal class MutableDataFrame(previous: ReachableFrame?) : ReachableFrame(prev
 //        if (constraint == getConstraint(value))
 
         if (constraintDiff.isEmpty()) {
-            constraintDiff = HashMap()
+            constraintDiff = IdentityHashMap()
         }
 
         volatileConstraintDiff.remove(value) // FIXME: 'tis is a fucking time bomb, come on
@@ -236,7 +236,7 @@ internal class MutableDataFrame(previous: ReachableFrame?) : ReachableFrame(prev
     fun setVolatileConstraint(value: Value, constraint: Constraint) {
         setConstraint(value, constraint)
 //        if (volatileConstraintDiff.isEmpty()) {
-//            volatileConstraintDiff = HashMap()
+//            volatileConstraintDiff = IdentityHashMap()
 //        }
 //
 //        volatileConstraintDiff[value] = constraint
