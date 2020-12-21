@@ -10,6 +10,26 @@
     "message": "Possible null dereference of \u0027cause\u0027"
   },
   {
+    "rule": "R0000",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/async-http-client-master/client/src/main/java/org/asynchttpclient/ntlm/NtlmEngine.java",
+      "line": 151,
+      "start": 6783,
+      "end": 6816
+    },
+    "message": "Possible null dereference of \u0027stripDotSuffix()\u0027"
+  },
+  {
+    "rule": "R0000",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/async-http-client-master/client/src/main/java/org/asynchttpclient/ntlm/NtlmEngine.java",
+      "line": 156,
+      "start": 6971,
+      "end": 7006
+    },
+    "message": "Possible null dereference of \u0027stripDotSuffix()\u0027"
+  },
+  {
     "rule": "R0001",
     "position": {
       "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/async-http-client-master/client/src/main/java/org/asynchttpclient/spnego/SpnegoEngine.java",

@@ -1,63 +1,23 @@
 [
   {
-    "rule": "R0003",
+    "rule": "R0000",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage.Client/src/main/java/org/mage/plugins/card/images/ImageCache.java",
-      "line": 355,
-      "start": 15289,
-      "end": 15293
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage/src/main/java/mage/abilities/condition/common/SourceHasCounterCondition.java",
+      "line": 53,
+      "start": 1445,
+      "end": 1471
     },
-    "message": "The returned value is always null: \u0027image\u0027"
+    "message": "Possible null dereference of \u0027permanent\u0027"
   },
   {
-    "rule": "R0002",
+    "rule": "R0000",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage.Client/src/main/java/mage/client/dialog/ConnectDialog.java",
-      "line": 145,
-      "start": 6036,
-      "end": 6143
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage/src/main/java/mage/abilities/condition/common/TargetHasCounterCondition.java",
+      "line": 53,
+      "start": 1449,
+      "end": 1475
     },
-    "message": "Unreachable statement"
-  },
-  {
-    "rule": "R0002",
-    "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage.Client/src/main/java/mage/client/util/CardViewEDHPowerLevelComparator.java",
-      "line": 228,
-      "start": 8574,
-      "end": 8614
-    },
-    "message": "Unreachable statement"
-  },
-  {
-    "rule": "R0002",
-    "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage.Client/src/main/java/org/mage/card/arcane/ManaSymbols.java",
-      "line": 281,
-      "start": 11964,
-      "end": 12037
-    },
-    "message": "Unreachable statement"
-  },
-  {
-    "rule": "R0002",
-    "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage.Client/src/main/java/org/mage/card/arcane/ManaSymbols.java",
-      "line": 297,
-      "start": 12465,
-      "end": 12515
-    },
-    "message": "Unreachable statement"
-  },
-  {
-    "rule": "R0002",
-    "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage.Client/src/main/java/org/mage/card/arcane/ManaSymbols.java",
-      "line": 347,
-      "start": 14691,
-      "end": 15068
-    },
-    "message": "Unreachable statement"
+    "message": "Possible null dereference of \u0027permanent\u0027"
   },
   {
     "rule": "R0001",
@@ -78,6 +38,46 @@
       "end": 3373
     },
     "message": "Condition is always true: \u0027permanent2 \u003d\u003d null\u0027"
+  },
+  {
+    "rule": "R0000",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage/src/main/java/mage/abilities/effects/common/cost/PlanarDieRollCostIncreasingEffect.java",
+      "line": 39,
+      "start": 1261,
+      "end": 1280
+    },
+    "message": "Possible null dereference of \u0027activePlayer\u0027"
+  },
+  {
+    "rule": "R0000",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage/src/main/java/mage/cards/CardImpl.java",
+      "line": 843,
+      "start": 32128,
+      "end": 32152
+    },
+    "message": "Possible null dereference of \u0027secondCard\u0027"
+  },
+  {
+    "rule": "R0002",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage.Client/src/main/java/mage/client/dialog/ConnectDialog.java",
+      "line": 145,
+      "start": 6036,
+      "end": 6143
+    },
+    "message": "Unreachable statement"
+  },
+  {
+    "rule": "R0002",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage.Client/src/main/java/mage/client/util/CardViewEDHPowerLevelComparator.java",
+      "line": 228,
+      "start": 8574,
+      "end": 8614
+    },
+    "message": "Unreachable statement"
   },
   {
     "rule": "R0001",
@@ -138,6 +138,156 @@
       "end": 8557
     },
     "message": "Condition is always false: \u0027xCost\u0027"
+  },
+  {
+    "rule": "R0000",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage.Client/src/main/java/mage/client/cards/CardDraggerGlassPane.java",
+      "line": 66,
+      "start": 2127,
+      "end": 2151
+    },
+    "message": "Possible null dereference of \u0027c\u0027"
+  },
+  {
+    "rule": "R0000",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage.Client/src/main/java/mage/client/deckeditor/DeckEditorPanel.java",
+      "line": 1316,
+      "start": 63461,
+      "end": 63474
+    },
+    "message": "Possible null dereference of \u0027file\u0027"
+  },
+  {
+    "rule": "R0000",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage.Client/src/main/java/mage/client/deckeditor/DeckEditorPanel.java",
+      "line": 1377,
+      "start": 66419,
+      "end": 66432
+    },
+    "message": "Possible null dereference of \u0027file\u0027"
+  },
+  {
+    "rule": "R0000",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage.Client/src/main/java/mage/client/dialog/MageDialog.java",
+      "line": 170,
+      "start": 6673,
+      "end": 6713
+    },
+    "message": "Possible null dereference of \u0027popupComponent\u0027"
+  },
+  {
+    "rule": "R0000",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage.Client/src/main/java/mage/client/game/PlayerPanelExt.java",
+      "line": 348,
+      "start": 13259,
+      "end": 13317
+    },
+    "message": "Possible null dereference of \u0027getCountryFlagIconSize()\u0027"
+  },
+  {
+    "rule": "R0000",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage/src/main/java/mage/game/GameImpl.java",
+      "line": 803,
+      "start": 27111,
+      "end": 27131
+    },
+    "message": "Possible null dereference of \u0027playerByOrder\u0027"
+  },
+  {
+    "rule": "R0000",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage/src/main/java/mage/game/GameImpl.java",
+      "line": 1108,
+      "start": 39496,
+      "end": 39535
+    },
+    "message": "Possible null dereference of \u0027plane\u0027"
+  },
+  {
+    "rule": "R0000",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage/src/main/java/mage/game/GameImpl.java",
+      "line": 2083,
+      "start": 83464,
+      "end": 83488
+    },
+    "message": "Possible null dereference of \u0027spellAbility\u0027"
+  },
+  {
+    "rule": "R0000",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage/src/main/java/mage/game/GameImpl.java",
+      "line": 2736,
+      "start": 113394,
+      "end": 113432
+    },
+    "message": "Possible null dereference of \u0027plane\u0027"
+  },
+  {
+    "rule": "R0000",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage/src/main/java/mage/game/combat/Combat.java",
+      "line": 1416,
+      "start": 75562,
+      "end": 75608
+    },
+    "message": "Possible null dereference of \u0027blocker\u0027"
+  },
+  {
+    "rule": "R0000",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage/src/main/java/mage/game/combat/CombatGroup.java",
+      "line": 834,
+      "start": 36417,
+      "end": 36444
+    },
+    "message": "Possible null dereference of \u0027attacker\u0027"
+  },
+  {
+    "rule": "R0003",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage.Client/src/main/java/org/mage/plugins/card/images/ImageCache.java",
+      "line": 355,
+      "start": 15289,
+      "end": 15293
+    },
+    "message": "The returned value is always null: \u0027image\u0027"
+  },
+  {
+    "rule": "R0002",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage.Client/src/main/java/org/mage/card/arcane/ManaSymbols.java",
+      "line": 281,
+      "start": 11964,
+      "end": 12037
+    },
+    "message": "Unreachable statement"
+  },
+  {
+    "rule": "R0002",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage.Client/src/main/java/org/mage/card/arcane/ManaSymbols.java",
+      "line": 297,
+      "start": 12465,
+      "end": 12515
+    },
+    "message": "Unreachable statement"
+  },
+  {
+    "rule": "R0002",
+    "position": {
+      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage.Client/src/main/java/org/mage/card/arcane/ManaSymbols.java",
+      "line": 347,
+      "start": 14691,
+      "end": 15068
+    },
+    "message": "Unreachable statement"
   },
   {
     "rule": "R0001",
@@ -208,146 +358,6 @@
       "end": 6439
     },
     "message": "Condition is always true: \u0027f !\u003d null\u0027"
-  },
-  {
-    "rule": "R0000",
-    "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage/src/main/java/mage/abilities/condition/common/SourceHasCounterCondition.java",
-      "line": 53,
-      "start": 1445,
-      "end": 1471
-    },
-    "message": "Possible null dereference of \u0027permanent\u0027"
-  },
-  {
-    "rule": "R0000",
-    "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage/src/main/java/mage/abilities/condition/common/TargetHasCounterCondition.java",
-      "line": 53,
-      "start": 1449,
-      "end": 1475
-    },
-    "message": "Possible null dereference of \u0027permanent\u0027"
-  },
-  {
-    "rule": "R0000",
-    "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage/src/main/java/mage/abilities/effects/common/cost/PlanarDieRollCostIncreasingEffect.java",
-      "line": 39,
-      "start": 1261,
-      "end": 1280
-    },
-    "message": "Possible null dereference of \u0027activePlayer\u0027"
-  },
-  {
-    "rule": "R0000",
-    "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage/src/main/java/mage/cards/CardImpl.java",
-      "line": 843,
-      "start": 32128,
-      "end": 32152
-    },
-    "message": "Possible null dereference of \u0027secondCard\u0027"
-  },
-  {
-    "rule": "R0000",
-    "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage.Client/src/main/java/mage/client/cards/CardDraggerGlassPane.java",
-      "line": 66,
-      "start": 2127,
-      "end": 2151
-    },
-    "message": "Possible null dereference of \u0027c\u0027"
-  },
-  {
-    "rule": "R0000",
-    "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage.Client/src/main/java/mage/client/deckeditor/DeckEditorPanel.java",
-      "line": 1316,
-      "start": 63461,
-      "end": 63474
-    },
-    "message": "Possible null dereference of \u0027file\u0027"
-  },
-  {
-    "rule": "R0000",
-    "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage.Client/src/main/java/mage/client/deckeditor/DeckEditorPanel.java",
-      "line": 1377,
-      "start": 66419,
-      "end": 66432
-    },
-    "message": "Possible null dereference of \u0027file\u0027"
-  },
-  {
-    "rule": "R0000",
-    "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage.Client/src/main/java/mage/client/dialog/MageDialog.java",
-      "line": 170,
-      "start": 6673,
-      "end": 6713
-    },
-    "message": "Possible null dereference of \u0027popupComponent\u0027"
-  },
-  {
-    "rule": "R0000",
-    "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage/src/main/java/mage/game/GameImpl.java",
-      "line": 803,
-      "start": 27111,
-      "end": 27131
-    },
-    "message": "Possible null dereference of \u0027playerByOrder\u0027"
-  },
-  {
-    "rule": "R0000",
-    "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage/src/main/java/mage/game/GameImpl.java",
-      "line": 1108,
-      "start": 39496,
-      "end": 39535
-    },
-    "message": "Possible null dereference of \u0027plane\u0027"
-  },
-  {
-    "rule": "R0000",
-    "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage/src/main/java/mage/game/GameImpl.java",
-      "line": 2083,
-      "start": 83464,
-      "end": 83488
-    },
-    "message": "Possible null dereference of \u0027spellAbility\u0027"
-  },
-  {
-    "rule": "R0000",
-    "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage/src/main/java/mage/game/GameImpl.java",
-      "line": 2736,
-      "start": 113394,
-      "end": 113432
-    },
-    "message": "Possible null dereference of \u0027plane\u0027"
-  },
-  {
-    "rule": "R0000",
-    "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage/src/main/java/mage/game/combat/Combat.java",
-      "line": 1416,
-      "start": 75562,
-      "end": 75608
-    },
-    "message": "Possible null dereference of \u0027blocker\u0027"
-  },
-  {
-    "rule": "R0000",
-    "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage/src/main/java/mage/game/combat/CombatGroup.java",
-      "line": 834,
-      "start": 36417,
-      "end": 36444
-    },
-    "message": "Possible null dereference of \u0027attacker\u0027"
   },
   {
     "rule": "R0000",
