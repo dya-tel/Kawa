@@ -1,6 +1,7 @@
 package sibwaf.kawa
 
 import org.slf4j.LoggerFactory
+import sibwaf.kawa.analysis.StatementAnalyzer
 import sibwaf.kawa.calculation.CtAssignmentCalculator
 import sibwaf.kawa.calculation.CtConditionalCalculator
 import sibwaf.kawa.calculation.CtConstructorCallCalculator
@@ -28,9 +29,18 @@ import sibwaf.kawa.values.BooleanValue
 import sibwaf.kawa.values.ConstrainedValue
 import sibwaf.kawa.values.ValueSource
 import spoon.reflect.code.CtExpression
+import spoon.reflect.code.CtStatement
 import spoon.reflect.declaration.CtExecutable
 import spoon.support.reflect.declaration.CtMethodImpl
 import java.util.Collections
+
+private object FailingStatementAnalyzer : StatementAnalyzer {
+    override fun supports(statement: CtStatement) = false
+
+    override suspend fun analyze(state: AnalyzerState, statement: CtStatement): DataFrame {
+        throw IllegalStateException("Standalone statement analysis in unsupported")
+    }
+}
 
 private object FallbackCalculator : ConditionCalculator {
 
@@ -61,7 +71,7 @@ private object FallbackCalculator : ConditionCalculator {
     }
 }
 
-object ValueCalculator {
+object ValueCalculator : sibwaf.kawa.calculation.ValueCalculator, ConditionCalculator {
 
     private val calculators = listOf(
         BooleanAndCalculator(),
@@ -90,10 +100,12 @@ object ValueCalculator {
     private val calculator = DelegatingValueCalculator(calculators)
     private val conditionCalculator = DelegatingConditionCalculator(conditionCalculators)
 
-    suspend fun calculateValue(state: AnalyzerState, expression: CtExpression<*>) =
+    override fun supports(expression: CtExpression<*>) = true
+
+    override suspend fun calculate(state: AnalyzerState, expression: CtExpression<*>) =
         calculator.calculate(state, expression)
 
-    suspend fun calculateCondition(state: AnalyzerState, expression: CtExpression<*>) =
+    override suspend fun calculateCondition(state: AnalyzerState, expression: CtExpression<*>) =
         conditionCalculator.calculateCondition(state, expression)
 
     private val placeholderExecutable = CtMethodImpl<Unit>()
@@ -109,10 +121,10 @@ object ValueCalculator {
             localVariables = Collections.emptySet(),
             jumpPoints = Collections.emptySet(),
             callChain = RightChain(null, placeholderExecutable),
-            methodEmulator = emulator::emulate,
-            statementFlowProvider = { _, _ -> throw IllegalStateException() },
-            valueProvider = this::calculateValue,
-            conditionValueProvider = this::calculateCondition
+            methodEmulator = emulator,
+            statementFlowProvider = FailingStatementAnalyzer,
+            valueProvider = this,
+            conditionValueProvider = this
         )
     }
 
@@ -122,7 +134,7 @@ object ValueCalculator {
         cache: Map<CtExecutable<*>, MethodFlow>
     ): Pair<DataFrame, ConstrainedValue> {
         val state = createState(frame, cache)
-        return calculateValue(state, expression)
+        return calculate(state, expression)
     }
 
     suspend fun calculateCondition(

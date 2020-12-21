@@ -6,6 +6,8 @@ import sibwaf.kawa.EmptyFlow
 import sibwaf.kawa.MutableDataFrame
 import sibwaf.kawa.calculation.conditions.ConditionCalculator
 import sibwaf.kawa.calculation.conditions.ConditionCalculatorResult
+import sibwaf.kawa.utility.FailingMethodEmulator
+import sibwaf.kawa.utility.FailingStatementAnalyzer
 import sibwaf.kawa.values.ConstrainedValue
 import spoon.reflect.code.CtExpression
 import java.util.Collections
@@ -46,10 +48,10 @@ abstract class ValueCalculatorTestBase {
             frame = MutableDataFrame(null),
             localVariables = Collections.emptySet(),
             jumpPoints = Collections.emptySet(),
-            methodEmulator = { _, _, _ -> throw IllegalStateException() },
-            statementFlowProvider = { _, _ -> throw IllegalStateException() },
-            valueProvider = { state, currentExpression -> calculator.calculate(state, currentExpression) },
-            conditionValueProvider = { state, currentExpression -> calculator.calculateCondition(state, currentExpression) }
+            methodEmulator = FailingMethodEmulator,
+            statementFlowProvider = FailingStatementAnalyzer,
+            valueProvider = calculator,
+            conditionValueProvider = calculator
         )
     }
 

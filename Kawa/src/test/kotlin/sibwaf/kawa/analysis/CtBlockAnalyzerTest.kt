@@ -56,8 +56,7 @@ class CtBlockAnalyzerTest : StatementAnalyzerTestBase() {
 
         runBlocking {
             analyzeStatement(wrappedStatementAnalyzer, outerBlock) {
-                val calculator = CtLiteralCalculator()
-                copy(valueProvider = { state, expression -> calculator.calculate(state, expression) })
+                copy(valueProvider = CtLiteralCalculator())
             }
         }
 
@@ -105,8 +104,7 @@ class CtBlockAnalyzerTest : StatementAnalyzerTestBase() {
 
         runBlocking {
             analyzeStatement(wrappedStatementAnalyzer, method.body) {
-                val calculator = CtLiteralCalculator()
-                copy(valueProvider = { state, expression -> calculator.calculate(state, expression) })
+                copy(valueProvider = CtLiteralCalculator())
             }
         }
 

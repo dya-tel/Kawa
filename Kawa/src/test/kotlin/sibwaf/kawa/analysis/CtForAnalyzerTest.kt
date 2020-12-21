@@ -4,8 +4,7 @@ import kotlinx.coroutines.runBlocking
 import sibwaf.kawa.ReachableFrame
 import sibwaf.kawa.extractVariables
 import sibwaf.kawa.parseStatement
-import sibwaf.kawa.values.ConstrainedValue
-import sibwaf.kawa.values.ValueSource
+import sibwaf.kawa.utility.IdentityValueCalculator
 import spoon.reflect.code.CtFor
 import strikt.api.expectThat
 import strikt.assertions.isNull
@@ -28,7 +27,7 @@ class CtForAnalyzerTest : StatementAnalyzerTestBase() {
 
         val frame = runBlocking {
             analyzeStatement(analyzer, statement) {
-                copy(valueProvider = { state, expression -> state.frame to ConstrainedValue.from(expression, ValueSource.NONE) })
+                copy(valueProvider = IdentityValueCalculator)
             }
         } as ReachableFrame
 

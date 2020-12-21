@@ -4,8 +4,9 @@ import sibwaf.kawa.AnalyzerState
 import sibwaf.kawa.DataFrame
 import sibwaf.kawa.EmptyFlow
 import sibwaf.kawa.MutableDataFrame
-import sibwaf.kawa.calculation.DelegatingValueCalculator
-import sibwaf.kawa.calculation.conditions.DelegatingConditionCalculator
+import sibwaf.kawa.utility.FailingConditionCalculator
+import sibwaf.kawa.utility.FailingMethodEmulator
+import sibwaf.kawa.utility.FailingValueCalculator
 import spoon.reflect.code.CtStatement
 import java.util.Collections
 
@@ -29,10 +30,10 @@ abstract class StatementAnalyzerTestBase {
             frame = MutableDataFrame(null),
             localVariables = Collections.emptySet(),
             jumpPoints = Collections.emptyList(),
-            methodEmulator = { _, _, _ -> throw IllegalStateException() },
-            statementFlowProvider = statementAnalyzer::analyze,
-            valueProvider = DelegatingValueCalculator(emptyList())::calculate,
-            conditionValueProvider = DelegatingConditionCalculator(emptyList())::calculateCondition
+            methodEmulator = FailingMethodEmulator,
+            statementFlowProvider = statementAnalyzer,
+            valueProvider = FailingValueCalculator,
+            conditionValueProvider = FailingConditionCalculator
         )
 
         return state.customizeState().getStatementFlow(statement)

@@ -152,10 +152,10 @@ class MethodFlowAnalyzer private constructor() {
         frame = MutableDataFrame(null),
         localVariables = Collections.emptySet(),
         jumpPoints = Collections.emptyList(),
-        methodEmulator = interproceduralEmulator::emulate,
-        statementFlowProvider = analyzer::analyze,
-        valueProvider = ValueCalculator::calculateValue,
-        conditionValueProvider = ValueCalculator::calculateCondition
+        methodEmulator = interproceduralEmulator,
+        statementFlowProvider = analyzer,
+        valueProvider = ValueCalculator,
+        conditionValueProvider = ValueCalculator
     )
 
     private suspend fun analyze(method: CtExecutable<*>) {

@@ -1,8 +1,12 @@
 package sibwaf.kawa
 
+import sibwaf.kawa.analysis.StatementAnalyzer
+import sibwaf.kawa.calculation.ValueCalculator
+import sibwaf.kawa.calculation.conditions.ConditionCalculator
 import sibwaf.kawa.calculation.conditions.ConditionCalculatorResult
 import sibwaf.kawa.emulation.FailedInvocation
 import sibwaf.kawa.emulation.InvocationResult
+import sibwaf.kawa.emulation.MethodEmulator
 import sibwaf.kawa.values.ConstrainedValue
 import spoon.reflect.code.CtCFlowBreak
 import spoon.reflect.code.CtExpression
@@ -22,10 +26,10 @@ data class AnalyzerState(
     val jumpPoints: MutableCollection<Pair<CtCFlowBreak, ReachableFrame>>,
     val callChain: RightChain<CtExecutable<*>>? = null, // TODO: probably should be non-null
 
-    private val methodEmulator: suspend (AnalyzerState, CtExecutableReference<*>, List<ConstrainedValue>) -> InvocationResult,
-    private val statementFlowProvider: suspend (AnalyzerState, CtStatement) -> DataFrame,
-    private val valueProvider: suspend (AnalyzerState, CtExpression<*>) -> Pair<DataFrame, ConstrainedValue>,
-    private val conditionValueProvider: suspend (AnalyzerState, CtExpression<*>) -> ConditionCalculatorResult,
+    private val methodEmulator: MethodEmulator,
+    private val statementFlowProvider: StatementAnalyzer,
+    private val valueProvider: ValueCalculator,
+    private val conditionValueProvider: ConditionCalculator,
 
     val cache: ModelInfoCache = ModelInfoCache()
 ) {
@@ -50,21 +54,21 @@ data class AnalyzerState(
         }
 
         val chain = RightChain(callChain, declaration)
-        return methodEmulator(this.copy(callChain = chain), executable, arguments)
+        return methodEmulator.emulate(this.copy(callChain = chain), executable, arguments)
     }
 
     suspend fun getStatementFlow(statement: CtStatement): DataFrame {
         annotation.frames[statement] = frame
-        return statementFlowProvider(this, statement)
+        return statementFlowProvider.analyze(this, statement)
     }
 
     suspend fun getValue(expression: CtExpression<*>): Pair<DataFrame, ConstrainedValue> {
         annotation.frames[expression] = frame
-        return valueProvider(this, expression)
+        return valueProvider.calculate(this, expression)
     }
 
     suspend fun getConditionValue(expression: CtExpression<*>): ConditionCalculatorResult {
         annotation.frames[expression] = frame
-        return conditionValueProvider(this, expression)
+        return conditionValueProvider.calculateCondition(this, expression)
     }
 }

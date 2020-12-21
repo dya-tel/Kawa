@@ -18,8 +18,7 @@ class CtWhileAnalyzerTest : StatementAnalyzerTestBase() {
 
         val resultFrame = runBlocking {
             analyzeStatement(analyzer, loop) {
-                val calculator = LiteralConditionCalculator()
-                copy(conditionValueProvider = { state, expression -> calculator.calculateCondition(state, expression) })
+                copy(conditionValueProvider = LiteralConditionCalculator())
             }
         }
 
