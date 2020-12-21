@@ -8,6 +8,7 @@ import sibwaf.kawa.values.BooleanValue
 import sibwaf.kawa.values.ValueSource
 import spoon.reflect.code.CtExpression
 import spoon.reflect.code.CtVariableRead
+import spoon.reflect.reference.CtFieldReference
 
 class VariableReadConditionCalculator : ConditionCalculator {
 
@@ -17,7 +18,11 @@ class VariableReadConditionCalculator : ConditionCalculator {
         val thenFrame = MutableDataFrame(state.frame)
         val elseFrame = MutableDataFrame(state.frame)
 
-        val declaration = (expression as CtVariableRead<*>).variable?.declaration
+        val declaration = (expression as CtVariableRead<*>)
+            .variable
+            .takeUnless { it is CtFieldReference<*> }
+            ?.declaration
+
         if (declaration != null) {
             thenFrame.setConstraint(declaration, BooleanConstraint.createTrue())
             elseFrame.setConstraint(declaration, BooleanConstraint.createFalse())

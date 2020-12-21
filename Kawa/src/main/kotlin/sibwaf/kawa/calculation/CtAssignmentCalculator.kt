@@ -8,7 +8,7 @@ import sibwaf.kawa.values.ConstrainedValue
 import spoon.reflect.code.CtAssignment
 import spoon.reflect.code.CtExpression
 import spoon.reflect.code.CtVariableAccess
-import spoon.reflect.declaration.CtField
+import spoon.reflect.reference.CtFieldReference
 
 class CtAssignmentCalculator : ValueCalculator {
 
@@ -22,8 +22,8 @@ class CtAssignmentCalculator : ValueCalculator {
 
         val variable = (expression.assigned as? CtVariableAccess<*>)
             ?.variable
+            ?.takeUnless { it is CtFieldReference<*> }
             ?.declaration
-            ?.takeUnless { it is CtField<*> }
 
         val resultFrame = if (variable != null && frame is ReachableFrame) {
             MutableDataFrame(frame).apply {

@@ -10,7 +10,7 @@ import spoon.reflect.code.CtExpression
 import spoon.reflect.code.CtUnaryOperator
 import spoon.reflect.code.CtVariableAccess
 import spoon.reflect.code.UnaryOperatorKind
-import spoon.reflect.declaration.CtField
+import spoon.reflect.reference.CtFieldReference
 
 class CtUnaryOperatorIncDecCalculator : ValueCalculator {
 
@@ -31,8 +31,8 @@ class CtUnaryOperatorIncDecCalculator : ValueCalculator {
 
         val variable = (expression.operand as? CtVariableAccess<*>)
             ?.variable
+            ?.takeUnless { it is CtFieldReference<*> }
             ?.declaration
-            ?.takeUnless { it is CtField<*> }
 
         val resultFrame = if (variable != null && frame is ReachableFrame) {
             MutableDataFrame(frame).apply {

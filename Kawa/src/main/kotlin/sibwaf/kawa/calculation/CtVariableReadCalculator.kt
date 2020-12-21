@@ -7,6 +7,7 @@ import sibwaf.kawa.values.ConstrainedValue
 import sibwaf.kawa.values.ValueSource
 import spoon.reflect.code.CtExpression
 import spoon.reflect.code.CtVariableRead
+import spoon.reflect.reference.CtFieldReference
 
 class CtVariableReadCalculator : ValueCalculator {
 
@@ -15,7 +16,12 @@ class CtVariableReadCalculator : ValueCalculator {
     override suspend fun calculate(state: AnalyzerState, expression: CtExpression<*>): Pair<DataFrame, ConstrainedValue> {
         expression as CtVariableRead<*>
 
-        val value = expression.variable.declaration?.let { state.frame.getValue(it) }
+        val value = expression
+            .variable
+            .takeUnless { it is CtFieldReference<*> }
+            ?.declaration
+            ?.let { state.frame.getValue(it) }
+
         val constraint = value?.let { state.frame.getConstraint(it) }
 
         val result = if (value != null && constraint != null) {
