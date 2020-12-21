@@ -81,6 +81,9 @@ sealed class ReachableFrame(override val previous: ReachableFrame?) : DataFrame 
     internal var constraintDiff: MutableMap<Value, Constraint> = Collections.emptyMap()
     internal var volatileConstraintDiff: MutableMap<Value, Constraint> = Collections.emptyMap()
 
+    protected fun containsValue(value: Value): Boolean =
+        value in valueDiff.values || (previous?.containsValue(value) == true)
+
     fun getValue(variable: CtVariable<*>): Value? {
         return valueDiff.getOrElse(variable) { previous?.getValue(variable) }
     }
@@ -113,8 +116,9 @@ sealed class ReachableFrame(override val previous: ReachableFrame?) : DataFrame 
         }
 
         for (diff in constraintDiff) {
-            // TODO: (optimization) do not copy constraints if corresponding values can't be obtained
-            frame.setConstraint(diff.key, diff.value)
+            if (frame.containsValue(diff.key)) {
+                frame.setConstraint(diff.key, diff.value)
+            }
         }
 
         if (keepVolatileConstraints) {
