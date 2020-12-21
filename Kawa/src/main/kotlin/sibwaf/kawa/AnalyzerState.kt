@@ -25,13 +25,15 @@ data class AnalyzerState(
     private val methodEmulator: suspend (AnalyzerState, CtExecutableReference<*>, List<ConstrainedValue>) -> InvocationResult,
     private val statementFlowProvider: suspend (AnalyzerState, CtStatement) -> DataFrame,
     private val valueProvider: suspend (AnalyzerState, CtExpression<*>) -> Pair<DataFrame, ConstrainedValue>,
-    private val conditionValueProvider: suspend (AnalyzerState, CtExpression<*>) -> ConditionCalculatorResult
+    private val conditionValueProvider: suspend (AnalyzerState, CtExpression<*>) -> ConditionCalculatorResult,
+
+    val cache: ModelInfoCache = ModelInfoCache()
 ) {
 
     suspend fun getInvocationFlow(executable: CtExecutableReference<*>, arguments: List<ConstrainedValue>): InvocationResult {
         // TODO: manual annotations go here
 
-        val declaration = executable.executableDeclaration ?: return FailedInvocation
+        val declaration = cache.getDeclaration(executable) ?: return FailedInvocation
 
         if (callChain?.contains(declaration) == true) {
             // TODO: handle recursive calls?

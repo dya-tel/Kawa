@@ -20,7 +20,7 @@ import java.util.LinkedList
 class BasicMethodEmulator(private val cache: MutableMap<CtExecutable<*>, MethodFlow>) : MethodEmulator {
 
     private suspend fun createAnnotation(state: AnalyzerState, method: CtExecutableReference<*>): MethodFlow {
-        val declaration = method.executableDeclaration ?: return EmptyFlow
+        val declaration = state.cache.getDeclaration(method) ?: return EmptyFlow
         val body = declaration.body ?: return EmptyFlow
 
         val annotation = MethodFlow()
@@ -82,7 +82,7 @@ class BasicMethodEmulator(private val cache: MutableMap<CtExecutable<*>, MethodF
         method: CtExecutableReference<*>,
         arguments: List<ConstrainedValue>
     ): InvocationResult {
-        val declaration = method.executableDeclaration
+        val declaration = state.cache.getDeclaration(method) ?: return FailedInvocation
 
         val annotation = cache.getOrElse(declaration) {
             createAnnotation(state, method).also {
