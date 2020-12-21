@@ -25,6 +25,7 @@ import sibwaf.kawa.calculation.conditions.LiteralConditionCalculator
 import sibwaf.kawa.calculation.conditions.VariableReadConditionCalculator
 import sibwaf.kawa.constraints.BooleanConstraint
 import sibwaf.kawa.emulation.BasicMethodEmulator
+import sibwaf.kawa.emulation.BlackHoleMethodTrace
 import sibwaf.kawa.values.BooleanValue
 import sibwaf.kawa.values.ConstrainedValue
 import sibwaf.kawa.values.ValueSource
@@ -117,6 +118,7 @@ object ValueCalculator : sibwaf.kawa.calculation.ValueCalculator, ConditionCalcu
         val emulator = BasicMethodEmulator(Collections.unmodifiableMap(cache).withDefault2(EmptyFlow))
         return AnalyzerState(
             annotation = EmptyFlow,
+            trace = BlackHoleMethodTrace,
             frame = frame,
             localVariables = Collections.emptySet(),
             jumpPoints = Collections.emptySet(),

@@ -36,9 +36,8 @@ class CtBlockAnalyzer : StatementAnalyzer {
             lastFrame = nextFrame
         }
 
-        state.annotation.blocks[statement] = BlockFlow().also {
-            it.startFrame = startFrame
-            it.endFrame = lastFrame
+        if (statement is CtBlock<*>) {
+            state.trace.trace(statement, startFrame, lastFrame)
         }
 
         lastFrame = lastFrame.compact(state.frame)

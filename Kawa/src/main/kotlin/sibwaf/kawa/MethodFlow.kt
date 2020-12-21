@@ -1,10 +1,10 @@
 package sibwaf.kawa
 
 import sibwaf.kawa.constraints.Constraint
+import sibwaf.kawa.emulation.BlackHoleMethodTrace
+import sibwaf.kawa.emulation.MethodTrace
 import sibwaf.kawa.values.Value
 import spoon.reflect.code.CtStatement
-import spoon.reflect.code.CtStatementList
-import spoon.reflect.declaration.CtElement
 import java.util.IdentityHashMap
 
 enum class MethodPurity {
@@ -18,13 +18,11 @@ open class BlockFlow {
         internal set
 }
 
-open class MethodFlow : BlockFlow() {
+open class MethodFlow(trace: MethodTrace) : BlockFlow(), MethodTrace by trace {
     var purity: MethodPurity? = null
 
     val parameters = ArrayList<Value>()
 
-    val frames = IdentityHashMap<CtElement, ReachableFrame>()
-    val blocks = IdentityHashMap<CtStatementList, BlockFlow>()
     val statements = IdentityHashMap<CtStatement, Int>()
 
     var neverReturns = false
@@ -33,4 +31,4 @@ open class MethodFlow : BlockFlow() {
 }
 
 // FIXME: holy shit it is mutable
-object EmptyFlow : MethodFlow()
+object EmptyFlow : MethodFlow(BlackHoleMethodTrace)

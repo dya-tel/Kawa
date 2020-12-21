@@ -33,6 +33,7 @@ import sibwaf.kawa.analysis.CtWhileAnalyzer
 import sibwaf.kawa.analysis.DelegatingStatementAnalyzer
 import sibwaf.kawa.analysis.StatementAnalyzer
 import sibwaf.kawa.emulation.BasicMethodEmulator
+import sibwaf.kawa.emulation.BlackHoleMethodTrace
 import spoon.reflect.code.CtStatement
 import spoon.reflect.declaration.CtExecutable
 import spoon.reflect.declaration.CtType
@@ -149,6 +150,7 @@ class MethodFlowAnalyzer private constructor() {
 
     private val rootState = AnalyzerState(
         annotation = EmptyFlow,
+        trace = BlackHoleMethodTrace,
         frame = MutableDataFrame(null),
         localVariables = Collections.emptySet(),
         jumpPoints = Collections.emptyList(),

@@ -4,6 +4,7 @@ import sibwaf.kawa.AnalyzerState
 import sibwaf.kawa.DataFrame
 import sibwaf.kawa.EmptyFlow
 import sibwaf.kawa.MutableDataFrame
+import sibwaf.kawa.emulation.BlackHoleMethodTrace
 import sibwaf.kawa.utility.FailingConditionCalculator
 import sibwaf.kawa.utility.FailingMethodEmulator
 import sibwaf.kawa.utility.FailingValueCalculator
@@ -27,6 +28,7 @@ abstract class StatementAnalyzerTestBase {
     ): DataFrame {
         val state = AnalyzerState(
             annotation = EmptyFlow,
+            trace = BlackHoleMethodTrace,
             frame = MutableDataFrame(null),
             localVariables = Collections.emptySet(),
             jumpPoints = Collections.emptyList(),

@@ -23,7 +23,8 @@ class BasicMethodEmulator(private val cache: MutableMap<CtExecutable<*>, MethodF
         val declaration = state.cache.getDeclaration(method) ?: return EmptyFlow
         val body = declaration.body ?: return EmptyFlow
 
-        val annotation = MethodFlow()
+        val trace = MutableMethodTraceImpl()
+        val annotation = MethodFlow(trace)
 
         val startFrame = MutableDataFrame(null)
         for (parameter in declaration.parameters) {
@@ -36,6 +37,7 @@ class BasicMethodEmulator(private val cache: MutableMap<CtExecutable<*>, MethodF
 
         val localState = state.copy(
             annotation = annotation,
+            trace = trace,
             frame = startFrame,
             localVariables = Collections.emptySet(),
             jumpPoints = ArrayList()

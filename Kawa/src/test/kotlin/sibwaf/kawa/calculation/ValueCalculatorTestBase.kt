@@ -6,6 +6,7 @@ import sibwaf.kawa.EmptyFlow
 import sibwaf.kawa.MutableDataFrame
 import sibwaf.kawa.calculation.conditions.ConditionCalculator
 import sibwaf.kawa.calculation.conditions.ConditionCalculatorResult
+import sibwaf.kawa.emulation.BlackHoleMethodTrace
 import sibwaf.kawa.utility.FailingMethodEmulator
 import sibwaf.kawa.utility.FailingStatementAnalyzer
 import sibwaf.kawa.values.ConstrainedValue
@@ -45,6 +46,7 @@ abstract class ValueCalculatorTestBase {
     protected fun createState(calculator: ConditionCalculator): AnalyzerState {
         return AnalyzerState(
             annotation = EmptyFlow,
+            trace = BlackHoleMethodTrace,
             frame = MutableDataFrame(null),
             localVariables = Collections.emptySet(),
             jumpPoints = Collections.emptySet(),

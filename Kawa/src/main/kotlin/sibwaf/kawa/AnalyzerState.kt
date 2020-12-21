@@ -7,6 +7,7 @@ import sibwaf.kawa.calculation.conditions.ConditionCalculatorResult
 import sibwaf.kawa.emulation.FailedInvocation
 import sibwaf.kawa.emulation.InvocationResult
 import sibwaf.kawa.emulation.MethodEmulator
+import sibwaf.kawa.emulation.MutableMethodTrace
 import sibwaf.kawa.values.ConstrainedValue
 import spoon.reflect.code.CtCFlowBreak
 import spoon.reflect.code.CtExpression
@@ -17,10 +18,12 @@ import spoon.reflect.declaration.CtTypeMember
 import spoon.reflect.declaration.CtVariable
 import spoon.reflect.reference.CtExecutableReference
 
-// TODO: move frame tracing to a separate collection to get rid of side effects and allow no-trace runs
 // TODO: remove 'annotation'
 data class AnalyzerState(
-    val annotation: MethodFlow,
+    private val annotation: MethodFlow,
+
+    val trace: MutableMethodTrace,
+
     val frame: ReachableFrame,
     val localVariables: MutableSet<CtVariable<*>>,
     val jumpPoints: MutableCollection<Pair<CtCFlowBreak, ReachableFrame>>,
@@ -58,17 +61,17 @@ data class AnalyzerState(
     }
 
     suspend fun getStatementFlow(statement: CtStatement): DataFrame {
-        annotation.frames[statement] = frame
+        trace.trace(statement, frame)
         return statementFlowProvider.analyze(this, statement)
     }
 
     suspend fun getValue(expression: CtExpression<*>): Pair<DataFrame, ConstrainedValue> {
-        annotation.frames[expression] = frame
+        trace.trace(expression, frame)
         return valueProvider.calculate(this, expression)
     }
 
     suspend fun getConditionValue(expression: CtExpression<*>): ConditionCalculatorResult {
-        annotation.frames[expression] = frame
+        trace.trace(expression, frame)
         return conditionValueProvider.calculateCondition(this, expression)
     }
 }

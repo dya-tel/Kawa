@@ -60,7 +60,7 @@ class ConditionTest : MethodAnalyzerTestBase() {
         val parameter = method.extractVariables().values.single()
         val ifStatement = method.getElementsOf<CtIf>().single()
         val thenBranchFrame = flow.blocks.getValue(ifStatement.thenBlock).startFrame
-        val elseBranchFrame = flow.blocks.getValue(ifStatement.elseBlock)!!.startFrame
+        val elseBranchFrame = flow.blocks.getValue(ifStatement.elseBlock!!).startFrame
 
         expect {
             that(thenBranchFrame.getConstraint(parameter) as ReferenceConstraint)
