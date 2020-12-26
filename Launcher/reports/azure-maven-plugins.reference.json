@@ -18,25 +18,5 @@
       "end": 1010
     },
     "message": "Possible null dereference of \u0027line\u0027"
-  },
-  {
-    "rule": "R0000",
-    "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/azure-maven-plugins-develop/azure-webapp-maven-plugin/src/main/java/com/microsoft/azure/maven/webapp/utils/RuntimeStackUtils.java",
-      "line": 89,
-      "start": 3842,
-      "end": 3924
-    },
-    "message": "Possible null dereference of \u0027getJavaVersionFromRuntimeStack()\u0027"
-  },
-  {
-    "rule": "R0000",
-    "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/azure-maven-plugins-develop/azure-webapp-maven-plugin/src/main/java/com/microsoft/azure/maven/webapp/utils/RuntimeStackUtils.java",
-      "line": 90,
-      "start": 3949,
-      "end": 4024
-    },
-    "message": "Possible null dereference of \u0027getWebContainerFromRuntimeStack()\u0027"
   }
 ]

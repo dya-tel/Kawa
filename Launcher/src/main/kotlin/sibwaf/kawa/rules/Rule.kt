@@ -1,7 +1,6 @@
 package sibwaf.kawa.rules
 
 import kotlinx.coroutines.runBlocking
-import sibwaf.kawa.EmptyFlow
 import sibwaf.kawa.MethodFlow
 import sibwaf.kawa.ReachableFrame
 import sibwaf.kawa.ValueCalculator
@@ -36,7 +35,11 @@ abstract class Rule : CtAbstractVisitor() {
         return flow.frames[element]
     }
 
-    fun getValue(frame: ReachableFrame, expression: CtExpression<*>): ConstrainedValue {
+    fun getValue(flow: MethodFlow, expression: CtExpression<*>): ConstrainedValue? {
+        return flow.expressions[expression]
+    }
+
+    fun calculateValue(frame: ReachableFrame, expression: CtExpression<*>): ConstrainedValue {
         return runBlocking {
             ValueCalculator.calculateValue(frame, expression, flow)
         }.second

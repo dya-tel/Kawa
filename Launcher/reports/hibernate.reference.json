@@ -13,9 +13,9 @@
     "rule": "R0000",
     "position": {
       "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/boot/registry/classloading/internal/ClassLoaderServiceImpl.java",
-      "line": 162,
-      "start": 5555,
-      "end": 5576
+      "line": 163,
+      "start": 5592,
+      "end": 5610
     },
     "message": "Possible null dereference of \u0027name\u0027"
   },
@@ -24,8 +24,8 @@
     "position": {
       "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/boot/registry/classloading/internal/ClassLoaderServiceImpl.java",
       "line": 202,
-      "start": 6566,
-      "end": 6587
+      "start": 6591,
+      "end": 6609
     },
     "message": "Possible null dereference of \u0027name\u0027"
   },
@@ -68,16 +68,6 @@
       "end": 24525
     },
     "message": "Possible null dereference of \u0027superEntity\u0027"
-  },
-  {
-    "rule": "R0000",
-    "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/cfg/AnnotationBinder.java",
-      "line": 758,
-      "start": 28771,
-      "end": 28802
-    },
-    "message": "Possible null dereference of \u0027discriminatorColumn\u0027"
   },
   {
     "rule": "R0000",
@@ -322,26 +312,6 @@
   {
     "rule": "R0000",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/engine/query/spi/HQLQueryPlan.java",
-      "line": 243,
-      "start": 8316,
-      "end": 8340
-    },
-    "message": "Possible null dereference of \u0027distinction\u0027"
-  },
-  {
-    "rule": "R0000",
-    "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/hql/internal/ast/QueryTranslatorImpl.java",
-      "line": 375,
-      "start": 12437,
-      "end": 12472
-    },
-    "message": "Possible null dereference of \u0027getSelectClause()\u0027"
-  },
-  {
-    "rule": "R0000",
-    "position": {
       "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/hql/internal/ast/QueryTranslatorImpl.java",
       "line": 566,
       "start": 18194,
@@ -423,9 +393,9 @@
     "rule": "R0000",
     "position": {
       "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/hql/internal/ast/util/SyntheticAndFactory.java",
-      "line": 153,
-      "start": 5097,
-      "end": 5129
+      "line": 154,
+      "start": 5154,
+      "end": 5181
     },
     "message": "Possible null dereference of \u0027whereFragment\u0027"
   },
@@ -472,42 +442,12 @@
   {
     "rule": "R0000",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/loader/Loader.java",
-      "line": 640,
-      "start": 21391,
-      "end": 21416
-    },
-    "message": "Possible null dereference of \u0027lastKey\u0027"
-  },
-  {
-    "rule": "R0000",
-    "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/loader/Loader.java",
-      "line": 658,
-      "start": 21761,
-      "end": 21788
-    },
-    "message": "Possible null dereference of \u0027keyToRead\u0027"
-  },
-  {
-    "rule": "R0000",
-    "position": {
       "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/loader/criteria/CriteriaJoinWalker.java",
       "line": 278,
       "start": 8980,
       "end": 9001
     },
     "message": "Possible null dereference of \u0027subcriteria\u0027"
-  },
-  {
-    "rule": "R0000",
-    "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/loader/criteria/CriteriaQueryTranslator.java",
-      "line": 259,
-      "start": 9724,
-      "end": 9752
-    },
-    "message": "Possible null dereference of \u0027elementType\u0027"
   },
   {
     "rule": "R0000",
@@ -673,9 +613,9 @@
     "rule": "R0000",
     "position": {
       "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/type/CollectionType.java",
-      "line": 754,
-      "start": 25145,
-      "end": 25189
+      "line": 759,
+      "start": 25387,
+      "end": 25435
     },
     "message": "Possible null dereference of \u0027target\u0027"
   },

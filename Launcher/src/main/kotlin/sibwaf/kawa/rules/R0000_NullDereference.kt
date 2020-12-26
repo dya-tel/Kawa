@@ -23,14 +23,13 @@ class R0000_NullDereference : Rule() {
 
     private fun checkDereference(expression: CtTargetedExpression<*, *>) {
         val flow = getFlow(expression) ?: return
-        val frame = getFrame(flow, expression) ?: return
 
         val target = expression.target
             ?.takeUnless { it is CtThisAccess<*> }
             ?.takeUnless { it is CtTypeReference<*> }
             ?: return
 
-        val (value, constraint) = getValue(frame, target)
+        val (value, constraint) = getValue(flow, target) ?: return
         if (constraint !is ReferenceConstraint) {
             return
         }

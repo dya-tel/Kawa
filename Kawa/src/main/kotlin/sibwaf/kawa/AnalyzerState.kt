@@ -67,11 +67,17 @@ data class AnalyzerState(
 
     suspend fun getValue(expression: CtExpression<*>): Pair<DataFrame, ConstrainedValue> {
         trace.trace(expression, frame)
-        return valueProvider.calculate(this, expression)
+
+        val result = valueProvider.calculate(this, expression)
+        trace.trace(expression, result.second)
+        return result
     }
 
     suspend fun getConditionValue(expression: CtExpression<*>): ConditionCalculatorResult {
         trace.trace(expression, frame)
-        return conditionValueProvider.calculateCondition(this, expression)
+
+        val result = conditionValueProvider.calculateCondition(this, expression)
+        trace.trace(expression, ConstrainedValue(result.value, result.constraint))
+        return result
     }
 }

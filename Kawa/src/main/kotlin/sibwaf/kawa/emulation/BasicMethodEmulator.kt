@@ -60,14 +60,13 @@ class BasicMethodEmulator(private val cache: MutableMap<CtExecutable<*>, MethodF
                 null
             } else {
                 val returnedConstraints = LinkedList<Constraint>()
-                for ((statement, frame) in localState.jumpPoints) {
+                for (jump in localState.jumpPoints) {
+                    val statement = jump.first
                     if (statement !is CtReturn<*> || statement.returnedExpression == null) {
                         continue
                     }
 
-                    // TODO: non-optimal, should use value cache in the future
-                    val (_, value) = localState.copy(frame = frame).getValue(statement.returnedExpression)
-                    returnedConstraints += value.constraint
+                    returnedConstraints += annotation.expressions.getValue(statement.returnedExpression).constraint
                 }
 
                 returnedConstraints.reduceOrNull(Constraint::merge)

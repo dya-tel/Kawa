@@ -192,16 +192,6 @@
   {
     "rule": "R0000",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage.Client/src/main/java/org/mage/card/arcane/ManaSymbols.java",
-      "line": 670,
-      "start": 26603,
-      "end": 26652
-    },
-    "message": "Possible null dereference of \u0027symbol\u0027"
-  },
-  {
-    "rule": "R0000",
-    "position": {
       "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage.Client/src/main/java/org/mage/card/arcane/ModernCardRenderer.java",
       "line": 70,
       "start": 2401,
