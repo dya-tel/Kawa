@@ -3,13 +3,16 @@ package sibwaf.kawa.projects
 import sibwaf.kawa.DiffTesterBase
 import sibwaf.kawa.ModelLoader
 import sibwaf.kawa.collectSources
+import java.nio.file.Path
 
 class AsyncHttpClientTest : DiffTesterBase() {
+    override val rootPath: Path = baseProjectPath.resolve("async-http-client-master")
     override val model = ModelLoader(
         "async-http-client",
+        rootPath,
         collectSources(
-            baseProjectPath.resolve("async-http-client-master"),
-            baseProjectPath.resolve("async-http-client-master").resolve("extras")
+            rootPath,
+            rootPath.resolve("extras")
         )
     )
 }

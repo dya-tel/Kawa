@@ -27,7 +27,7 @@ class Analyzer(private val modelLoader: ModelLoader, private val baseCoroutineCo
     fun analyze(): Collection<Warning> {
         val model = modelLoader.model
 
-        val types = model.allTypes.toList()
+        val types = model.model.allTypes.toList()
 
         val flow: Map<CtExecutable<*>, MethodFlow>
         val flowTime = measureTimeMillis {

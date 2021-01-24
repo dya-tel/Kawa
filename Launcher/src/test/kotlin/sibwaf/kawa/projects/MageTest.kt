@@ -3,13 +3,16 @@ package sibwaf.kawa.projects
 import sibwaf.kawa.DiffTesterBase
 import sibwaf.kawa.ModelLoader
 import sibwaf.kawa.collectSources
+import java.nio.file.Path
 
 class MageTest : DiffTesterBase() {
+    override val rootPath: Path = baseProjectPath.resolve("mage-master")
     override val model = ModelLoader(
         "mage",
+        rootPath,
         collectSources(
-            baseProjectPath.resolve("mage-master"),
-            baseProjectPath.resolve("mage-master").resolve("Mage.Server.Plugins")
+            rootPath,
+            rootPath.resolve("Mage.Server.Plugins")
         )
     )
 }

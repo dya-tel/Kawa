@@ -1,5 +1,6 @@
 package sibwaf.kawa
 
+import org.slf4j.LoggerFactory
 import java.math.BigInteger
 import java.nio.file.Paths
 import java.security.MessageDigest
@@ -11,21 +12,33 @@ private fun String.stableHash(): BigInteger {
         .let { BigInteger(it) }
 }
 
+private val log = LoggerFactory.getLogger("FlowLauncher")
+
 fun main(args: Array<String>) {
-    val sources = collectSources(args.map { Paths.get(it) })
+    val model = run {
+        if (args.size < 2) {
+            log.error("At least 2 arguments are required: project_root source_path [source_path ...]")
+            return
+        }
 
-    val hash = sources.map { it.absolutePath.stableHash() }
-        .reduce(BigInteger::add)
-        .toString()
-        .takeLast(32)
+        val root = Paths.get(args[0])
+        val sources = collectSources(args.drop(1).map { Paths.get(it) })
+        val hash = sources.map { it.absolutePath.stableHash() }
+            .reduce(BigInteger::add)
+            .toString()
+            .takeLast(32)
 
-    val model = ModelLoader(hash, sources)
+        ModelLoader(hash, root, sources)
+    }
 
-    val report = Analyzer(model, 4).analyze().map { it.wrap() }
+    val root = Paths.get(model.model.root)
+    val report = Analyzer(model, 4)
+        .analyze()
+        .map { it.wrap(root) }
 
     for (warning in report.sortedWith(ReportManager.WARNING_COMPARATOR)) {
         with(warning) {
-            println("[$rule] $message. ${position.file}:${position.line}")
+            println("[$rule] $message. ${root.resolve(position.file)}:${position.line}")
         }
     }
 }

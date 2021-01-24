@@ -2,7 +2,7 @@
   {
     "rule": "R0000",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/boot/internal/InFlightMetadataCollectorImpl.java",
+      "file": "hibernate-core/src/main/java/org/hibernate/boot/internal/InFlightMetadataCollectorImpl.java",
       "line": 802,
       "start": 27559,
       "end": 27580
@@ -12,7 +12,7 @@
   {
     "rule": "R0000",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/boot/registry/classloading/internal/ClassLoaderServiceImpl.java",
+      "file": "hibernate-core/src/main/java/org/hibernate/boot/registry/classloading/internal/ClassLoaderServiceImpl.java",
       "line": 163,
       "start": 5592,
       "end": 5610
@@ -22,7 +22,7 @@
   {
     "rule": "R0000",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/boot/registry/classloading/internal/ClassLoaderServiceImpl.java",
+      "file": "hibernate-core/src/main/java/org/hibernate/boot/registry/classloading/internal/ClassLoaderServiceImpl.java",
       "line": 202,
       "start": 6591,
       "end": 6609
@@ -32,7 +32,7 @@
   {
     "rule": "R0001",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/bytecode/internal/javassist/BytecodeProviderImpl.java",
+      "file": "hibernate-core/src/main/java/org/hibernate/bytecode/internal/javassist/BytecodeProviderImpl.java",
       "line": 50,
       "start": 1633,
       "end": 1649
@@ -42,7 +42,7 @@
   {
     "rule": "R0002",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/bytecode/internal/javassist/BytecodeProviderImpl.java",
+      "file": "hibernate-core/src/main/java/org/hibernate/bytecode/internal/javassist/BytecodeProviderImpl.java",
       "line": 51,
       "start": 1660,
       "end": 1679
@@ -52,7 +52,7 @@
   {
     "rule": "R0000",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/cfg/AnnotationBinder.java",
+      "file": "hibernate-core/src/main/java/org/hibernate/cfg/AnnotationBinder.java",
       "line": 326,
       "start": 12704,
       "end": 12718
@@ -62,7 +62,7 @@
   {
     "rule": "R0000",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/cfg/AnnotationBinder.java",
+      "file": "hibernate-core/src/main/java/org/hibernate/cfg/AnnotationBinder.java",
       "line": 648,
       "start": 24499,
       "end": 24525
@@ -72,7 +72,7 @@
   {
     "rule": "R0000",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/cfg/AnnotationBinder.java",
+      "file": "hibernate-core/src/main/java/org/hibernate/cfg/AnnotationBinder.java",
       "line": 2248,
       "start": 84692,
       "end": 84729
@@ -82,7 +82,7 @@
   {
     "rule": "R0000",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/cfg/AnnotationBinder.java",
+      "file": "hibernate-core/src/main/java/org/hibernate/cfg/AnnotationBinder.java",
       "line": 2298,
       "start": 86400,
       "end": 86437
@@ -92,7 +92,7 @@
   {
     "rule": "R0000",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/cfg/AnnotationBinder.java",
+      "file": "hibernate-core/src/main/java/org/hibernate/cfg/AnnotationBinder.java",
       "line": 2311,
       "start": 86993,
       "end": 87024
@@ -102,7 +102,7 @@
   {
     "rule": "R0000",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/cfg/AnnotationBinder.java",
+      "file": "hibernate-core/src/main/java/org/hibernate/cfg/AnnotationBinder.java",
       "line": 2544,
       "start": 94829,
       "end": 94848
@@ -112,7 +112,7 @@
   {
     "rule": "R0000",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/cfg/AnnotationBinder.java",
+      "file": "hibernate-core/src/main/java/org/hibernate/cfg/AnnotationBinder.java",
       "line": 3484,
       "start": 127694,
       "end": 127714
@@ -122,7 +122,7 @@
   {
     "rule": "R0000",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/cfg/AnnotationBinder.java",
+      "file": "hibernate-core/src/main/java/org/hibernate/cfg/AnnotationBinder.java",
       "line": 3499,
       "start": 128159,
       "end": 128179
@@ -132,7 +132,7 @@
   {
     "rule": "R0000",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/cfg/AnnotationBinder.java",
+      "file": "hibernate-core/src/main/java/org/hibernate/cfg/AnnotationBinder.java",
       "line": 3511,
       "start": 128627,
       "end": 128641
@@ -142,7 +142,7 @@
   {
     "rule": "R0000",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/cfg/AnnotationBinder.java",
+      "file": "hibernate-core/src/main/java/org/hibernate/cfg/AnnotationBinder.java",
       "line": 3517,
       "start": 128835,
       "end": 128849
@@ -152,7 +152,7 @@
   {
     "rule": "R0000",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/cfg/AnnotationBinder.java",
+      "file": "hibernate-core/src/main/java/org/hibernate/cfg/AnnotationBinder.java",
       "line": 3522,
       "start": 129042,
       "end": 129056
@@ -162,7 +162,7 @@
   {
     "rule": "R0000",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/cfg/AttributeConverterDefinition.java",
+      "file": "hibernate-core/src/main/java/org/hibernate/cfg/AttributeConverterDefinition.java",
       "line": 166,
       "start": 6576,
       "end": 6603
@@ -172,7 +172,7 @@
   {
     "rule": "R0000",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/cfg/AttributeConverterDefinition.java",
+      "file": "hibernate-core/src/main/java/org/hibernate/cfg/AttributeConverterDefinition.java",
       "line": 224,
       "start": 8479,
       "end": 8503
@@ -182,7 +182,7 @@
   {
     "rule": "R0000",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/cfg/BinderHelper.java",
+      "file": "hibernate-core/src/main/java/org/hibernate/cfg/BinderHelper.java",
       "line": 269,
       "start": 11157,
       "end": 11187
@@ -192,7 +192,7 @@
   {
     "rule": "R0000",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/cfg/InheritanceState.java",
+      "file": "hibernate-core/src/main/java/org/hibernate/cfg/InheritanceState.java",
       "line": 278,
       "start": 8981,
       "end": 9006
@@ -202,7 +202,7 @@
   {
     "rule": "R0001",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/cfg/OneToOneSecondPass.java",
+      "file": "hibernate-core/src/main/java/org/hibernate/cfg/OneToOneSecondPass.java",
       "line": 131,
       "start": 4820,
       "end": 4829
@@ -212,7 +212,7 @@
   {
     "rule": "R0000",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/cfg/annotations/CollectionBinder.java",
+      "file": "hibernate-core/src/main/java/org/hibernate/cfg/annotations/CollectionBinder.java",
       "line": 1367,
       "start": 49212,
       "end": 49280
@@ -222,7 +222,7 @@
   {
     "rule": "R0000",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/cfg/annotations/TableBinder.java",
+      "file": "hibernate-core/src/main/java/org/hibernate/cfg/annotations/TableBinder.java",
       "line": 554,
       "start": 15736,
       "end": 15766
@@ -232,7 +232,7 @@
   {
     "rule": "R0000",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/context/internal/ManagedSessionContext.java",
+      "file": "hibernate-core/src/main/java/org/hibernate/context/internal/ManagedSessionContext.java",
       "line": 85,
       "start": 3186,
       "end": 3247
@@ -242,7 +242,7 @@
   {
     "rule": "R0001",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/dialect/Dialect.java",
+      "file": "hibernate-core/src/main/java/org/hibernate/dialect/Dialect.java",
       "line": 379,
       "start": 16992,
       "end": 17005
@@ -252,7 +252,7 @@
   {
     "rule": "R0002",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/dialect/Dialect.java",
+      "file": "hibernate-core/src/main/java/org/hibernate/dialect/Dialect.java",
       "line": 380,
       "start": 17014,
       "end": 17100
@@ -262,7 +262,7 @@
   {
     "rule": "R0001",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/dialect/Dialect.java",
+      "file": "hibernate-core/src/main/java/org/hibernate/dialect/Dialect.java",
       "line": 704,
       "start": 28574,
       "end": 28587
@@ -272,7 +272,7 @@
   {
     "rule": "R0002",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/dialect/Dialect.java",
+      "file": "hibernate-core/src/main/java/org/hibernate/dialect/Dialect.java",
       "line": 705,
       "start": 28596,
       "end": 28688
@@ -282,7 +282,7 @@
   {
     "rule": "R0000",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/engine/internal/Collections.java",
+      "file": "hibernate-core/src/main/java/org/hibernate/engine/internal/Collections.java",
       "line": 72,
       "start": 2549,
       "end": 2589
@@ -292,7 +292,7 @@
   {
     "rule": "R0000",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/engine/internal/EntityEntryContext.java",
+      "file": "hibernate-core/src/main/java/org/hibernate/engine/internal/EntityEntryContext.java",
       "line": 123,
       "start": 4896,
       "end": 4952
@@ -302,7 +302,7 @@
   {
     "rule": "R0000",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/engine/jdbc/internal/JdbcCoordinatorImpl.java",
+      "file": "hibernate-core/src/main/java/org/hibernate/engine/jdbc/internal/JdbcCoordinatorImpl.java",
       "line": 347,
       "start": 10163,
       "end": 10219
@@ -312,7 +312,7 @@
   {
     "rule": "R0000",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/hql/internal/ast/QueryTranslatorImpl.java",
+      "file": "hibernate-core/src/main/java/org/hibernate/hql/internal/ast/QueryTranslatorImpl.java",
       "line": 566,
       "start": 18194,
       "end": 18241
@@ -322,7 +322,7 @@
   {
     "rule": "R0000",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/hql/internal/ast/tree/AbstractRestrictableStatement.java",
+      "file": "hibernate-core/src/main/java/org/hibernate/hql/internal/ast/tree/AbstractRestrictableStatement.java",
       "line": 53,
       "start": 1776,
       "end": 1798
@@ -332,7 +332,7 @@
   {
     "rule": "R0000",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/hql/internal/ast/tree/DotNode.java",
+      "file": "hibernate-core/src/main/java/org/hibernate/hql/internal/ast/tree/DotNode.java",
       "line": 551,
       "start": 20357,
       "end": 20381
@@ -342,7 +342,7 @@
   {
     "rule": "R0000",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/hql/internal/ast/tree/FromElementFactory.java",
+      "file": "hibernate-core/src/main/java/org/hibernate/hql/internal/ast/tree/FromElementFactory.java",
       "line": 150,
       "start": 5087,
       "end": 5276
@@ -352,7 +352,7 @@
   {
     "rule": "R0000",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/hql/internal/ast/tree/QueryNode.java",
+      "file": "hibernate-core/src/main/java/org/hibernate/hql/internal/ast/tree/QueryNode.java",
       "line": 89,
       "start": 2949,
       "end": 2976
@@ -362,7 +362,7 @@
   {
     "rule": "R0000",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/hql/internal/ast/tree/QueryNode.java",
+      "file": "hibernate-core/src/main/java/org/hibernate/hql/internal/ast/tree/QueryNode.java",
       "line": 151,
       "start": 4068,
       "end": 4134
@@ -372,7 +372,7 @@
   {
     "rule": "R0000",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/hql/internal/ast/util/ASTUtil.java",
+      "file": "hibernate-core/src/main/java/org/hibernate/hql/internal/ast/util/ASTUtil.java",
       "line": 315,
       "start": 8481,
       "end": 8527
@@ -382,7 +382,7 @@
   {
     "rule": "R0000",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/hql/internal/ast/util/JoinProcessor.java",
+      "file": "hibernate-core/src/main/java/org/hibernate/hql/internal/ast/util/JoinProcessor.java",
       "line": 162,
       "start": 5924,
       "end": 5971
@@ -392,7 +392,7 @@
   {
     "rule": "R0000",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/hql/internal/ast/util/SyntheticAndFactory.java",
+      "file": "hibernate-core/src/main/java/org/hibernate/hql/internal/ast/util/SyntheticAndFactory.java",
       "line": 154,
       "start": 5154,
       "end": 5181
@@ -402,7 +402,7 @@
   {
     "rule": "R0000",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/internal/SessionImpl.java",
+      "file": "hibernate-core/src/main/java/org/hibernate/internal/SessionImpl.java",
       "line": 1735,
       "start": 57452,
       "end": 57477
@@ -412,7 +412,7 @@
   {
     "rule": "R0003",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/internal/SessionImpl.java",
+      "file": "hibernate-core/src/main/java/org/hibernate/internal/SessionImpl.java",
       "line": 3721,
       "start": 115996,
       "end": 116000
@@ -422,7 +422,7 @@
   {
     "rule": "R0000",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/internal/util/ReflectHelper.java",
+      "file": "hibernate-core/src/main/java/org/hibernate/internal/util/ReflectHelper.java",
       "line": 468,
       "start": 14875,
       "end": 14898
@@ -432,7 +432,7 @@
   {
     "rule": "R0000",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/internal/util/collections/ConcurrentReferenceHashMap.java",
+      "file": "hibernate-core/src/main/java/org/hibernate/internal/util/collections/ConcurrentReferenceHashMap.java",
       "line": 857,
       "start": 26536,
       "end": 26542
@@ -442,7 +442,7 @@
   {
     "rule": "R0000",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/loader/criteria/CriteriaJoinWalker.java",
+      "file": "hibernate-core/src/main/java/org/hibernate/loader/criteria/CriteriaJoinWalker.java",
       "line": 278,
       "start": 8980,
       "end": 9001
@@ -452,7 +452,7 @@
   {
     "rule": "R0000",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/metamodel/internal/AttributeFactory.java",
+      "file": "hibernate-core/src/main/java/org/hibernate/metamodel/internal/AttributeFactory.java",
       "line": 183,
       "start": 7403,
       "end": 7437
@@ -462,7 +462,7 @@
   {
     "rule": "R0000",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/metamodel/internal/AttributeFactory.java",
+      "file": "hibernate-core/src/main/java/org/hibernate/metamodel/internal/AttributeFactory.java",
       "line": 213,
       "start": 8405,
       "end": 8445
@@ -472,7 +472,7 @@
   {
     "rule": "R0001",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/persister/collection/AbstractCollectionPersister.java",
+      "file": "hibernate-core/src/main/java/org/hibernate/persister/collection/AbstractCollectionPersister.java",
       "line": 1566,
       "start": 50051,
       "end": 50060
@@ -482,7 +482,7 @@
   {
     "rule": "R0000",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/query/criteria/internal/expression/LiteralExpression.java",
+      "file": "hibernate-core/src/main/java/org/hibernate/query/criteria/internal/expression/LiteralExpression.java",
       "line": 84,
       "start": 2820,
       "end": 2914
@@ -492,7 +492,7 @@
   {
     "rule": "R0000",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/query/criteria/internal/expression/LiteralExpression.java",
+      "file": "hibernate-core/src/main/java/org/hibernate/query/criteria/internal/expression/LiteralExpression.java",
       "line": 104,
       "start": 3463,
       "end": 3562
@@ -502,7 +502,7 @@
   {
     "rule": "R0000",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/query/spi/StreamDecorator.java",
+      "file": "hibernate-core/src/main/java/org/hibernate/query/spi/StreamDecorator.java",
       "line": 319,
       "start": 7623,
       "end": 7746
@@ -512,7 +512,7 @@
   {
     "rule": "R0000",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/query/spi/StreamDecorator.java",
+      "file": "hibernate-core/src/main/java/org/hibernate/query/spi/StreamDecorator.java",
       "line": 332,
       "start": 8047,
       "end": 8170
@@ -522,7 +522,7 @@
   {
     "rule": "R0000",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/sql/Template.java",
+      "file": "hibernate-core/src/main/java/org/hibernate/sql/Template.java",
       "line": 161,
       "start": 5784,
       "end": 5813
@@ -532,7 +532,7 @@
   {
     "rule": "R0001",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/sql/Template.java",
+      "file": "hibernate-core/src/main/java/org/hibernate/sql/Template.java",
       "line": 295,
       "start": 9923,
       "end": 9936
@@ -542,7 +542,7 @@
   {
     "rule": "R0002",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/sql/Template.java",
+      "file": "hibernate-core/src/main/java/org/hibernate/sql/Template.java",
       "line": 296,
       "start": 9946,
       "end": 10010
@@ -552,7 +552,7 @@
   {
     "rule": "R0002",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/sql/Template.java",
+      "file": "hibernate-core/src/main/java/org/hibernate/sql/Template.java",
       "line": 297,
       "start": 9982,
       "end": 10004
@@ -562,7 +562,7 @@
   {
     "rule": "R0000",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/stat/internal/StatisticsImpl.java",
+      "file": "hibernate-core/src/main/java/org/hibernate/stat/internal/StatisticsImpl.java",
       "line": 755,
       "start": 21949,
       "end": 22002
@@ -572,7 +572,7 @@
   {
     "rule": "R0000",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/stat/internal/StatisticsImpl.java",
+      "file": "hibernate-core/src/main/java/org/hibernate/stat/internal/StatisticsImpl.java",
       "line": 768,
       "start": 22278,
       "end": 22332
@@ -582,7 +582,7 @@
   {
     "rule": "R0000",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/stat/internal/StatisticsImpl.java",
+      "file": "hibernate-core/src/main/java/org/hibernate/stat/internal/StatisticsImpl.java",
       "line": 781,
       "start": 22606,
       "end": 22659
@@ -592,7 +592,7 @@
   {
     "rule": "R0000",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/tool/schema/extract/internal/InformationExtractorJdbcDatabaseMetaDataImpl.java",
+      "file": "hibernate-core/src/main/java/org/hibernate/tool/schema/extract/internal/InformationExtractorJdbcDatabaseMetaDataImpl.java",
       "line": 751,
       "start": 22350,
       "end": 22375
@@ -602,7 +602,7 @@
   {
     "rule": "R0000",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/tool/schema/extract/internal/InformationExtractorJdbcDatabaseMetaDataImpl.java",
+      "file": "hibernate-core/src/main/java/org/hibernate/tool/schema/extract/internal/InformationExtractorJdbcDatabaseMetaDataImpl.java",
       "line": 752,
       "start": 22386,
       "end": 22410
@@ -612,7 +612,7 @@
   {
     "rule": "R0000",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-core/src/main/java/org/hibernate/type/CollectionType.java",
+      "file": "hibernate-core/src/main/java/org/hibernate/type/CollectionType.java",
       "line": 759,
       "start": 25387,
       "end": 25435
@@ -622,7 +622,7 @@
   {
     "rule": "R0000",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-envers/src/main/java/org/hibernate/envers/boot/internal/EnversServiceImpl.java",
+      "file": "hibernate-envers/src/main/java/org/hibernate/envers/boot/internal/EnversServiceImpl.java",
       "line": 170,
       "start": 6850,
       "end": 6936
@@ -632,7 +632,7 @@
   {
     "rule": "R0002",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-envers/src/main/java/org/hibernate/envers/configuration/internal/metadata/CollectionMetadataGenerator.java",
+      "file": "hibernate-envers/src/main/java/org/hibernate/envers/configuration/internal/metadata/CollectionMetadataGenerator.java",
       "line": 749,
       "start": 30092,
       "end": 30118
@@ -642,7 +642,7 @@
   {
     "rule": "R0000",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-envers/src/main/java/org/hibernate/envers/internal/entities/mapper/relation/ListCollectionMapper.java",
+      "file": "hibernate-envers/src/main/java/org/hibernate/envers/internal/entities/mapper/relation/ListCollectionMapper.java",
       "line": 141,
       "start": 4777,
       "end": 4825
@@ -652,7 +652,7 @@
   {
     "rule": "R0000",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-envers/src/main/java/org/hibernate/envers/internal/entities/mapper/relation/ListCollectionMapper.java",
+      "file": "hibernate-envers/src/main/java/org/hibernate/envers/internal/entities/mapper/relation/ListCollectionMapper.java",
       "line": 157,
       "start": 5393,
       "end": 5441
@@ -662,7 +662,7 @@
   {
     "rule": "R0000",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-envers/src/main/java/org/hibernate/envers/internal/reader/AuditReaderImpl.java",
+      "file": "hibernate-envers/src/main/java/org/hibernate/envers/internal/reader/AuditReaderImpl.java",
       "line": 88,
       "start": 2986,
       "end": 2998
@@ -672,7 +672,7 @@
   {
     "rule": "R0000",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-envers/src/main/java/org/hibernate/envers/internal/reader/AuditReaderImpl.java",
+      "file": "hibernate-envers/src/main/java/org/hibernate/envers/internal/reader/AuditReaderImpl.java",
       "line": 137,
       "start": 4632,
       "end": 4644
@@ -682,7 +682,7 @@
   {
     "rule": "R0000",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-envers/src/main/java/org/hibernate/envers/internal/reader/AuditReaderImpl.java",
+      "file": "hibernate-envers/src/main/java/org/hibernate/envers/internal/reader/AuditReaderImpl.java",
       "line": 299,
       "start": 10222,
       "end": 10242
@@ -692,7 +692,7 @@
   {
     "rule": "R0000",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-envers/src/main/java/org/hibernate/envers/query/AuditQueryCreator.java",
+      "file": "hibernate-envers/src/main/java/org/hibernate/envers/query/AuditQueryCreator.java",
       "line": 51,
       "start": 2237,
       "end": 2247
@@ -702,7 +702,7 @@
   {
     "rule": "R0000",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-envers/src/main/java/org/hibernate/envers/query/AuditQueryCreator.java",
+      "file": "hibernate-envers/src/main/java/org/hibernate/envers/query/AuditQueryCreator.java",
       "line": 141,
       "start": 6244,
       "end": 6254
@@ -712,7 +712,7 @@
   {
     "rule": "R0000",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-envers/src/main/java/org/hibernate/envers/query/AuditQueryCreator.java",
+      "file": "hibernate-envers/src/main/java/org/hibernate/envers/query/AuditQueryCreator.java",
       "line": 169,
       "start": 8016,
       "end": 8026
@@ -722,7 +722,7 @@
   {
     "rule": "R0001",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-testing/src/main/java/org/hibernate/testing/jta/JtaAwareConnectionProviderImpl.java",
+      "file": "hibernate-testing/src/main/java/org/hibernate/testing/jta/JtaAwareConnectionProviderImpl.java",
       "line": 53,
       "start": 2403,
       "end": 2429
@@ -732,7 +732,7 @@
   {
     "rule": "R0000",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-testing/src/main/java/org/hibernate/testing/junit4/BaseCoreFunctionalTestCase.java",
+      "file": "hibernate-testing/src/main/java/org/hibernate/testing/junit4/BaseCoreFunctionalTestCase.java",
       "line": 356,
       "start": 11155,
       "end": 11258
@@ -742,7 +742,7 @@
   {
     "rule": "R0000",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/hibernate-orm-master/hibernate-testing/src/main/java/org/hibernate/testing/junit4/BaseNonConfigCoreFunctionalTestCase.java",
+      "file": "hibernate-testing/src/main/java/org/hibernate/testing/junit4/BaseNonConfigCoreFunctionalTestCase.java",
       "line": 456,
       "start": 14433,
       "end": 14536

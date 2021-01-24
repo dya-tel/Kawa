@@ -1,6 +1,7 @@
 package sibwaf.kawa
 
 import spoon.reflect.declaration.CtElement
+import java.nio.file.Path
 
 data class Warning(
     val rule: String,
@@ -8,9 +9,16 @@ data class Warning(
     val message: String
 ) {
 
-    fun wrap(): SerializableWarningWrapper {
+    fun wrap(rootPath: Path): SerializableWarningWrapper {
+        val absoluteRoot = rootPath.toAbsolutePath()
+
+        var filePath = element.position.file.toPath().toAbsolutePath()
+        if (filePath.startsWith(absoluteRoot)) {
+            filePath = absoluteRoot.relativize(filePath)
+        }
+
         val position = PositionSignature(
-            file = element.position.file.absolutePath,
+            file = filePath.toString().replace("\\", "/"),
             line = element.position.line,
             start = element.position.sourceStart,
             end = element.position.sourceEnd

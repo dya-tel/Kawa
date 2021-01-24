@@ -2,7 +2,7 @@
   {
     "rule": "R0000",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/azure-maven-plugins-develop/azure-maven-plugin-lib/src/main/java/com/microsoft/azure/maven/utils/TemplateUtils.java",
+      "file": "azure-maven-plugin-lib/src/main/java/com/microsoft/azure/maven/utils/TemplateUtils.java",
       "line": 40,
       "start": 1363,
       "end": 1454
@@ -12,7 +12,7 @@
   {
     "rule": "R0000",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/azure-maven-plugins-develop/azure-tools-common/src/main/java/com/microsoft/azure/common/utils/IndentUtil.java",
+      "file": "azure-tools-common/src/main/java/com/microsoft/azure/common/utils/IndentUtil.java",
       "line": 22,
       "start": 997,
       "end": 1010

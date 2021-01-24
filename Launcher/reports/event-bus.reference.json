@@ -2,7 +2,7 @@
   {
     "rule": "R0001",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/EventBus-master/EventBus/src/org/greenrobot/eventbus/EventBus.java",
+      "file": "EventBus/src/org/greenrobot/eventbus/EventBus.java",
       "line": 363,
       "start": 15075,
       "end": 15092

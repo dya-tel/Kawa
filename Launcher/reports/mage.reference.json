@@ -2,7 +2,7 @@
   {
     "rule": "R0000",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage.Client/src/main/java/mage/client/cards/CardDraggerGlassPane.java",
+      "file": "Mage.Client/src/main/java/mage/client/cards/CardDraggerGlassPane.java",
       "line": 66,
       "start": 2127,
       "end": 2151
@@ -12,7 +12,7 @@
   {
     "rule": "R0001",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage.Client/src/main/java/mage/client/deckeditor/DeckEditorPanel.java",
+      "file": "Mage.Client/src/main/java/mage/client/deckeditor/DeckEditorPanel.java",
       "line": 717,
       "start": 31420,
       "end": 31434
@@ -22,7 +22,7 @@
   {
     "rule": "R0001",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage.Client/src/main/java/mage/client/deckeditor/DeckEditorPanel.java",
+      "file": "Mage.Client/src/main/java/mage/client/deckeditor/DeckEditorPanel.java",
       "line": 763,
       "start": 33249,
       "end": 33268
@@ -32,7 +32,7 @@
   {
     "rule": "R0001",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage.Client/src/main/java/mage/client/deckeditor/DeckEditorPanel.java",
+      "file": "Mage.Client/src/main/java/mage/client/deckeditor/DeckEditorPanel.java",
       "line": 861,
       "start": 37156,
       "end": 37170
@@ -42,7 +42,7 @@
   {
     "rule": "R0000",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage.Client/src/main/java/mage/client/deckeditor/DeckEditorPanel.java",
+      "file": "Mage.Client/src/main/java/mage/client/deckeditor/DeckEditorPanel.java",
       "line": 1316,
       "start": 63461,
       "end": 63474
@@ -52,7 +52,7 @@
   {
     "rule": "R0000",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage.Client/src/main/java/mage/client/deckeditor/DeckEditorPanel.java",
+      "file": "Mage.Client/src/main/java/mage/client/deckeditor/DeckEditorPanel.java",
       "line": 1377,
       "start": 66419,
       "end": 66432
@@ -62,7 +62,7 @@
   {
     "rule": "R0001",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage.Client/src/main/java/mage/client/deckeditor/DeckEditorPanel.java",
+      "file": "Mage.Client/src/main/java/mage/client/deckeditor/DeckEditorPanel.java",
       "line": 1380,
       "start": 66550,
       "end": 66564
@@ -72,7 +72,7 @@
   {
     "rule": "R0001",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage.Client/src/main/java/mage/client/dialog/ConnectDialog.java",
+      "file": "Mage.Client/src/main/java/mage/client/dialog/ConnectDialog.java",
       "line": 144,
       "start": 6007,
       "end": 6015
@@ -82,7 +82,7 @@
   {
     "rule": "R0002",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage.Client/src/main/java/mage/client/dialog/ConnectDialog.java",
+      "file": "Mage.Client/src/main/java/mage/client/dialog/ConnectDialog.java",
       "line": 145,
       "start": 6036,
       "end": 6143
@@ -92,7 +92,7 @@
   {
     "rule": "R0000",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage.Client/src/main/java/mage/client/dialog/MageDialog.java",
+      "file": "Mage.Client/src/main/java/mage/client/dialog/MageDialog.java",
       "line": 170,
       "start": 6673,
       "end": 6713
@@ -102,7 +102,7 @@
   {
     "rule": "R0000",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage.Client/src/main/java/mage/client/game/PlayerPanelExt.java",
+      "file": "Mage.Client/src/main/java/mage/client/game/PlayerPanelExt.java",
       "line": 348,
       "start": 13259,
       "end": 13317
@@ -112,7 +112,7 @@
   {
     "rule": "R0001",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage.Client/src/main/java/mage/client/util/CardViewEDHPowerLevelComparator.java",
+      "file": "Mage.Client/src/main/java/mage/client/util/CardViewEDHPowerLevelComparator.java",
       "line": 227,
       "start": 8553,
       "end": 8557
@@ -122,7 +122,7 @@
   {
     "rule": "R0002",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage.Client/src/main/java/mage/client/util/CardViewEDHPowerLevelComparator.java",
+      "file": "Mage.Client/src/main/java/mage/client/util/CardViewEDHPowerLevelComparator.java",
       "line": 228,
       "start": 8574,
       "end": 8614
@@ -132,7 +132,7 @@
   {
     "rule": "R0001",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage.Client/src/main/java/org/mage/card/arcane/ManaSymbols.java",
+      "file": "Mage.Client/src/main/java/org/mage/card/arcane/ManaSymbols.java",
       "line": 280,
       "start": 11888,
       "end": 11947
@@ -142,7 +142,7 @@
   {
     "rule": "R0002",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage.Client/src/main/java/org/mage/card/arcane/ManaSymbols.java",
+      "file": "Mage.Client/src/main/java/org/mage/card/arcane/ManaSymbols.java",
       "line": 281,
       "start": 11964,
       "end": 12037
@@ -152,7 +152,7 @@
   {
     "rule": "R0001",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage.Client/src/main/java/org/mage/card/arcane/ManaSymbols.java",
+      "file": "Mage.Client/src/main/java/org/mage/card/arcane/ManaSymbols.java",
       "line": 295,
       "start": 12378,
       "end": 12386
@@ -162,7 +162,7 @@
   {
     "rule": "R0002",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage.Client/src/main/java/org/mage/card/arcane/ManaSymbols.java",
+      "file": "Mage.Client/src/main/java/org/mage/card/arcane/ManaSymbols.java",
       "line": 297,
       "start": 12465,
       "end": 12515
@@ -172,7 +172,7 @@
   {
     "rule": "R0001",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage.Client/src/main/java/org/mage/card/arcane/ManaSymbols.java",
+      "file": "Mage.Client/src/main/java/org/mage/card/arcane/ManaSymbols.java",
       "line": 341,
       "start": 14411,
       "end": 14451
@@ -182,7 +182,7 @@
   {
     "rule": "R0002",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage.Client/src/main/java/org/mage/card/arcane/ManaSymbols.java",
+      "file": "Mage.Client/src/main/java/org/mage/card/arcane/ManaSymbols.java",
       "line": 347,
       "start": 14691,
       "end": 15068
@@ -192,7 +192,7 @@
   {
     "rule": "R0000",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage.Client/src/main/java/org/mage/card/arcane/ModernCardRenderer.java",
+      "file": "Mage.Client/src/main/java/org/mage/card/arcane/ModernCardRenderer.java",
       "line": 70,
       "start": 2401,
       "end": 2414
@@ -202,7 +202,7 @@
   {
     "rule": "R0003",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage.Client/src/main/java/org/mage/plugins/card/images/ImageCache.java",
+      "file": "Mage.Client/src/main/java/org/mage/plugins/card/images/ImageCache.java",
       "line": 355,
       "start": 15289,
       "end": 15293
@@ -212,7 +212,7 @@
   {
     "rule": "R0001",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage.Client/src/main/java/org/mage/plugins/theme/ThemePluginImpl.java",
+      "file": "Mage.Client/src/main/java/org/mage/plugins/theme/ThemePluginImpl.java",
       "line": 164,
       "start": 6431,
       "end": 6439
@@ -222,7 +222,7 @@
   {
     "rule": "R0000",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage.Common/src/main/java/mage/utils/DeckBuilder.java",
+      "file": "Mage.Common/src/main/java/mage/utils/DeckBuilder.java",
       "line": 202,
       "start": 7621,
       "end": 7640
@@ -232,7 +232,7 @@
   {
     "rule": "R0000",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage.Server.Plugins/Mage.Player.AI/src/main/java/mage/player/ai/ComputerPlayer.java",
+      "file": "Mage.Server.Plugins/Mage.Player.AI/src/main/java/mage/player/ai/ComputerPlayer.java",
       "line": 695,
       "start": 32953,
       "end": 32972
@@ -242,7 +242,7 @@
   {
     "rule": "R0000",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage.Server.Plugins/Mage.Player.AI/src/main/java/mage/player/ai/ComputerPlayer.java",
+      "file": "Mage.Server.Plugins/Mage.Player.AI/src/main/java/mage/player/ai/ComputerPlayer.java",
       "line": 1552,
       "start": 74778,
       "end": 74813
@@ -252,7 +252,7 @@
   {
     "rule": "R0000",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage.Server/src/main/java/mage/server/game/GameController.java",
+      "file": "Mage.Server/src/main/java/mage/server/game/GameController.java",
       "line": 870,
       "start": 41309,
       "end": 41324
@@ -262,7 +262,7 @@
   {
     "rule": "R0000",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage.Server/src/main/java/mage/server/util/SystemUtil.java",
+      "file": "Mage.Server/src/main/java/mage/server/util/SystemUtil.java",
       "line": 382,
       "start": 14383,
       "end": 14404
@@ -272,7 +272,7 @@
   {
     "rule": "R0001",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage.Server/src/main/java/mage/server/util/SystemUtil.java",
+      "file": "Mage.Server/src/main/java/mage/server/util/SystemUtil.java",
       "line": 401,
       "start": 15255,
       "end": 15276
@@ -282,7 +282,7 @@
   {
     "rule": "R0001",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage.Server/src/main/java/mage/server/util/SystemUtil.java",
+      "file": "Mage.Server/src/main/java/mage/server/util/SystemUtil.java",
       "line": 408,
       "start": 15609,
       "end": 15630
@@ -292,7 +292,7 @@
   {
     "rule": "R0001",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage.Server/src/main/java/mage/server/util/SystemUtil.java",
+      "file": "Mage.Server/src/main/java/mage/server/util/SystemUtil.java",
       "line": 417,
       "start": 16149,
       "end": 16170
@@ -302,7 +302,7 @@
   {
     "rule": "R0000",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage/src/main/java/mage/abilities/condition/common/SourceHasCounterCondition.java",
+      "file": "Mage/src/main/java/mage/abilities/condition/common/SourceHasCounterCondition.java",
       "line": 53,
       "start": 1445,
       "end": 1471
@@ -312,7 +312,7 @@
   {
     "rule": "R0000",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage/src/main/java/mage/abilities/condition/common/TargetHasCounterCondition.java",
+      "file": "Mage/src/main/java/mage/abilities/condition/common/TargetHasCounterCondition.java",
       "line": 53,
       "start": 1449,
       "end": 1475
@@ -322,7 +322,7 @@
   {
     "rule": "R0001",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage/src/main/java/mage/abilities/effects/common/continuous/ExchangeControlTargetEffect.java",
+      "file": "Mage/src/main/java/mage/abilities/effects/common/continuous/ExchangeControlTargetEffect.java",
       "line": 85,
       "start": 3039,
       "end": 3056
@@ -332,7 +332,7 @@
   {
     "rule": "R0001",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage/src/main/java/mage/abilities/effects/common/continuous/ExchangeControlTargetEffect.java",
+      "file": "Mage/src/main/java/mage/abilities/effects/common/continuous/ExchangeControlTargetEffect.java",
       "line": 93,
       "start": 3356,
       "end": 3373
@@ -342,7 +342,7 @@
   {
     "rule": "R0000",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage/src/main/java/mage/abilities/effects/common/cost/PlanarDieRollCostIncreasingEffect.java",
+      "file": "Mage/src/main/java/mage/abilities/effects/common/cost/PlanarDieRollCostIncreasingEffect.java",
       "line": 39,
       "start": 1261,
       "end": 1280
@@ -352,7 +352,7 @@
   {
     "rule": "R0000",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage/src/main/java/mage/cards/CardImpl.java",
+      "file": "Mage/src/main/java/mage/cards/CardImpl.java",
       "line": 843,
       "start": 32128,
       "end": 32152
@@ -362,7 +362,7 @@
   {
     "rule": "R0000",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage/src/main/java/mage/game/GameImpl.java",
+      "file": "Mage/src/main/java/mage/game/GameImpl.java",
       "line": 803,
       "start": 27111,
       "end": 27131
@@ -372,7 +372,7 @@
   {
     "rule": "R0000",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage/src/main/java/mage/game/GameImpl.java",
+      "file": "Mage/src/main/java/mage/game/GameImpl.java",
       "line": 1108,
       "start": 39496,
       "end": 39535
@@ -382,7 +382,7 @@
   {
     "rule": "R0000",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage/src/main/java/mage/game/GameImpl.java",
+      "file": "Mage/src/main/java/mage/game/GameImpl.java",
       "line": 2083,
       "start": 83464,
       "end": 83488
@@ -392,7 +392,7 @@
   {
     "rule": "R0000",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage/src/main/java/mage/game/GameImpl.java",
+      "file": "Mage/src/main/java/mage/game/GameImpl.java",
       "line": 2736,
       "start": 113394,
       "end": 113432
@@ -402,7 +402,7 @@
   {
     "rule": "R0000",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage/src/main/java/mage/game/combat/Combat.java",
+      "file": "Mage/src/main/java/mage/game/combat/Combat.java",
       "line": 1416,
       "start": 75562,
       "end": 75608
@@ -412,7 +412,7 @@
   {
     "rule": "R0000",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage/src/main/java/mage/game/combat/CombatGroup.java",
+      "file": "Mage/src/main/java/mage/game/combat/CombatGroup.java",
       "line": 834,
       "start": 36417,
       "end": 36444
@@ -422,7 +422,7 @@
   {
     "rule": "R0000",
     "position": {
-      "file": "/home/sibwaf/Workspace/Default/Flow/Launcher/mage-master/Mage/src/main/java/mage/util/functions/CopyTokenFunction.java",
+      "file": "Mage/src/main/java/mage/util/functions/CopyTokenFunction.java",
       "line": 65,
       "start": 2566,
       "end": 2584

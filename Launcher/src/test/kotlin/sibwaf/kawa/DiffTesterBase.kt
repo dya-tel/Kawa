@@ -9,20 +9,22 @@ abstract class DiffTesterBase {
 
     val baseProjectPath: Path = Paths.get("projects")
 
+    abstract val rootPath: Path
     abstract val model: ModelLoader
 
     @Test fun test() {
-        val report = Analyzer(model, 4).analyze().map { it.wrap() }
+        val report = Analyzer(model, 4).analyze().map { it.wrap(rootPath) }
 
         val reportManager = ReportManager()
         reportManager.saveReport(model.name, report)
         val diff = reportManager.getDiffWithReference(model.name, report)
 
         if (diff.isNotEmpty()) {
+            val root = Paths.get(model.model.root)
             val sortedDiff = diff.toSortedMap(ReportManager.WARNING_COMPARATOR)
             for ((warning, type) in sortedDiff) {
                 with(warning) {
-                    System.err.println("[$rule] $type $message. ${position.file}:${position.line}")
+                    System.err.println("[$rule] $type $message. ${root.resolve(position.file)}:${position.line}")
                 }
             }
 
