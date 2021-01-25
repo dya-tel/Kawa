@@ -34,6 +34,7 @@ import sibwaf.kawa.analysis.DelegatingStatementAnalyzer
 import sibwaf.kawa.analysis.StatementAnalyzer
 import sibwaf.kawa.emulation.BasicMethodEmulator
 import sibwaf.kawa.emulation.BlackHoleMethodTrace
+import sibwaf.kawa.emulation.InliningMethodEmulator
 import spoon.reflect.code.CtStatement
 import spoon.reflect.declaration.CtExecutable
 import spoon.reflect.declaration.CtType
@@ -91,7 +92,7 @@ class MethodFlowAnalyzer private constructor() {
                     val debugPrinter = launch {
                         while (log.isDebugEnabled && isActive) {
                             val time = (System.currentTimeMillis() - startTime) / 1000
-                            log.debug("${analyzer.cache.size}/${methods.size} analyzed, $time seconds)")
+                            log.debug("${analyzer.cache.size}/${methods.size} analyzed, $time seconds")
                             delay(1000)
                         }
                     }
@@ -146,7 +147,9 @@ class MethodFlowAnalyzer private constructor() {
 
     private val cache = Collections.synchronizedMap(IdentityHashMap<CtExecutable<*>, MethodFlow>())
     private val emulator = BasicMethodEmulator(cache)
+
     private val interproceduralEmulator = emulator
+//    private val interproceduralEmulator = InliningMethodEmulator()
 
     private val rootState = AnalyzerState(
         annotation = EmptyFlow,
