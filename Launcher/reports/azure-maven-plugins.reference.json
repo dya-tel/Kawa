@@ -4,8 +4,8 @@
     "position": {
       "file": "azure-maven-plugin-lib/src/main/java/com/microsoft/azure/maven/utils/TemplateUtils.java",
       "line": 40,
-      "start": 1363,
-      "end": 1454
+      "start": 1402,
+      "end": 1493
     },
     "message": "Possible null dereference of \u0027evalPlainText()\u0027"
   },
@@ -14,8 +14,8 @@
     "position": {
       "file": "azure-tools-common/src/main/java/com/microsoft/azure/common/utils/IndentUtil.java",
       "line": 22,
-      "start": 997,
-      "end": 1010
+      "start": 1018,
+      "end": 1031
     },
     "message": "Possible null dereference of \u0027line\u0027"
   }

@@ -4,8 +4,8 @@
     "position": {
       "file": "client/src/main/java/org/asynchttpclient/netty/channel/NettyConnectListener.java",
       "line": 178,
-      "start": 6167,
-      "end": 6184
+      "start": 6344,
+      "end": 6361
     },
     "message": "Possible null dereference of \u0027cause\u0027"
   },
@@ -14,8 +14,8 @@
     "position": {
       "file": "client/src/main/java/org/asynchttpclient/ntlm/NtlmEngine.java",
       "line": 151,
-      "start": 6783,
-      "end": 6816
+      "start": 6933,
+      "end": 6966
     },
     "message": "Possible null dereference of \u0027stripDotSuffix()\u0027"
   },
@@ -24,8 +24,8 @@
     "position": {
       "file": "client/src/main/java/org/asynchttpclient/ntlm/NtlmEngine.java",
       "line": 156,
-      "start": 6971,
-      "end": 7006
+      "start": 7126,
+      "end": 7161
     },
     "message": "Possible null dereference of \u0027stripDotSuffix()\u0027"
   },
@@ -34,8 +34,8 @@
     "position": {
       "file": "client/src/main/java/org/asynchttpclient/spnego/SpnegoEngine.java",
       "line": 221,
-      "start": 9045,
-      "end": 9057
+      "start": 9265,
+      "end": 9277
     },
     "message": "Condition is always true: \u0027token \u003d\u003d null\u0027"
   }

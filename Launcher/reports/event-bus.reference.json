@@ -4,8 +4,8 @@
     "position": {
       "file": "EventBus/src/org/greenrobot/eventbus/EventBus.java",
       "line": 363,
-      "start": 15075,
-      "end": 15092
+      "start": 15437,
+      "end": 15454
     },
     "message": "Condition is always true: \u0027eventTypes !\u003d null\u0027"
   }

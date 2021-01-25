@@ -4,8 +4,8 @@
     "position": {
       "file": "hibernate-core/src/main/java/org/hibernate/boot/internal/InFlightMetadataCollectorImpl.java",
       "line": 802,
-      "start": 27559,
-      "end": 27580
+      "start": 28350,
+      "end": 28371
     },
     "message": "Possible null dereference of \u0027logicalName\u0027"
   },
@@ -14,8 +14,8 @@
     "position": {
       "file": "hibernate-core/src/main/java/org/hibernate/boot/registry/classloading/internal/ClassLoaderServiceImpl.java",
       "line": 163,
-      "start": 5592,
-      "end": 5610
+      "start": 5754,
+      "end": 5772
     },
     "message": "Possible null dereference of \u0027name\u0027"
   },
@@ -24,8 +24,8 @@
     "position": {
       "file": "hibernate-core/src/main/java/org/hibernate/boot/registry/classloading/internal/ClassLoaderServiceImpl.java",
       "line": 202,
-      "start": 6591,
-      "end": 6609
+      "start": 6792,
+      "end": 6810
     },
     "message": "Possible null dereference of \u0027name\u0027"
   },
@@ -34,8 +34,8 @@
     "position": {
       "file": "hibernate-core/src/main/java/org/hibernate/bytecode/internal/javassist/BytecodeProviderImpl.java",
       "line": 50,
-      "start": 1633,
-      "end": 1649
+      "start": 1682,
+      "end": 1698
     },
     "message": "Condition is always false: \u0027fastClass \u003d\u003d null\u0027"
   },
@@ -44,8 +44,8 @@
     "position": {
       "file": "hibernate-core/src/main/java/org/hibernate/bytecode/internal/javassist/BytecodeProviderImpl.java",
       "line": 51,
-      "start": 1660,
-      "end": 1679
+      "start": 1710,
+      "end": 1729
     },
     "message": "Unreachable statement"
   },
@@ -53,9 +53,9 @@
     "rule": "R0000",
     "position": {
       "file": "hibernate-core/src/main/java/org/hibernate/cfg/AnnotationBinder.java",
-      "line": 326,
-      "start": 12704,
-      "end": 12718
+      "line": 320,
+      "start": 13016,
+      "end": 13030
     },
     "message": "Possible null dereference of \u0027idGen\u0027"
   },
@@ -63,9 +63,9 @@
     "rule": "R0000",
     "position": {
       "file": "hibernate-core/src/main/java/org/hibernate/cfg/AnnotationBinder.java",
-      "line": 648,
-      "start": 24499,
-      "end": 24525
+      "line": 650,
+      "start": 24938,
+      "end": 24964
     },
     "message": "Possible null dereference of \u0027superEntity\u0027"
   },
@@ -73,9 +73,9 @@
     "rule": "R0000",
     "position": {
       "file": "hibernate-core/src/main/java/org/hibernate/cfg/AnnotationBinder.java",
-      "line": 2248,
-      "start": 84692,
-      "end": 84729
+      "line": 2245,
+      "start": 87030,
+      "end": 87067
     },
     "message": "Possible null dereference of \u0027mapsIdProperty\u0027"
   },
@@ -83,9 +83,9 @@
     "rule": "R0000",
     "position": {
       "file": "hibernate-core/src/main/java/org/hibernate/cfg/AnnotationBinder.java",
-      "line": 2298,
-      "start": 86400,
-      "end": 86437
+      "line": 2295,
+      "start": 88788,
+      "end": 88825
     },
     "message": "Possible null dereference of \u0027mapsIdProperty\u0027"
   },
@@ -93,9 +93,9 @@
     "rule": "R0000",
     "position": {
       "file": "hibernate-core/src/main/java/org/hibernate/cfg/AnnotationBinder.java",
-      "line": 2311,
-      "start": 86993,
-      "end": 87024
+      "line": 2308,
+      "start": 89394,
+      "end": 89425
     },
     "message": "Possible null dereference of \u0027mapsIdProperty\u0027"
   },
@@ -103,9 +103,9 @@
     "rule": "R0000",
     "position": {
       "file": "hibernate-core/src/main/java/org/hibernate/cfg/AnnotationBinder.java",
-      "line": 2544,
-      "start": 94829,
-      "end": 94848
+      "line": 2541,
+      "start": 97463,
+      "end": 97482
     },
     "message": "Possible null dereference of \u0027assocTable\u0027"
   },
@@ -113,9 +113,9 @@
     "rule": "R0000",
     "position": {
       "file": "hibernate-core/src/main/java/org/hibernate/cfg/AnnotationBinder.java",
-      "line": 3484,
-      "start": 127694,
-      "end": 127714
+      "line": 3487,
+      "start": 131719,
+      "end": 131739
     },
     "message": "Possible null dereference of \u0027idGenerator\u0027"
   },
@@ -123,9 +123,9 @@
     "rule": "R0000",
     "position": {
       "file": "hibernate-core/src/main/java/org/hibernate/cfg/AnnotationBinder.java",
-      "line": 3499,
-      "start": 128159,
-      "end": 128179
+      "line": 3502,
+      "start": 132199,
+      "end": 132219
     },
     "message": "Possible null dereference of \u0027idGenerator\u0027"
   },
@@ -133,9 +133,9 @@
     "rule": "R0000",
     "position": {
       "file": "hibernate-core/src/main/java/org/hibernate/cfg/AnnotationBinder.java",
-      "line": 3511,
-      "start": 128627,
-      "end": 128641
+      "line": 3514,
+      "start": 132679,
+      "end": 132693
     },
     "message": "Possible null dereference of \u0027idGen\u0027"
   },
@@ -143,9 +143,9 @@
     "rule": "R0000",
     "position": {
       "file": "hibernate-core/src/main/java/org/hibernate/cfg/AnnotationBinder.java",
-      "line": 3517,
-      "start": 128835,
-      "end": 128849
+      "line": 3520,
+      "start": 132893,
+      "end": 132907
     },
     "message": "Possible null dereference of \u0027idGen\u0027"
   },
@@ -153,9 +153,9 @@
     "rule": "R0000",
     "position": {
       "file": "hibernate-core/src/main/java/org/hibernate/cfg/AnnotationBinder.java",
-      "line": 3522,
-      "start": 129042,
-      "end": 129056
+      "line": 3525,
+      "start": 133105,
+      "end": 133119
     },
     "message": "Possible null dereference of \u0027idGen\u0027"
   },
@@ -164,8 +164,8 @@
     "position": {
       "file": "hibernate-core/src/main/java/org/hibernate/cfg/AttributeConverterDefinition.java",
       "line": 166,
-      "start": 6576,
-      "end": 6603
+      "start": 6741,
+      "end": 6768
     },
     "message": "Possible null dereference of \u0027clazz\u0027"
   },
@@ -174,8 +174,8 @@
     "position": {
       "file": "hibernate-core/src/main/java/org/hibernate/cfg/AttributeConverterDefinition.java",
       "line": 224,
-      "start": 8479,
-      "end": 8503
+      "start": 8702,
+      "end": 8726
     },
     "message": "Possible null dereference of \u0027clazz\u0027"
   },
@@ -183,9 +183,9 @@
     "rule": "R0000",
     "position": {
       "file": "hibernate-core/src/main/java/org/hibernate/cfg/BinderHelper.java",
-      "line": 269,
-      "start": 11157,
-      "end": 11187
+      "line": 268,
+      "start": 11350,
+      "end": 11380
     },
     "message": "Possible null dereference of \u0027associatedClass\u0027"
   },
@@ -194,8 +194,8 @@
     "position": {
       "file": "hibernate-core/src/main/java/org/hibernate/cfg/InheritanceState.java",
       "line": 278,
-      "start": 8981,
-      "end": 9006
+      "start": 9258,
+      "end": 9283
     },
     "message": "Possible null dereference of \u0027superClass\u0027"
   },
@@ -203,9 +203,9 @@
     "rule": "R0001",
     "position": {
       "file": "hibernate-core/src/main/java/org/hibernate/cfg/OneToOneSecondPass.java",
-      "line": 131,
-      "start": 4820,
-      "end": 4829
+      "line": 132,
+      "start": 4972,
+      "end": 4981
     },
     "message": "Condition is always true: \u0027rightOrder\u0027"
   },
@@ -213,9 +213,9 @@
     "rule": "R0000",
     "position": {
       "file": "hibernate-core/src/main/java/org/hibernate/cfg/annotations/CollectionBinder.java",
-      "line": 1367,
-      "start": 49212,
-      "end": 49280
+      "line": 1386,
+      "start": 51541,
+      "end": 51609
     },
     "message": "Possible null dereference of \u0027collectionEntity\u0027"
   },
@@ -224,8 +224,8 @@
     "position": {
       "file": "hibernate-core/src/main/java/org/hibernate/cfg/annotations/TableBinder.java",
       "line": 554,
-      "start": 15736,
-      "end": 15766
+      "start": 16289,
+      "end": 16319
     },
     "message": "Possible null dereference of \u0027associatedClass\u0027"
   },
@@ -234,8 +234,8 @@
     "position": {
       "file": "hibernate-core/src/main/java/org/hibernate/context/internal/ManagedSessionContext.java",
       "line": 85,
-      "start": 3186,
-      "end": 3247
+      "start": 3270,
+      "end": 3331
     },
     "message": "Possible null dereference of \u0027sessionMap()\u0027"
   },
@@ -243,9 +243,9 @@
     "rule": "R0001",
     "position": {
       "file": "hibernate-core/src/main/java/org/hibernate/dialect/Dialect.java",
-      "line": 379,
-      "start": 16992,
-      "end": 17005
+      "line": 384,
+      "start": 17606,
+      "end": 17619
     },
     "message": "Condition is always false: \u0027result \u003d\u003d null\u0027"
   },
@@ -253,9 +253,9 @@
     "rule": "R0002",
     "position": {
       "file": "hibernate-core/src/main/java/org/hibernate/dialect/Dialect.java",
-      "line": 380,
-      "start": 17014,
-      "end": 17100
+      "line": 385,
+      "start": 17629,
+      "end": 17715
     },
     "message": "Unreachable statement"
   },
@@ -263,9 +263,9 @@
     "rule": "R0001",
     "position": {
       "file": "hibernate-core/src/main/java/org/hibernate/dialect/Dialect.java",
-      "line": 704,
-      "start": 28574,
-      "end": 28587
+      "line": 709,
+      "start": 29513,
+      "end": 29526
     },
     "message": "Condition is always false: \u0027result \u003d\u003d null\u0027"
   },
@@ -273,9 +273,9 @@
     "rule": "R0002",
     "position": {
       "file": "hibernate-core/src/main/java/org/hibernate/dialect/Dialect.java",
-      "line": 705,
-      "start": 28596,
-      "end": 28688
+      "line": 710,
+      "start": 29536,
+      "end": 29628
     },
     "message": "Unreachable statement"
   },
@@ -284,8 +284,8 @@
     "position": {
       "file": "hibernate-core/src/main/java/org/hibernate/engine/internal/Collections.java",
       "line": 72,
-      "start": 2549,
-      "end": 2589
+      "start": 2620,
+      "end": 2660
     },
     "message": "Possible null dereference of \u0027loadedPersister\u0027"
   },
@@ -294,8 +294,8 @@
     "position": {
       "file": "hibernate-core/src/main/java/org/hibernate/engine/internal/EntityEntryContext.java",
       "line": 123,
-      "start": 4896,
-      "end": 4952
+      "start": 5018,
+      "end": 5074
     },
     "message": "Possible null dereference of \u0027managedEntity\u0027"
   },
@@ -304,8 +304,8 @@
     "position": {
       "file": "hibernate-core/src/main/java/org/hibernate/engine/jdbc/internal/JdbcCoordinatorImpl.java",
       "line": 347,
-      "start": 10163,
-      "end": 10219
+      "start": 10509,
+      "end": 10565
     },
     "message": "Possible null dereference of \u0027sqlExceptionHelper\u0027"
   },
@@ -314,8 +314,8 @@
     "position": {
       "file": "hibernate-core/src/main/java/org/hibernate/hql/internal/ast/QueryTranslatorImpl.java",
       "line": 566,
-      "start": 18194,
-      "end": 18241
+      "start": 18760,
+      "end": 18807
     },
     "message": "Possible null dereference of \u0027getSelectClause()\u0027"
   },
@@ -324,8 +324,8 @@
     "position": {
       "file": "hibernate-core/src/main/java/org/hibernate/hql/internal/ast/tree/AbstractRestrictableStatement.java",
       "line": 53,
-      "start": 1776,
-      "end": 1798
+      "start": 1828,
+      "end": 1850
     },
     "message": "Possible null dereference of \u0027parent\u0027"
   },
@@ -333,9 +333,9 @@
     "rule": "R0000",
     "position": {
       "file": "hibernate-core/src/main/java/org/hibernate/hql/internal/ast/tree/DotNode.java",
-      "line": 551,
-      "start": 20357,
-      "end": 20381
+      "line": 552,
+      "start": 21029,
+      "end": 21053
     },
     "message": "Possible null dereference of \u0027elem\u0027"
   },
@@ -344,8 +344,8 @@
     "position": {
       "file": "hibernate-core/src/main/java/org/hibernate/hql/internal/ast/tree/FromElementFactory.java",
       "line": 150,
-      "start": 5087,
-      "end": 5276
+      "start": 5236,
+      "end": 5432
     },
     "message": "Possible null dereference of \u0027pathNode\u0027"
   },
@@ -354,8 +354,8 @@
     "position": {
       "file": "hibernate-core/src/main/java/org/hibernate/hql/internal/ast/tree/QueryNode.java",
       "line": 89,
-      "start": 2949,
-      "end": 2976
+      "start": 3037,
+      "end": 3064
     },
     "message": "Possible null dereference of \u0027prevSibling\u0027"
   },
@@ -364,8 +364,8 @@
     "position": {
       "file": "hibernate-core/src/main/java/org/hibernate/hql/internal/ast/tree/QueryNode.java",
       "line": 151,
-      "start": 4068,
-      "end": 4134
+      "start": 4218,
+      "end": 4284
     },
     "message": "Possible null dereference of \u0027getSelectClause()\u0027"
   },
@@ -374,8 +374,8 @@
     "position": {
       "file": "hibernate-core/src/main/java/org/hibernate/hql/internal/ast/util/ASTUtil.java",
       "line": 315,
-      "start": 8481,
-      "end": 8527
+      "start": 8795,
+      "end": 8841
     },
     "message": "Possible null dereference of \u0027getLastChild()\u0027"
   },
@@ -384,8 +384,8 @@
     "position": {
       "file": "hibernate-core/src/main/java/org/hibernate/hql/internal/ast/util/JoinProcessor.java",
       "line": 162,
-      "start": 5924,
-      "end": 5971
+      "start": 6085,
+      "end": 6132
     },
     "message": "Possible null dereference of \u0027getSelectClause()\u0027"
   },
@@ -394,8 +394,8 @@
     "position": {
       "file": "hibernate-core/src/main/java/org/hibernate/hql/internal/ast/util/SyntheticAndFactory.java",
       "line": 154,
-      "start": 5154,
-      "end": 5181
+      "start": 5307,
+      "end": 5334
     },
     "message": "Possible null dereference of \u0027whereFragment\u0027"
   },
@@ -403,9 +403,9 @@
     "rule": "R0000",
     "position": {
       "file": "hibernate-core/src/main/java/org/hibernate/internal/SessionImpl.java",
-      "line": 1735,
-      "start": 57452,
-      "end": 57477
+      "line": 1734,
+      "start": 59126,
+      "end": 59151
     },
     "message": "Possible null dereference of \u0027entry\u0027"
   },
@@ -413,9 +413,9 @@
     "rule": "R0003",
     "position": {
       "file": "hibernate-core/src/main/java/org/hibernate/internal/SessionImpl.java",
-      "line": 3721,
-      "start": 115996,
-      "end": 116000
+      "line": 3720,
+      "start": 119595,
+      "end": 119599
     },
     "message": "The returned value is always null: \u0027named\u0027"
   },
@@ -424,8 +424,8 @@
     "position": {
       "file": "hibernate-core/src/main/java/org/hibernate/internal/util/ReflectHelper.java",
       "line": 468,
-      "start": 14875,
-      "end": 14898
+      "start": 15342,
+      "end": 15365
     },
     "message": "Possible null dereference of \u0027containerClass\u0027"
   },
@@ -434,8 +434,8 @@
     "position": {
       "file": "hibernate-core/src/main/java/org/hibernate/internal/util/collections/ConcurrentReferenceHashMap.java",
       "line": 857,
-      "start": 26536,
-      "end": 26542
+      "start": 27392,
+      "end": 27398
     },
     "message": "Possible null dereference of \u0027p\u0027"
   },
@@ -444,8 +444,8 @@
     "position": {
       "file": "hibernate-core/src/main/java/org/hibernate/loader/criteria/CriteriaJoinWalker.java",
       "line": 278,
-      "start": 8980,
-      "end": 9001
+      "start": 9257,
+      "end": 9278
     },
     "message": "Possible null dereference of \u0027subcriteria\u0027"
   },
@@ -454,8 +454,8 @@
     "position": {
       "file": "hibernate-core/src/main/java/org/hibernate/metamodel/internal/AttributeFactory.java",
       "line": 183,
-      "start": 7403,
-      "end": 7437
+      "start": 7566,
+      "end": 7600
     },
     "message": "Possible null dereference of \u0027attributeMetadata\u0027"
   },
@@ -464,8 +464,8 @@
     "position": {
       "file": "hibernate-core/src/main/java/org/hibernate/metamodel/internal/AttributeFactory.java",
       "line": 213,
-      "start": 8405,
-      "end": 8445
+      "start": 8598,
+      "end": 8638
     },
     "message": "Possible null dereference of \u0027attributeMetadata\u0027"
   },
@@ -474,18 +474,28 @@
     "position": {
       "file": "hibernate-core/src/main/java/org/hibernate/persister/collection/AbstractCollectionPersister.java",
       "line": 1566,
-      "start": 50051,
-      "end": 50060
+      "start": 51616,
+      "end": 51625
     },
     "message": "Condition is always true: \u0027st \u003d\u003d null\u0027"
   },
   {
     "rule": "R0000",
     "position": {
+      "file": "hibernate-core/src/main/java/org/hibernate/persister/entity/AbstractEntityPersister.java",
+      "line": 2475,
+      "start": 89479,
+      "end": 89570
+    },
+    "message": "Possible null dereference of \u0027getAppropriateUniqueKeyLoader()\u0027"
+  },
+  {
+    "rule": "R0000",
+    "position": {
       "file": "hibernate-core/src/main/java/org/hibernate/query/criteria/internal/expression/LiteralExpression.java",
       "line": 84,
-      "start": 2820,
-      "end": 2914
+      "start": 2903,
+      "end": 2997
     },
     "message": "Possible null dereference of \u0027determineAppropriateHandler()\u0027"
   },
@@ -494,8 +504,8 @@
     "position": {
       "file": "hibernate-core/src/main/java/org/hibernate/query/criteria/internal/expression/LiteralExpression.java",
       "line": 104,
-      "start": 3463,
-      "end": 3562
+      "start": 3566,
+      "end": 3665
     },
     "message": "Possible null dereference of \u0027determineAppropriateHandler()\u0027"
   },
@@ -504,8 +514,8 @@
     "position": {
       "file": "hibernate-core/src/main/java/org/hibernate/query/spi/StreamDecorator.java",
       "line": 319,
-      "start": 7623,
-      "end": 7746
+      "start": 7940,
+      "end": 8065
     },
     "message": "Possible null dereference of \u0027getMethod()\u0027"
   },
@@ -514,8 +524,8 @@
     "position": {
       "file": "hibernate-core/src/main/java/org/hibernate/query/spi/StreamDecorator.java",
       "line": 332,
-      "start": 8047,
-      "end": 8170
+      "start": 8377,
+      "end": 8502
     },
     "message": "Possible null dereference of \u0027getMethod()\u0027"
   },
@@ -524,8 +534,8 @@
     "position": {
       "file": "hibernate-core/src/main/java/org/hibernate/sql/Template.java",
       "line": 161,
-      "start": 5784,
-      "end": 5813
+      "start": 5944,
+      "end": 5973
     },
     "message": "Possible null dereference of \u0027token\u0027"
   },
@@ -534,8 +544,8 @@
     "position": {
       "file": "hibernate-core/src/main/java/org/hibernate/sql/Template.java",
       "line": 295,
-      "start": 9923,
-      "end": 9936
+      "start": 10216,
+      "end": 10229
     },
     "message": "Condition is always false: \u0027afterFromTable\u0027"
   },
@@ -544,8 +554,8 @@
     "position": {
       "file": "hibernate-core/src/main/java/org/hibernate/sql/Template.java",
       "line": 296,
-      "start": 9946,
-      "end": 10010
+      "start": 10240,
+      "end": 10306
     },
     "message": "Unreachable statement"
   },
@@ -554,8 +564,8 @@
     "position": {
       "file": "hibernate-core/src/main/java/org/hibernate/sql/Template.java",
       "line": 297,
-      "start": 9982,
-      "end": 10004
+      "start": 10277,
+      "end": 10299
     },
     "message": "Unreachable statement"
   },
@@ -564,8 +574,8 @@
     "position": {
       "file": "hibernate-core/src/main/java/org/hibernate/stat/internal/StatisticsImpl.java",
       "line": 755,
-      "start": 21949,
-      "end": 22002
+      "start": 22703,
+      "end": 22756
     },
     "message": "Possible null dereference of \u0027getQueryRegionStats()\u0027"
   },
@@ -574,8 +584,8 @@
     "position": {
       "file": "hibernate-core/src/main/java/org/hibernate/stat/internal/StatisticsImpl.java",
       "line": 768,
-      "start": 22278,
-      "end": 22332
+      "start": 23045,
+      "end": 23099
     },
     "message": "Possible null dereference of \u0027getQueryRegionStats()\u0027"
   },
@@ -584,8 +594,8 @@
     "position": {
       "file": "hibernate-core/src/main/java/org/hibernate/stat/internal/StatisticsImpl.java",
       "line": 781,
-      "start": 22606,
-      "end": 22659
+      "start": 23386,
+      "end": 23439
     },
     "message": "Possible null dereference of \u0027getQueryRegionStats()\u0027"
   },
@@ -594,8 +604,8 @@
     "position": {
       "file": "hibernate-core/src/main/java/org/hibernate/tool/schema/extract/internal/InformationExtractorJdbcDatabaseMetaDataImpl.java",
       "line": 751,
-      "start": 22350,
-      "end": 22375
+      "start": 23100,
+      "end": 23125
     },
     "message": "Possible null dereference of \u0027columnIdentifier\u0027"
   },
@@ -604,8 +614,8 @@
     "position": {
       "file": "hibernate-core/src/main/java/org/hibernate/tool/schema/extract/internal/InformationExtractorJdbcDatabaseMetaDataImpl.java",
       "line": 752,
-      "start": 22386,
-      "end": 22410
+      "start": 23137,
+      "end": 23161
     },
     "message": "Possible null dereference of \u0027indexIdentifier\u0027"
   },
@@ -613,9 +623,9 @@
     "rule": "R0000",
     "position": {
       "file": "hibernate-core/src/main/java/org/hibernate/type/CollectionType.java",
-      "line": 759,
-      "start": 25387,
-      "end": 25435
+      "line": 760,
+      "start": 26252,
+      "end": 26300
     },
     "message": "Possible null dereference of \u0027target\u0027"
   },
@@ -623,9 +633,9 @@
     "rule": "R0000",
     "position": {
       "file": "hibernate-envers/src/main/java/org/hibernate/envers/boot/internal/EnversServiceImpl.java",
-      "line": 170,
-      "start": 6850,
-      "end": 6936
+      "line": 180,
+      "start": 7620,
+      "end": 7706
     },
     "message": "Possible null dereference of \u0027getDefaultConstructor()\u0027"
   },
@@ -633,9 +643,9 @@
     "rule": "R0002",
     "position": {
       "file": "hibernate-envers/src/main/java/org/hibernate/envers/configuration/internal/metadata/CollectionMetadataGenerator.java",
-      "line": 749,
-      "start": 30092,
-      "end": 30118
+      "line": 753,
+      "start": 31070,
+      "end": 31096
     },
     "message": "Unreachable statement"
   },
@@ -644,8 +654,8 @@
     "position": {
       "file": "hibernate-envers/src/main/java/org/hibernate/envers/internal/entities/mapper/relation/ListCollectionMapper.java",
       "line": 141,
-      "start": 4777,
-      "end": 4825
+      "start": 4917,
+      "end": 4965
     },
     "message": "Possible null dereference of \u0027oldCollection\u0027"
   },
@@ -654,8 +664,8 @@
     "position": {
       "file": "hibernate-envers/src/main/java/org/hibernate/envers/internal/entities/mapper/relation/ListCollectionMapper.java",
       "line": 157,
-      "start": 5393,
-      "end": 5441
+      "start": 5549,
+      "end": 5597
     },
     "message": "Possible null dereference of \u0027newCollection\u0027"
   },
@@ -664,8 +674,8 @@
     "position": {
       "file": "hibernate-envers/src/main/java/org/hibernate/envers/internal/reader/AuditReaderImpl.java",
       "line": 88,
-      "start": 2986,
-      "end": 2998
+      "start": 3073,
+      "end": 3085
     },
     "message": "Possible null dereference of \u0027cls\u0027"
   },
@@ -674,8 +684,8 @@
     "position": {
       "file": "hibernate-envers/src/main/java/org/hibernate/envers/internal/reader/AuditReaderImpl.java",
       "line": 137,
-      "start": 4632,
-      "end": 4644
+      "start": 4768,
+      "end": 4780
     },
     "message": "Possible null dereference of \u0027cls\u0027"
   },
@@ -684,8 +694,8 @@
     "position": {
       "file": "hibernate-envers/src/main/java/org/hibernate/envers/internal/reader/AuditReaderImpl.java",
       "line": 299,
-      "start": 10222,
-      "end": 10242
+      "start": 10520,
+      "end": 10540
     },
     "message": "Possible null dereference of \u0027entityClass\u0027"
   },
@@ -694,8 +704,8 @@
     "position": {
       "file": "hibernate-envers/src/main/java/org/hibernate/envers/query/AuditQueryCreator.java",
       "line": 51,
-      "start": 2237,
-      "end": 2247
+      "start": 2287,
+      "end": 2297
     },
     "message": "Possible null dereference of \u0027c\u0027"
   },
@@ -704,8 +714,8 @@
     "position": {
       "file": "hibernate-envers/src/main/java/org/hibernate/envers/query/AuditQueryCreator.java",
       "line": 141,
-      "start": 6244,
-      "end": 6254
+      "start": 6384,
+      "end": 6394
     },
     "message": "Possible null dereference of \u0027c\u0027"
   },
@@ -714,8 +724,8 @@
     "position": {
       "file": "hibernate-envers/src/main/java/org/hibernate/envers/query/AuditQueryCreator.java",
       "line": 169,
-      "start": 8016,
-      "end": 8026
+      "start": 8184,
+      "end": 8194
     },
     "message": "Possible null dereference of \u0027c\u0027"
   },
@@ -724,8 +734,8 @@
     "position": {
       "file": "hibernate-testing/src/main/java/org/hibernate/testing/jta/JtaAwareConnectionProviderImpl.java",
       "line": 53,
-      "start": 2403,
-      "end": 2429
+      "start": 2455,
+      "end": 2481
     },
     "message": "Condition is always true: \u0027passThroughSettings !\u003d null\u0027"
   },
@@ -734,8 +744,8 @@
     "position": {
       "file": "hibernate-testing/src/main/java/org/hibernate/testing/junit4/BaseCoreFunctionalTestCase.java",
       "line": 356,
-      "start": 11155,
-      "end": 11258
+      "start": 11510,
+      "end": 11613
     },
     "message": "Possible null dereference of \u0027getMethod()\u0027"
   },
@@ -744,8 +754,8 @@
     "position": {
       "file": "hibernate-testing/src/main/java/org/hibernate/testing/junit4/BaseNonConfigCoreFunctionalTestCase.java",
       "line": 456,
-      "start": 14433,
-      "end": 14536
+      "start": 14888,
+      "end": 14991
     },
     "message": "Possible null dereference of \u0027getMethod()\u0027"
   }

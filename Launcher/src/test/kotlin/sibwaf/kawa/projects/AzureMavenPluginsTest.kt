@@ -6,7 +6,7 @@ import sibwaf.kawa.collectSources
 import java.nio.file.Path
 
 class AzureMavenPluginsTest : DiffTesterBase() {
-    override val rootPath: Path = baseProjectPath.resolve("azure-maven-plugins-develop")
+    override val rootPath: Path = baseProjectPath.resolve("azure-maven-plugins")
     override val model = ModelLoader(
         "azure-maven-plugins",
         rootPath,
