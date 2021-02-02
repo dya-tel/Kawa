@@ -17,7 +17,9 @@ abstract class DiffTesterBase {
             fail("Project model is empty")
         }
 
-        val report = Analyzer(model, 4).analyze().map { it.wrap(rootPath) }
+        val report = Analyzer(model, 4)
+            .analyze()
+            .mapNotNull { it.wrap(rootPath) }
 
         val reportManager = ReportManager()
         reportManager.saveReport(model.name, report)

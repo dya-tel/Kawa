@@ -9,24 +9,24 @@ data class Warning(
     val message: String
 ) {
 
-    fun wrap(rootPath: Path): SerializableWarningWrapper {
+    fun wrap(rootPath: Path): SerializableWarningWrapper? {
         val absoluteRoot = rootPath.toAbsolutePath()
 
-        var filePath = element.position.file.toPath().toAbsolutePath()
+        val position = element.position.takeIf { it.isValidPosition } ?: return null
+
+        var filePath = position.file.toPath().toAbsolutePath()
         if (filePath.startsWith(absoluteRoot)) {
             filePath = absoluteRoot.relativize(filePath)
         }
 
-        val position = PositionSignature(
-            file = filePath.toString().replace("\\", "/"),
-            line = element.position.line,
-            start = element.position.sourceStart,
-            end = element.position.sourceEnd
-        )
-
         return SerializableWarningWrapper(
             rule = rule,
-            position = position,
+            position = PositionSignature(
+                file = filePath.toString().replace("\\", "/"),
+                line = position.line,
+                start = position.sourceStart,
+                end = position.sourceEnd
+            ),
             message = message
         )
     }

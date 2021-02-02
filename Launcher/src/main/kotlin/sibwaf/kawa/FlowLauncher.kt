@@ -34,7 +34,7 @@ fun main(args: Array<String>) {
     val root = Paths.get(model.model.root)
     val report = Analyzer(model, 4)
         .analyze()
-        .map { it.wrap(root) }
+        .mapNotNull { it.wrap(root) }
 
     for (warning in report.sortedWith(ReportManager.WARNING_COMPARATOR)) {
         with(warning) {
