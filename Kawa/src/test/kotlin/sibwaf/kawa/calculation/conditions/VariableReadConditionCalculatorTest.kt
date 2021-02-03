@@ -9,7 +9,6 @@ import sibwaf.kawa.extractVariables
 import sibwaf.kawa.getElementsOf
 import sibwaf.kawa.parseMethod
 import sibwaf.kawa.values.BooleanValue
-import sibwaf.kawa.values.ValueSource
 import spoon.reflect.code.CtLocalVariable
 import strikt.api.expect
 import strikt.assertions.isA
@@ -33,7 +32,7 @@ class VariableReadConditionCalculatorTest : ValueCalculatorTestBase() {
         val calculator = VariableReadConditionCalculator()
 
         val frame = MutableDataFrame(null).apply {
-            setValue(x, BooleanValue(ValueSource.NONE))
+            setValue(x, BooleanValue(null))
             setConstraint(x, BooleanConstraint.createUnknown())
         }
 

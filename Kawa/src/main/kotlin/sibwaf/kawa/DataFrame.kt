@@ -2,7 +2,6 @@ package sibwaf.kawa
 
 import sibwaf.kawa.constraints.Constraint
 import sibwaf.kawa.values.Value
-import sibwaf.kawa.values.ValueSource
 import spoon.reflect.declaration.CtVariable
 import java.util.Collections
 import java.util.IdentityHashMap
@@ -54,7 +53,7 @@ interface DataFrame {
                 }
 
                 // TODO: compound value
-                val mergedValue = Value.from(variable.type, ValueSource.NONE)
+                val mergedValue = Value.withoutSource(variable)
                 result.setValue(variable, mergedValue)
 
                 val mergedConstraint = reachableFrames.mapNotNull { it.getConstraint(variable) }.reduce(Constraint::merge)

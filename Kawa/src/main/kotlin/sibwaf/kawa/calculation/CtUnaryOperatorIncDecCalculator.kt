@@ -5,7 +5,6 @@ import sibwaf.kawa.DataFrame
 import sibwaf.kawa.MutableDataFrame
 import sibwaf.kawa.ReachableFrame
 import sibwaf.kawa.values.ConstrainedValue
-import sibwaf.kawa.values.ValueSource
 import spoon.reflect.code.CtExpression
 import spoon.reflect.code.CtUnaryOperator
 import spoon.reflect.code.CtVariableAccess
@@ -27,7 +26,7 @@ class CtUnaryOperatorIncDecCalculator : ValueCalculator {
         val (frame, operandValue) = state.getValue(expression.operand)
         // TODO: exit on UnreachableFrame with invalid value
 
-        val operatorValue = ConstrainedValue.from(expression, ValueSource.NONE) // TODO
+        val operatorValue = ConstrainedValue.from(expression) // TODO
 
         val variable = (expression.operand as? CtVariableAccess<*>)
             ?.variable

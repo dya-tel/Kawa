@@ -4,7 +4,6 @@ import sibwaf.kawa.AnalyzerState
 import sibwaf.kawa.DataFrame
 import sibwaf.kawa.MutableDataFrame
 import sibwaf.kawa.values.ConstrainedValue
-import sibwaf.kawa.values.ValueSource
 import spoon.reflect.code.CtExpression
 import spoon.reflect.code.CtVariableRead
 import spoon.reflect.reference.CtFieldReference
@@ -27,7 +26,7 @@ class CtVariableReadCalculator : ValueCalculator {
         val result = if (value != null && constraint != null) {
             ConstrainedValue(value, constraint)
         } else {
-            ConstrainedValue.from(expression, ValueSource.NONE)
+            ConstrainedValue.from(expression)
         }
 
         return MutableDataFrame(state.frame) to result

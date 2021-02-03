@@ -9,7 +9,6 @@ import sibwaf.kawa.constraints.Constraint
 import sibwaf.kawa.constraints.ReferenceConstraint
 import sibwaf.kawa.values.BooleanValue
 import sibwaf.kawa.values.Value
-import sibwaf.kawa.values.ValueSource
 import spoon.reflect.code.BinaryOperatorKind
 import spoon.reflect.code.CtBinaryOperator
 import spoon.reflect.code.CtExpression
@@ -53,12 +52,12 @@ class EqualityConditionCalculator : ConditionCalculator {
 
         val (leftFrame, leftValue) = state.getValue(expression.leftHandOperand)
         if (leftFrame !is ReachableFrame) {
-            return ConditionCalculatorResult(leftFrame, leftFrame, BooleanValue(ValueSource.NONE), BooleanConstraint.createUnknown())
+            return ConditionCalculatorResult(leftFrame, leftFrame, BooleanValue(expression), BooleanConstraint.createUnknown())
         }
 
         val (rightFrame, rightValue) = state.copy(frame = leftFrame).getValue(expression.rightHandOperand)
         if (rightFrame !is ReachableFrame) {
-            return ConditionCalculatorResult(rightFrame, rightFrame, BooleanValue(ValueSource.NONE), BooleanConstraint.createUnknown())
+            return ConditionCalculatorResult(rightFrame, rightFrame, BooleanValue(expression), BooleanConstraint.createUnknown())
         }
 
         val leftConstraint = leftValue.constraint
@@ -86,14 +85,14 @@ class EqualityConditionCalculator : ConditionCalculator {
             ConditionCalculatorResult(
                 thenFrame = thenFrame,
                 elseFrame = elseFrame,
-                value = BooleanValue(ValueSource.NONE),
+                value = BooleanValue(expression),
                 constraint = resultConstraint
             )
         } else {
             ConditionCalculatorResult(
                 thenFrame = elseFrame,
                 elseFrame = thenFrame,
-                value = BooleanValue(ValueSource.NONE),
+                value = BooleanValue(expression),
                 constraint = resultConstraint.invert()
             )
         }

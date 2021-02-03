@@ -6,7 +6,6 @@ import sibwaf.kawa.MutableDataFrame
 import sibwaf.kawa.constraints.ReferenceConstraint
 import sibwaf.kawa.values.ConstrainedValue
 import sibwaf.kawa.values.ReferenceValue
-import sibwaf.kawa.values.ValueSource
 import spoon.reflect.code.CtExpression
 import spoon.reflect.code.CtLiteral
 
@@ -18,8 +17,8 @@ class CtLiteralCalculator : ValueCalculator {
         expression as CtLiteral<*>
 
         return MutableDataFrame(state.frame) to when (expression.value) {
-            null -> ConstrainedValue(ReferenceValue(ValueSource.NONE), ReferenceConstraint.createNull())
-            else -> ConstrainedValue.from(expression, ValueSource.NONE)
+            null -> ConstrainedValue(ReferenceValue(expression), ReferenceConstraint.createNull())
+            else -> ConstrainedValue.from(expression)
         }
     }
 }

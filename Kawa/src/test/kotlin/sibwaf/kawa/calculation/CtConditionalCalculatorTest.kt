@@ -13,7 +13,6 @@ import sibwaf.kawa.getElementsOf
 import sibwaf.kawa.parseMethod
 import sibwaf.kawa.values.ConstrainedValue
 import sibwaf.kawa.values.ReferenceValue
-import sibwaf.kawa.values.ValueSource
 import spoon.reflect.code.CtConditional
 import spoon.reflect.code.CtExpression
 import spoon.reflect.code.CtLocalVariable
@@ -61,7 +60,7 @@ class CtConditionalCalculatorTest : ValueCalculatorTestBase() {
         }
 
         val frame = MutableDataFrame(null).apply {
-            setValue(x, ReferenceValue(ValueSource.NONE))
+            setValue(x, ReferenceValue(null))
             setConstraint(x, ReferenceConstraint.createUnknown())
         }
 

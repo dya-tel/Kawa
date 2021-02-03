@@ -6,7 +6,6 @@ import sibwaf.kawa.ReachableFrame
 import sibwaf.kawa.constraints.Constraint
 import sibwaf.kawa.values.ConstrainedValue
 import sibwaf.kawa.values.Value
-import sibwaf.kawa.values.ValueSource
 import spoon.reflect.code.CtConditional
 import spoon.reflect.code.CtExpression
 import java.util.LinkedList
@@ -41,7 +40,7 @@ class CtConditionalCalculator : ValueCalculator {
         )
 
         // TODO: composite value
-        val resultValue = Value.from(expression, ValueSource.NONE)
+        val resultValue = Value.from(expression)
         val resultConstraint = values.map { it.constraint }.reduce(Constraint::merge)
 
         return resultFrame to ConstrainedValue(resultValue, resultConstraint)

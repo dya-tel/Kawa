@@ -8,9 +8,9 @@ import kotlin.test.Test
 class ValuesTest {
 
     @Test fun `Test value compositing`() {
-        val value1 = Value(ValueSource.NONE)
-        val value2 = Value(ValueSource.NONE)
-        val value3 = Value(ValueSource.NONE)
+        val value1 = Value(null)
+        val value2 = Value(null)
+        val value3 = Value(null)
 
         val composite = CompositeValue(listOf(value1, value2))
 

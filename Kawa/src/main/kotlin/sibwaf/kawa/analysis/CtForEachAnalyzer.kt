@@ -10,7 +10,6 @@ import sibwaf.kawa.constraints.BooleanConstraint
 import sibwaf.kawa.constraints.ReferenceConstraint
 import sibwaf.kawa.values.BooleanValue
 import sibwaf.kawa.values.Value
-import sibwaf.kawa.values.ValueSource
 import spoon.reflect.code.CtForEach
 import spoon.reflect.code.CtStatement
 
@@ -22,7 +21,7 @@ class CtForEachAnalyzer : CtLoopAnalyzer<CtForEach>() {
         ConditionCalculatorResult(
             thenFrame = state.frame,
             elseFrame = state.frame,
-            value = BooleanValue(ValueSource.NONE),
+            value = BooleanValue(null),
             constraint = BooleanConstraint.createUnknown()
         )
 
@@ -32,7 +31,7 @@ class CtForEachAnalyzer : CtLoopAnalyzer<CtForEach>() {
     override suspend fun getBodyFlow(state: AnalyzerState, loop: CtForEach): DataFrame {
         val frame = MutableDataFrame(state.frame).apply {
             val variable = loop.variable
-            val value = Value.from(loop.variable, ValueSource.NONE)
+            val value = Value.withoutSource(loop.variable)
 
             setValue(variable, value)
             setConstraint(value, ReferenceConstraint.createUnknown())

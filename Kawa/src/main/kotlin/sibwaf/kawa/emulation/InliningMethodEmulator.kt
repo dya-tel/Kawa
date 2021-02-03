@@ -11,7 +11,6 @@ import sibwaf.kawa.constraints.ReferenceConstraint
 import sibwaf.kawa.values.ConstrainedValue
 import sibwaf.kawa.values.ReferenceValue
 import sibwaf.kawa.values.Value
-import sibwaf.kawa.values.ValueSource
 import spoon.reflect.code.CtReturn
 import spoon.reflect.declaration.CtVariable
 import spoon.reflect.reference.CtExecutableReference
@@ -49,7 +48,7 @@ class InliningMethodEmulator : MethodEmulator {
         for ((parameter, argument) in parameters.zip(arguments)) {
             if (parameter.isVarArgs) {
                 // TODO: collect all arguments
-                frame.setValue(parameter, ReferenceValue(ValueSource.NONE))
+                frame.setValue(parameter, ReferenceValue(parameter))
                 frame.setConstraint(parameter, ReferenceConstraint.createNonNull()) // TODO: might be a wrong assumption
             } else {
                 frame.setValue(parameter, argument.value)
@@ -60,7 +59,7 @@ class InliningMethodEmulator : MethodEmulator {
         // empty vararg
         if (parameters.size > 0 && arguments.size < parameters.size) {
             val vararg = parameters.last()
-            frame.setValue(vararg, ReferenceValue(ValueSource.NONE))
+            frame.setValue(vararg, ReferenceValue(vararg))
             frame.setConstraint(vararg, ReferenceConstraint.createNonNull())
         }
 
@@ -110,7 +109,7 @@ class InliningMethodEmulator : MethodEmulator {
                 values.single()
             } else {
                 // TODO: composite value
-                Value.from(method.type, ValueSource.NONE)
+                Value.withoutSource(method.type)
             }
 
             val constraint = if (constraints.isEmpty()) {

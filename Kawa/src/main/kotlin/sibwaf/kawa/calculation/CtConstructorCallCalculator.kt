@@ -7,7 +7,6 @@ import sibwaf.kawa.ReachableFrame
 import sibwaf.kawa.constraints.ReferenceConstraint
 import sibwaf.kawa.values.ConstrainedValue
 import sibwaf.kawa.values.Value
-import sibwaf.kawa.values.ValueSource
 import spoon.reflect.code.CtConstructorCall
 import spoon.reflect.code.CtExpression
 
@@ -23,13 +22,13 @@ class CtConstructorCallCalculator : ValueCalculator {
         for (argument in expression.arguments) {
             val (nextFrame, _) = currentState.getValue(argument)
             if (nextFrame !is ReachableFrame) {
-                return nextFrame to ConstrainedValue.from(expression, ValueSource.NONE) // TODO: invalid value
+                return nextFrame to ConstrainedValue.from(expression) // TODO: invalid value
             }
 
             currentState = currentState.copy(frame = nextFrame)
         }
 
-        val value = Value.from(expression, ValueSource.NONE)
+        val value = Value.from(expression)
         val constraint = ReferenceConstraint.createNonNull()
 
         // TODO: constructor side-effects

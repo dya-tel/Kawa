@@ -7,7 +7,6 @@ import sibwaf.kawa.UnreachableFrame
 import sibwaf.kawa.constraints.BooleanConstraint
 import sibwaf.kawa.utility.flattenExpression
 import sibwaf.kawa.values.BooleanValue
-import sibwaf.kawa.values.ValueSource
 import spoon.reflect.code.BinaryOperatorKind
 import spoon.reflect.code.CtBinaryOperator
 import spoon.reflect.code.CtExpression
@@ -54,7 +53,7 @@ class BooleanOrCalculator : ConditionCalculator {
         return ConditionCalculatorResult(
             thenFrame = if (result.isFalse) UnreachableFrame.after(thenFrame) else thenFrame,
             elseFrame = if (result.isTrue) UnreachableFrame.after(elseFrame) else elseFrame,
-            value = BooleanValue(ValueSource.NONE),
+            value = BooleanValue(expression),
             constraint = result
         )
     }

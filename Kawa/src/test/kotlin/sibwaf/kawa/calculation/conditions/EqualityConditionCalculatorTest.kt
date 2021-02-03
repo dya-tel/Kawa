@@ -12,7 +12,6 @@ import sibwaf.kawa.extractVariables
 import sibwaf.kawa.getElementsOf
 import sibwaf.kawa.parseMethod
 import sibwaf.kawa.values.ReferenceValue
-import sibwaf.kawa.values.ValueSource
 import spoon.reflect.code.CtLocalVariable
 import strikt.api.expect
 import strikt.assertions.isA
@@ -42,7 +41,7 @@ class EqualityConditionCalculatorTest : ValueCalculatorTestBase() {
         )
 
         val frame = MutableDataFrame(null).apply {
-            setValue(x, ReferenceValue(ValueSource.NONE))
+            setValue(x, ReferenceValue(null))
             setConstraint(x, ReferenceConstraint.createUnknown())
         }
 
@@ -85,7 +84,7 @@ class EqualityConditionCalculatorTest : ValueCalculatorTestBase() {
         )
 
         val frame = MutableDataFrame(null).apply {
-            setValue(x, ReferenceValue(ValueSource.NONE))
+            setValue(x, ReferenceValue(null))
             setConstraint(x, ReferenceConstraint.createUnknown())
         }
 

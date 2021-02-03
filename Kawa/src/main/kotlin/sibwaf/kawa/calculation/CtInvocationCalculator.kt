@@ -5,7 +5,6 @@ import sibwaf.kawa.DataFrame
 import sibwaf.kawa.ReachableFrame
 import sibwaf.kawa.emulation.SuccessfulInvocation
 import sibwaf.kawa.values.ConstrainedValue
-import sibwaf.kawa.values.ValueSource
 import spoon.reflect.code.CtExpression
 import spoon.reflect.code.CtInvocation
 import java.util.LinkedList
@@ -22,7 +21,7 @@ class CtInvocationCalculator : CtTargetedExpressionCalculator() {
         expression as CtInvocation<*>
 
         // TODO: proper invalid value
-        fun invalidValue() = ConstrainedValue.from(expression, ValueSource.NONE)
+        fun invalidValue() = ConstrainedValue.from(expression)
 
         val arguments = LinkedList<ConstrainedValue>()
 

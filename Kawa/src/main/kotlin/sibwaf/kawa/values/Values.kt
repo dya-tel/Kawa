@@ -2,31 +2,41 @@ package sibwaf.kawa.values
 
 import sibwaf.kawa.constraints.Constraint
 import spoon.SpoonException
+import spoon.reflect.code.CtExpression
+import spoon.reflect.declaration.CtElement
+import spoon.reflect.declaration.CtParameter
 import spoon.reflect.declaration.CtTypedElement
 import spoon.reflect.factory.TypeFactory
 import spoon.reflect.reference.CtTypeReference
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.ConcurrentMap
 
-enum class ValueSource {
-    PARAMETER, LOCAL_VARIABLE, NONE
-}
-
-// TODO: replace ValueSource with CtExpression
 // TODO: split into multiple files
 
-open class Value constructor(val source: ValueSource) {
+open class Value constructor(val source: CtElement?) {
 
     companion object {
         private val typeFactory = TypeFactory()
 
-        private val valueFactoryCache: ConcurrentMap<String, (ValueSource) -> Value> = ConcurrentHashMap()
+        private val valueFactoryCache: ConcurrentMap<String, (CtElement?) -> Value> = ConcurrentHashMap()
 
-        fun from(element: CtTypedElement<*>, source: ValueSource): Value {
-            return from(element.type, source)
+        fun withoutSource(typeProvider: CtTypedElement<*>): Value {
+            return withoutSource(typeProvider.type)
         }
 
-        fun from(type: CtTypeReference<*>?, source: ValueSource): Value {
+        fun withoutSource(type: CtTypeReference<*>?): Value {
+            return from(type, null)
+        }
+
+        fun from(source: CtParameter<*>): Value {
+            return from(source.type, source)
+        }
+
+        fun from(source: CtExpression<*>): Value {
+            return from(source.type, source)
+        }
+
+        private fun from(type: CtTypeReference<*>?, source: CtElement?): Value {
             if (type == null) {
                 return Value(source)
             }
@@ -39,17 +49,17 @@ open class Value constructor(val source: ValueSource) {
                 return Value(source)
             }
 
-            val valueFactory = valueFactoryCache.computeIfAbsent(type.qualifiedName) {
+            val valueFactory = valueFactoryCache.computeIfAbsent(type.qualifiedName) { _ ->
                 try {
                     if (type.isSubtypeOf(typeFactory.COLLECTION) || type.isSubtypeOf(typeFactory.MAP)) {
-                        return@computeIfAbsent { source -> CollectionValue(source) }
+                        return@computeIfAbsent { CollectionValue(it) }
                     }
                 } catch (ignored: SpoonException) {
                     // Spoon does Spoon things and sometimes dies on 'isSubtypeOf' invocations,
                     // but we can be sure that it's at least a ReferenceValue
                 }
 
-                return@computeIfAbsent { source -> ReferenceValue(source) }
+                return@computeIfAbsent { ReferenceValue(it) }
             }
 
             return valueFactory(source)
@@ -66,7 +76,7 @@ open class Value constructor(val source: ValueSource) {
     }
 }
 
-open class BooleanValue(source: ValueSource) : Value(source) {
+open class BooleanValue(source: CtElement?) : Value(source) {
     override fun copy(): BooleanValue = BooleanValue(source)
     internal open fun invert(): BooleanValue = InvertedBooleanValue(this)
 }
@@ -94,7 +104,7 @@ internal class InvertedBooleanValue(private val original: BooleanValue) : Boolea
 //    override fun invert(): BooleanValue = FalseValue
 //}
 
-open class ReferenceValue(source: ValueSource) : Value(source) {
+open class ReferenceValue(source: CtElement?) : Value(source) {
     override fun copy(): ReferenceValue = ReferenceValue(source)
 }
 
@@ -102,11 +112,11 @@ open class ReferenceValue(source: ValueSource) : Value(source) {
 //    override fun copy(): NullValue = NullValue
 //}
 
-class CollectionValue(source: ValueSource) : Value(source) {
+class CollectionValue(source: CtElement?) : Value(source) {
     override fun copy(): CollectionValue = CollectionValue(source)
 }
 
-class CompositeValue(values: Iterable<Value>) : Value(ValueSource.NONE) {
+class CompositeValue(values: Iterable<Value>) : Value(null) {
     val values = values.toSet()
 
     override fun isSameAs(other: Value): Boolean {
@@ -119,14 +129,24 @@ class CompositeValue(values: Iterable<Value>) : Value(ValueSource.NONE) {
 
 class ConstrainedValue(val value: Value, val constraint: Constraint) {
     companion object {
-        fun from(element: CtTypedElement<*>, source: ValueSource): ConstrainedValue {
-            return from(element.type, source)
+        fun withoutSource(typeProvider: CtTypedElement<*>): ConstrainedValue {
+            return from(Value.withoutSource(typeProvider))
         }
 
-        fun from(type: CtTypeReference<*>?, source: ValueSource): ConstrainedValue {
-            val value = Value.from(type, source)
-            val constraint = Constraint.from(value)
-            return ConstrainedValue(value, constraint)
+        fun withoutSource(type: CtTypeReference<*>?): ConstrainedValue {
+            return from(Value.withoutSource(type))
+        }
+
+        fun from(source: CtParameter<*>): ConstrainedValue {
+            return from(Value.from(source))
+        }
+
+        fun from(source: CtExpression<*>): ConstrainedValue {
+            return from(Value.from(source))
+        }
+
+        fun from(value: Value): ConstrainedValue {
+            return ConstrainedValue(value, Constraint.from(value))
         }
     }
 

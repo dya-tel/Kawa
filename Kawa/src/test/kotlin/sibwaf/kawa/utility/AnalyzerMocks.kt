@@ -10,7 +10,6 @@ import sibwaf.kawa.constraints.BooleanConstraint
 import sibwaf.kawa.emulation.MethodEmulator
 import sibwaf.kawa.values.BooleanValue
 import sibwaf.kawa.values.ConstrainedValue
-import sibwaf.kawa.values.ValueSource
 import spoon.reflect.code.CtExpression
 import spoon.reflect.code.CtStatement
 import spoon.reflect.reference.CtExecutableReference
@@ -40,7 +39,7 @@ object FailingValueCalculator : ValueCalculator {
 object IdentityValueCalculator : ValueCalculator {
     override fun supports(expression: CtExpression<*>) = true
     override suspend fun calculate(state: AnalyzerState, expression: CtExpression<*>): Pair<DataFrame, ConstrainedValue> {
-        return state.frame to ConstrainedValue.from(expression, ValueSource.NONE)
+        return state.frame to ConstrainedValue.from(expression)
     }
 }
 
@@ -56,7 +55,7 @@ object IdentityConditionCalculator : ConditionCalculator {
         return ConditionCalculatorResult(
             state.frame,
             state.frame,
-            BooleanValue(ValueSource.NONE),
+            BooleanValue(expression),
             BooleanConstraint.createUnknown()
         )
     }

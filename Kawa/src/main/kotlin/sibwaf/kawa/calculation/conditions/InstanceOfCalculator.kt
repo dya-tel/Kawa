@@ -6,7 +6,6 @@ import sibwaf.kawa.constraints.BooleanConstraint
 import sibwaf.kawa.constraints.Nullability
 import sibwaf.kawa.constraints.ReferenceConstraint
 import sibwaf.kawa.values.BooleanValue
-import sibwaf.kawa.values.ValueSource
 import spoon.reflect.code.BinaryOperatorKind
 import spoon.reflect.code.CtBinaryOperator
 import spoon.reflect.code.CtExpression
@@ -36,7 +35,7 @@ class InstanceOfCalculator : ConditionCalculator {
         return ConditionCalculatorResult(
             thenFrame = thenFrame,
             elseFrame = elseFrame,
-            value = BooleanValue(ValueSource.NONE),
+            value = BooleanValue(expression),
             constraint = resultConstraint
         )
     }

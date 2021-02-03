@@ -5,7 +5,6 @@ import sibwaf.kawa.MutableDataFrame
 import sibwaf.kawa.UnreachableFrame
 import sibwaf.kawa.constraints.BooleanConstraint
 import sibwaf.kawa.values.BooleanValue
-import sibwaf.kawa.values.ValueSource
 import spoon.reflect.code.CtExpression
 import spoon.reflect.code.CtLiteral
 
@@ -29,7 +28,7 @@ class LiteralConditionCalculator : ConditionCalculator {
         return ConditionCalculatorResult(
             thenFrame = if (constraint.isFalse) UnreachableFrame.after(state.frame) else thenFrame,
             elseFrame = if (constraint.isTrue) UnreachableFrame.after(state.frame) else elseFrame,
-            value = BooleanValue(ValueSource.NONE),
+            value = BooleanValue(expression),
             constraint = constraint
         )
     }

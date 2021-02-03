@@ -9,7 +9,6 @@ import sibwaf.kawa.UnreachableFrame
 import sibwaf.kawa.constraints.Constraint
 import sibwaf.kawa.values.ConstrainedValue
 import sibwaf.kawa.values.Value
-import sibwaf.kawa.values.ValueSource
 import spoon.reflect.code.CtReturn
 import spoon.reflect.code.CtThrow
 import spoon.reflect.declaration.CtExecutable
@@ -28,7 +27,7 @@ class BasicMethodEmulator(private val cache: MutableMap<CtExecutable<*>, MethodF
 
         val startFrame = MutableDataFrame(null)
         for (parameter in declaration.parameters) {
-            val value = Value.from(parameter, ValueSource.PARAMETER)
+            val value = Value.from(parameter)
             startFrame.setValue(parameter, value)
 
             val constraint = Constraint.from(value)
@@ -72,7 +71,7 @@ class BasicMethodEmulator(private val cache: MutableMap<CtExecutable<*>, MethodF
                 returnedConstraints.reduceOrNull(Constraint::merge)
             }
 
-            annotation.returnConstraint = returnConstraint ?: Constraint.from(Value.from(declaration, ValueSource.NONE))
+            annotation.returnConstraint = returnConstraint ?: Constraint.from(Value.withoutSource(declaration))
         }
 
         return annotation
@@ -95,13 +94,13 @@ class BasicMethodEmulator(private val cache: MutableMap<CtExecutable<*>, MethodF
             // TODO: invalid value
             return SuccessfulInvocation(
                 frame = UnreachableFrame.after(state.frame),
-                value = ConstrainedValue.from(method.type, ValueSource.NONE)
+                value = ConstrainedValue.withoutSource(method.type)
             )
         }
 
         val returnConstraint = annotation.returnConstraint
         val result = if (returnConstraint != null) {
-            val value = Value.from(method.type, ValueSource.NONE)
+            val value = Value.withoutSource(method.type)
             val constraint = returnConstraint.copy()
             ConstrainedValue(value, constraint)
         } else {

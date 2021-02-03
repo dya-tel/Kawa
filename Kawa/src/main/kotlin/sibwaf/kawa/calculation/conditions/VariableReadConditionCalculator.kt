@@ -5,7 +5,6 @@ import sibwaf.kawa.MutableDataFrame
 import sibwaf.kawa.UnreachableFrame
 import sibwaf.kawa.constraints.BooleanConstraint
 import sibwaf.kawa.values.BooleanValue
-import sibwaf.kawa.values.ValueSource
 import spoon.reflect.code.CtExpression
 import spoon.reflect.code.CtVariableRead
 import spoon.reflect.reference.CtFieldReference
@@ -28,7 +27,7 @@ class VariableReadConditionCalculator : ConditionCalculator {
             elseFrame.setConstraint(declaration, BooleanConstraint.createFalse())
         }
 
-        val value = declaration?.let { state.frame.getValue(it) as? BooleanValue } ?: BooleanValue(ValueSource.NONE)
+        val value = declaration?.let { state.frame.getValue(it) as? BooleanValue } ?: BooleanValue(expression)
         val constraint = (declaration?.let { state.frame.getConstraint(it) } as? BooleanConstraint) ?: BooleanConstraint.createUnknown()
 
         return ConditionCalculatorResult(

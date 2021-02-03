@@ -6,7 +6,6 @@ import sibwaf.kawa.MutableDataFrame
 import sibwaf.kawa.constraints.ReferenceConstraint
 import sibwaf.kawa.values.ConstrainedValue
 import sibwaf.kawa.values.ReferenceValue
-import sibwaf.kawa.values.ValueSource
 import spoon.reflect.code.CtExpression
 import spoon.reflect.code.CtLambda
 
@@ -17,7 +16,7 @@ class CtLambdaCalculator : ValueCalculator {
     override suspend fun calculate(state: AnalyzerState, expression: CtExpression<*>): Pair<DataFrame, ConstrainedValue> {
         // TODO
         val value = ConstrainedValue(
-            ReferenceValue(ValueSource.NONE),
+            ReferenceValue(expression),
             ReferenceConstraint.createNonNull()
         )
 

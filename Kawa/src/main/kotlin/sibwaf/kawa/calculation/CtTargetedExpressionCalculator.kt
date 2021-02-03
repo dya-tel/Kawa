@@ -8,7 +8,6 @@ import sibwaf.kawa.UnreachableFrame
 import sibwaf.kawa.constraints.Nullability
 import sibwaf.kawa.constraints.ReferenceConstraint
 import sibwaf.kawa.values.ConstrainedValue
-import sibwaf.kawa.values.ValueSource
 import spoon.reflect.code.CtExpression
 import spoon.reflect.code.CtTargetedExpression
 
@@ -35,7 +34,7 @@ abstract class CtTargetedExpressionCalculator : ValueCalculator {
         }
 
         return if (frame !is ReachableFrame) {
-            frame to ConstrainedValue.from(expression, ValueSource.NONE)
+            frame to ConstrainedValue.from(expression)
         } else {
             calculate(state.copy(frame = frame), expression, targetValue)
         }

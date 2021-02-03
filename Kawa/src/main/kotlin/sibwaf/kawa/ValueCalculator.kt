@@ -28,7 +28,6 @@ import sibwaf.kawa.emulation.BasicMethodEmulator
 import sibwaf.kawa.emulation.BlackHoleMethodTrace
 import sibwaf.kawa.values.BooleanValue
 import sibwaf.kawa.values.ConstrainedValue
-import sibwaf.kawa.values.ValueSource
 import spoon.reflect.code.CtExpression
 import spoon.reflect.code.CtStatement
 import spoon.reflect.declaration.CtExecutable
@@ -55,7 +54,7 @@ private object FallbackCalculator : ConditionCalculator {
             log.warn("Failed to find a calculator for {}", expression.javaClass)
         }
 
-        return MutableDataFrame(state.frame) to ConstrainedValue.from(expression, ValueSource.NONE)
+        return MutableDataFrame(state.frame) to ConstrainedValue.from(expression)
     }
 
     override suspend fun calculateCondition(state: AnalyzerState, expression: CtExpression<*>): ConditionCalculatorResult {
@@ -66,7 +65,7 @@ private object FallbackCalculator : ConditionCalculator {
         return ConditionCalculatorResult(
             thenFrame = MutableDataFrame(state.frame),
             elseFrame = MutableDataFrame(state.frame),
-            value = BooleanValue(ValueSource.NONE),
+            value = BooleanValue(expression),
             constraint = BooleanConstraint.createUnknown()
         )
     }
