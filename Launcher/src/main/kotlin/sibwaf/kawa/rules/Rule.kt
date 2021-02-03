@@ -27,8 +27,13 @@ abstract class Rule : CtAbstractVisitor() {
     val name by lazy { javaClass.simpleName.takeWhile { it != '_' } }
 
     fun getFlow(element: CtElement): MethodFlow? {
-        return element.getParent(CtExecutable::class.java)
-            ?.let { flow[it] }
+        val executable = if (element is CtExecutable<*>) {
+            element
+        } else {
+            element.getParent(CtExecutable::class.java)
+        }
+
+        return executable?.let { flow[it] }
     }
 
     fun getFrame(flow: MethodFlow, element: CtElement): ReachableFrame? {
