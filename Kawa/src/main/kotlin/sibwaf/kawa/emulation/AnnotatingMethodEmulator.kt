@@ -16,7 +16,7 @@ import spoon.reflect.reference.CtExecutableReference
 import java.util.Collections
 import java.util.LinkedList
 
-class BasicMethodEmulator(private val cache: MutableMap<CtExecutable<*>, MethodFlow>) : MethodEmulator {
+class AnnotatingMethodEmulator(private val cache: MutableMap<CtExecutable<*>, MethodFlow>) : MethodEmulator {
 
     private suspend fun createAnnotation(state: AnalyzerState, method: CtExecutableReference<*>): MethodFlow {
         val declaration = state.cache.getDeclaration(method) ?: return EmptyFlow

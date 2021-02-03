@@ -32,7 +32,7 @@ import sibwaf.kawa.analysis.CtUnaryOperatorAnalyzer
 import sibwaf.kawa.analysis.CtWhileAnalyzer
 import sibwaf.kawa.analysis.DelegatingStatementAnalyzer
 import sibwaf.kawa.analysis.StatementAnalyzer
-import sibwaf.kawa.emulation.BasicMethodEmulator
+import sibwaf.kawa.emulation.AnnotatingMethodEmulator
 import sibwaf.kawa.emulation.BlackHoleMethodTrace
 import sibwaf.kawa.emulation.InliningMethodEmulator
 import spoon.reflect.code.CtStatement
@@ -146,7 +146,7 @@ class MethodFlowAnalyzer private constructor() {
     )
 
     private val cache = Collections.synchronizedMap(IdentityHashMap<CtExecutable<*>, MethodFlow>())
-    private val emulator = BasicMethodEmulator(cache)
+    private val emulator = AnnotatingMethodEmulator(cache)
 
     private val interproceduralEmulator = emulator
 //    private val interproceduralEmulator = InliningMethodEmulator()

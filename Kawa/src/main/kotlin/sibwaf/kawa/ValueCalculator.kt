@@ -24,7 +24,7 @@ import sibwaf.kawa.calculation.conditions.InvertedConditionCalculator
 import sibwaf.kawa.calculation.conditions.LiteralConditionCalculator
 import sibwaf.kawa.calculation.conditions.VariableReadConditionCalculator
 import sibwaf.kawa.constraints.BooleanConstraint
-import sibwaf.kawa.emulation.BasicMethodEmulator
+import sibwaf.kawa.emulation.AnnotatingMethodEmulator
 import sibwaf.kawa.emulation.BlackHoleMethodTrace
 import sibwaf.kawa.values.BooleanValue
 import sibwaf.kawa.values.ConstrainedValue
@@ -114,7 +114,7 @@ object ValueCalculator : sibwaf.kawa.calculation.ValueCalculator, ConditionCalcu
         frame: ReachableFrame,
         cache: Map<CtExecutable<*>, MethodFlow>
     ): AnalyzerState {
-        val emulator = BasicMethodEmulator(Collections.unmodifiableMap(cache).withDefault2(EmptyFlow))
+        val emulator = AnnotatingMethodEmulator(Collections.unmodifiableMap(cache).withDefault2(EmptyFlow))
         return AnalyzerState(
             annotation = EmptyFlow,
             trace = BlackHoleMethodTrace,
